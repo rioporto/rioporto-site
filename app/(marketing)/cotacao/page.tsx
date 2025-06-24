@@ -16,7 +16,7 @@ import { Bitcoin, DollarSign, Info, ArrowRight, Calculator, Shield, TrendingUp, 
 import Link from "next/link"
 import toast from "react-hot-toast"
 import { formatBRL, cn } from "@/lib/utils"
-import { getBitcoinPriceBRL, getCryptoPriceBRL, type CryptoPrice } from "@/lib/api/crypto"
+import { getBitcoinPriceBRL, type CryptoPrice } from "@/lib/api/crypto"
 
 interface CotacaoForm {
   tipo: "compra" | "venda"
