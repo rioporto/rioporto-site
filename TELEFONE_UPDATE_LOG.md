@@ -15,6 +15,8 @@ O número de telefone da empresa foi atualizado de **+55 21 34000-3259** para **
 
 ### 3. Interface do Usuário
 - ✅ `/components/layout/footer.tsx` - Rodapé do site
+- ✅ `/app/(marketing)/contato/page.tsx` - Página de contato (2 ocorrências)
+- ✅ `/components/whatsapp-button.tsx` - Botão flutuante do WhatsApp (criado novo)
 
 ## 📋 Próximos Passos
 

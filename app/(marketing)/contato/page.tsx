@@ -92,7 +92,7 @@ export default function ContatoPage() {
                     <Phone className="mt-1 h-5 w-5 text-primary" />
                     <div>
                       <p className="font-semibold">Telefone / WhatsApp</p>
-                      <p className="text-muted-foreground">+55 21 3400-3259</p>
+                      <p className="text-muted-foreground">+55 21 2018-7776</p>
                     </div>
                   </div>
                   
@@ -129,7 +129,7 @@ export default function ContatoPage() {
                 </p>
                 <Button variant="outline" className="w-full" asChild>
                   <a 
-                    href="https://wa.me/5521340003259" 
+                    href="https://wa.me/552120187776" 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
