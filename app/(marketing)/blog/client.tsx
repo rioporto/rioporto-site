@@ -1,9 +1,5 @@
 "use client"
 
-if (!window.Promise) {
-  window.Promise = Promise;
-}
-
 import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

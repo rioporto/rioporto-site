@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { getPostBySlug, getPostsByCategory } from '@/lib/blog/api'
 
 export async function generateBlogMetadata({
   title,

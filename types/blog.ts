@@ -58,11 +58,7 @@ export interface BlogPostWithRelations extends BlogPost {
   author_avatar: string | null
   category_name: string | null
   category_slug: string | null
-  tags: {
-    id: string
-    name: string
-    slug: string
-  }[]
+  tags?: BlogTag[]
 }
 
 export interface BlogComment {
