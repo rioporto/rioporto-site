@@ -1,12 +1,15 @@
 # 📚 ÍNDICE DE DOCUMENTAÇÃO - RIO PORTO P2P
 
-## 🎉 PROJETO PUBLICADO NO VERCEL! (07/01/2025)
+## 🎉 PROJETO PUBLICADO NO VERCEL! 
+## 📅 CRONOGRAMA COMPLETO DISPONÍVEL! (24/06/2025)
 
 ### 📌 DOCUMENTOS ESSENCIAIS (Ler na ordem):
 
-1. **`LEIA_PRIMEIRO.md`** ⭐ - Estado atual resumido (ATUALIZADO AGORA!)
-2. **`INSTRUCOES_PROXIMOS_PASSOS.md`** ⭐ - O que fazer no próximo chat
-3. **`RESUMO_PROJETO_ATUAL.md`** ⭐ - Visão completa do projeto
+1. **🆕 `CRONOGRAMA_COMPLETO_RIOPORTO.md`** ⭐ - Roadmap completo do projeto (6 fases, 12 sprints)
+2. **🆕 `VISAO_GERAL_PROJETO.md`** ⭐ - Status visual e próximos passos
+3. **`GUIA_RAPIDO_NOVO_CHAT.md`** ⭐ - Instruções para continuar (ATUALIZADO!)
+4. **`LEIA_PRIMEIRO.md`** ⭐ - Estado atual resumido
+5. **`PROGRESSO_FASE2.md`** ⭐ - Sprint atual detalhado
 
 ## ✅ PROBLEMAS RESOLVIDOS
 
@@ -77,9 +80,10 @@
 3. `RESUMO_PROJETO_ATUAL.md`
 
 ### Para entender o projeto:
-1. `RIOPORTO_CLAUDE_RULES.md`
-2. `README.md`
-3. Pasta `/docs/supabase-snippets/`
+1. `CRONOGRAMA_COMPLETO_RIOPORTO.md` - Visão geral
+2. `RIOPORTO_CLAUDE_RULES.md` - Regras do projeto
+3. `README.md` - Documentação oficial
+4. Pasta `/docs/supabase-snippets/` - Padrões de código
 
 ### Para fazer deploy:
 1. `DEPLOY_GUIDE.md`
@@ -87,15 +91,18 @@
 
 ---
 
-**Total:** 30+ arquivos de documentação  
-**Última atualização:** 07/01/2025  
-**Status:** ✅ Projeto publicado e funcionando!
+**Total:** 35+ arquivos de documentação  
+**Última atualização:** 24/06/2025  
+**Status:** ✅ Sprint 1 completo! Projeto com cronograma completo até MVP final!
 
 ## 🎯 Próximo Objetivo:
 
-Verificar se o build passou no Vercel e começar a implementar:
-- Sistema KYC
-- Sistema de Cursos
-- Ou melhorias no Dashboard
+**Sprint 2 - Escolher uma funcionalidade:**
+1. WhatsApp Business API (RECOMENDADO)
+2. Sistema de Comentários Completo
+3. Newsletter Double Opt-in
+4. Dashboard com Métricas
+
+**Progresso Total**: 25% (Fase 1 completa + Sprint 1 da Fase 2)
 
 **Boa sorte no próximo chat! 🚀**

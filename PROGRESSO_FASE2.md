@@ -155,6 +155,18 @@ Iniciar Sprint 2 - Novas Funcionalidades:
 - WhatsApp Business API
 - Dashboard com métricas
 
+## 📅 CRONOGRAMA COMPLETO
+
+Consulte o arquivo `CRONOGRAMA_COMPLETO_RIOPORTO.md` para ver:
+- ✅ Fase 1 (Completa)
+- 🚀 Fase 2 - 6 Sprints detalhados
+- 🎓 Fase 3 - Sistema de Cursos
+- 🔐 Fase 4 - Sistema KYC
+- 📊 Fase 5 - Analytics & BI
+- 🌐 Fase 6 - Expansão Internacional
+
+**Timeline Total**: ~10-12 semanas para projeto completo
+
 ## ✅ SPRINT 1 COMPLETO - RESUMO
 
 ### Implementações realizadas:
