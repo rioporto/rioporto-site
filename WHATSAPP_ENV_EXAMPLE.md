@@ -3,7 +3,7 @@
 # Adicione estas variáveis ao seu arquivo .env.local
 
 # WhatsApp Business - Número oficial
-WHATSAPP_BUSINESS_NUMBER="+5521340003259"
+WHATSAPP_BUSINESS_NUMBER="+552120187776"
 
 # WhatsApp Cloud API (Meta/Facebook)
 WHATSAPP_ACCESS_TOKEN="seu_access_token_aqui"

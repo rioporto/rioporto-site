@@ -91,7 +91,7 @@ CREATE POLICY "Admins podem ver todas as mensagens"
   ON public.whatsapp_messages FOR ALL 
   USING (
     auth.uid() IN (
-      SELECT id FROM public.profiles WHERE role = 'admin'
+      SELECT id FROM public.profiles WHERE level = '3'
     )
   );
 
@@ -99,7 +99,7 @@ CREATE POLICY "Admins podem gerenciar cotações"
   ON public.quotations FOR ALL 
   USING (
     auth.uid() IN (
-      SELECT id FROM public.profiles WHERE role = 'admin'
+      SELECT id FROM public.profiles WHERE level = '3'
     )
   );
 
@@ -107,7 +107,7 @@ CREATE POLICY "Admins podem gerenciar conversas"
   ON public.whatsapp_conversations FOR ALL 
   USING (
     auth.uid() IN (
-      SELECT id FROM public.profiles WHERE role = 'admin'
+      SELECT id FROM public.profiles WHERE level = '3'
     )
   );
 

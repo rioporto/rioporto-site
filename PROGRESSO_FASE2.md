@@ -14,7 +14,7 @@
 
 ## 🏃 SPRINT 2 - NOVAS FUNCIONALIDADES (EM ANDAMENTO)
 
-### 2.3 WhatsApp Business API (🔄 25% Concluído)
+### 2.3 WhatsApp Business API (🔄 30% Concluído)
 **Iniciado**: 24/06/2025  
 **Prioridade**: 🔴 Alta  
 
@@ -28,6 +28,8 @@
 - [x] Página admin (`/app/(platform)/admin/whatsapp/page.tsx`)
 - [x] SQL para tabelas (`whatsapp_setup.sql`)
 - [x] Documentação de variáveis (`WHATSAPP_ENV_EXAMPLE.md`)
+- [x] Atualizado .env.example com variáveis do WhatsApp
+- [x] Script de teste criado (`test-whatsapp-build.js`)
 
 #### 🔄 Em Progresso:
 - [ ] Executar SQL no Supabase

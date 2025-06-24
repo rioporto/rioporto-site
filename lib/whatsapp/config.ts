@@ -2,7 +2,7 @@
 
 export const whatsappConfig = {
   // Número do WhatsApp Business
-  businessNumber: process.env.WHATSAPP_BUSINESS_NUMBER || "+5521340003259",
+  businessNumber: process.env.WHATSAPP_BUSINESS_NUMBER || "+552120187776",
   
   // Token de acesso (será configurado no .env)
   accessToken: process.env.WHATSAPP_ACCESS_TOKEN || "",
