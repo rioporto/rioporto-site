@@ -1,0 +1,10 @@
+# Evitar arquivos TypeScript/JSX na documentação
+*.ts
+*.tsx
+*.js
+*.jsx
+
+# Permitir apenas documentação
+!*.md
+!*.txt
+!*.json

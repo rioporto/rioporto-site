@@ -44,6 +44,11 @@
 - Solução: Convertido para função assíncrona com async/await
 - Arquivo: `components/blog/post-content.tsx`
 
+**10. ERRO DE PROMISE CHAIN - RESOLVIDO** 🎉
+- Problema: Property 'catch' does not exist on type 'PromiseLike<void>'
+- Solução: Reformatado promise chain corretamente
+- Arquivo: `lib/blog/api.ts` linha 129
+
 ### 📁 NOVA DOCUMENTAÇÃO CRIADA:
 
 ```
@@ -52,8 +57,16 @@ docs/
 └── supabase-ssr-patterns/    # NOVA documentação atualizada
     ├── 01-padrao-completo-supabase-ssr.md
     ├── 02-tipos-typescript-supabase.md
-    └── 03-rls-politicas-seguranca.md
+    ├── 03-rls-politicas-seguranca.md
+    └── 04-padroes-bibliotecas-externas.md
 ```
+
+### 📝 ARQUIVOS DE STATUS IMPORTANTES:
+
+1. **CONTEXTO_COMPLETO_PROJETO.md** - TODO o contexto do projeto (LEIA ESTE!)
+2. **INSTRUCOES_URGENTES_PROXIMO_CHAT.md** - O que fazer no próximo chat
+3. **BUILD_FINAL_9_CORRECOES.md** - Lista das 9 correções aplicadas
+4. **LEIA_PRIMEIRO.md** - Estado atual do projeto
 
 ### 🚀 COMANDO FINAL:
 

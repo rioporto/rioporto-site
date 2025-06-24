@@ -124,11 +124,13 @@ export async function getPostBySlug(slug: string): Promise<BlogPostWithRelations
     }
 
     // Incrementar views (não esperar pela resposta)
-    supabase.rpc('increment_post_views', { post_id_param: data.id }).then(() => {
-      console.log('View incremented')
-    }).catch(error => {
-      console.error('Error incrementing views:', error)
-    })
+    supabase.rpc('increment_post_views', { post_id_param: data.id })
+      .then(() => {
+        console.log('View incremented')
+      })
+      .catch((error: any) => {
+        console.error('Error incrementing views:', error)
+      })
 
     return data
   } catch (error) {
