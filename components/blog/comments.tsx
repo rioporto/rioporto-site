@@ -147,7 +147,7 @@ export function BlogComments({ postId }: BlogCommentsProps) {
           <CardHeader className="pb-4">
             <div className="flex items-start gap-4">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={comment.user?.avatar_url || ""} />
+                <AvatarImage src="" />
                 <AvatarFallback>
                   <User className="h-5 w-5" />
                 </AvatarFallback>

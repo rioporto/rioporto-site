@@ -15,9 +15,7 @@ export function BlogPostContent({ content }: BlogPostContentProps) {
     marked.setOptions({
       gfm: true,
       breaks: true,
-      pedantic: false,
-      smartLists: true,
-      smartypants: true
+      pedantic: false
     })
 
     if (contentRef.current) {
