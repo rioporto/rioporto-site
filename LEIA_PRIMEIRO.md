@@ -29,6 +29,11 @@
 - Solução: Usar typeof para verificar função
 - Arquivo: `app/debug-blog/page.tsx`
 
+**6. ERRO DE TYPESCRIPT COMMENTS-V2 - RESOLVIDO**
+- Problema: Property 'avatar_url' does not exist na linha 137
+- Solução: Removido acesso a propriedade inexistente
+- Arquivo: `components/blog/comments-v2.tsx`
+
 ### 🔧 PARA FAZER O DEPLOY:
 
 #### No Windows (Command Prompt/PowerShell):
@@ -43,13 +48,13 @@ fix-badge-error.bat
 #### No Linux/Ubuntu/WSL:
 ```bash
 # Opção 1 - Testar build e push (RECOMENDADO):
-rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
+rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - 6 correções aplicadas" && git push
 
 # Opção 2 - Apenas testar build:
 rm -rf .next && npm run build
 
 # Opção 3 - Se o build passou, fazer push:
-git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
+git add . && git commit -m "fix: corrigir todos os type errors - 6 correções aplicadas" && git push
 ```
 
 ## 📊 STATUS DO PROJETO:

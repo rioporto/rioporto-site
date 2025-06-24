@@ -32,6 +32,12 @@
 - **Erro:** This condition will always return true since this function is always defined
 - **Correção:** Verificar tipo da função com `typeof crypto.randomUUID === 'function'`
 
+### 6. TypeScript Error - Comments V2 (RESOLVIDO)
+- **Arquivo:** `components/blog/comments-v2.tsx`
+- **Linha:** 137
+- **Erro:** Property 'avatar_url' does not exist on type
+- **Correção:** Removido acesso a avatar_url que não existe no tipo BlogComment
+
 ## 🚀 COMANDOS PARA DEPLOY (UBUNTU/LINUX):
 
 ### Opção 1 - Testar build localmente primeiro:
@@ -42,12 +48,12 @@ rm -rf .next && npm run build
 
 ### Opção 2 - Se o build passar, fazer commit e push:
 ```bash
-git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
+git add . && git commit -m "fix: corrigir todos os type errors - 6 correções aplicadas" && git push
 ```
 
 ### Opção 3 - Tudo em um comando (RECOMENDADO):
 ```bash
-rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
+rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - 6 correções aplicadas" && git push
 ```
 
 ## 📊 STATUS DO BUILD:
@@ -56,6 +62,7 @@ rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos
 - ❌ Erro 3: TypeScript crypto API → ✅ CORRIGIDO
 - ❌ Erro 4: TypeScript logout route → ✅ CORRIGIDO
 - ❌ Erro 5: TypeScript debug-blog → ✅ CORRIGIDO
+- ❌ Erro 6: TypeScript comments-v2 → ✅ CORRIGIDO
 - ⏳ Aguardando novo build no Vercel
 
 ## 🎯 PRÓXIMOS PASSOS:
