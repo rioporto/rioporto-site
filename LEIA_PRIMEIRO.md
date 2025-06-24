@@ -39,6 +39,11 @@
 - Solução: Removidas opções inexistentes (smartLists e smartypants)
 - Arquivo: `components/blog/post-content.tsx`
 
+**8. ERRO DE MARKED ASYNC - RESOLVIDO**
+- Problema: Type 'Promise<string>' is not assignable to type 'string'
+- Solução: Convertido para função assíncrona com async/await
+- Arquivo: `components/blog/post-content.tsx`
+
 ### 📁 NOVA DOCUMENTAÇÃO CRIADA:
 
 ```

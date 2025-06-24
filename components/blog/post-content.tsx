@@ -11,16 +11,18 @@ export function BlogPostContent({ content }: BlogPostContentProps) {
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Configurar marked para renderização segura
-    marked.setOptions({
-      gfm: true,
-      breaks: true,
-      pedantic: false
-    })
+    async function renderContent() {
+      // Configurar marked para renderização segura
+      marked.setOptions({
+        gfm: true,
+        breaks: true,
+        pedantic: false
+      })
 
-    if (contentRef.current) {
-      // Renderizar Markdown
-      contentRef.current.innerHTML = marked(content)
+      if (contentRef.current && content) {
+        // Renderizar Markdown
+        const htmlContent = await marked(content)
+        contentRef.current.innerHTML = htmlContent
       
       // Adicionar classes Tailwind aos elementos
       const elements = contentRef.current.querySelectorAll('*')
@@ -95,7 +97,10 @@ export function BlogPostContent({ content }: BlogPostContentProps) {
             break
         }
       })
+      }
     }
+    
+    renderContent()
   }, [content])
 
   return (
