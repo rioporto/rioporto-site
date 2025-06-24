@@ -26,6 +26,12 @@
 - **Erro:** Expected 0 arguments, but got 1
 - **Correção:** Removido argumento de `createClient()` - função não recebe parâmetros
 
+### 5. TypeScript Error - Debug Blog (RESOLVIDO)
+- **Arquivo:** `app/debug-blog/page.tsx`
+- **Linha:** 84
+- **Erro:** This condition will always return true since this function is always defined
+- **Correção:** Verificar tipo da função com `typeof crypto.randomUUID === 'function'`
+
 ## 🚀 COMANDOS PARA DEPLOY (UBUNTU/LINUX):
 
 ### Opção 1 - Testar build localmente primeiro:
@@ -36,19 +42,20 @@ rm -rf .next && npm run build
 
 ### Opção 2 - Se o build passar, fazer commit e push:
 ```bash
-git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
+git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
 ```
 
 ### Opção 3 - Tudo em um comando (RECOMENDADO):
 ```bash
-rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
+rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
 ```
 
 ## 📊 STATUS DO BUILD:
-- ❌ Erro 1: Badge variant "success" → ✅ CORRIGIDO
+- ❌ Erro 1: Badge variant → ✅ CORRIGIDO
 - ❌ Erro 2: TypeScript analytics → ✅ CORRIGIDO
 - ❌ Erro 3: TypeScript crypto API → ✅ CORRIGIDO
 - ❌ Erro 4: TypeScript logout route → ✅ CORRIGIDO
+- ❌ Erro 5: TypeScript debug-blog → ✅ CORRIGIDO
 - ⏳ Aguardando novo build no Vercel
 
 ## 🎯 PRÓXIMOS PASSOS:

@@ -24,6 +24,11 @@
 - Solução: Removido argumento de createClient()
 - Arquivo: `app/api/logout/route.ts`
 
+**5. ERRO DE TYPESCRIPT DEBUG-BLOG - RESOLVIDO**
+- Problema: Function always defined na linha 84
+- Solução: Usar typeof para verificar função
+- Arquivo: `app/debug-blog/page.tsx`
+
 ### 🔧 PARA FAZER O DEPLOY:
 
 #### No Windows (Command Prompt/PowerShell):
@@ -38,13 +43,13 @@ fix-badge-error.bat
 #### No Linux/Ubuntu/WSL:
 ```bash
 # Opção 1 - Testar build e push (RECOMENDADO):
-rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
+rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
 
 # Opção 2 - Apenas testar build:
 rm -rf .next && npm run build
 
 # Opção 3 - Se o build passou, fazer push:
-git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
+git add . && git commit -m "fix: corrigir todos os type errors incluindo debug-blog" && git push
 ```
 
 ## 📊 STATUS DO PROJETO:

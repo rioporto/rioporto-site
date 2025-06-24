@@ -77,11 +77,12 @@ export default function BlogDebugPage() {
 
     // Test 4: Fetch Polyfill
     try {
-      const testUUID = crypto.randomUUID ? crypto.randomUUID() : 'not-supported'
+      const hasRandomUUID = typeof crypto.randomUUID === 'function'
+      const testUUID = hasRandomUUID ? crypto.randomUUID() : 'not-supported'
       setTests(prev => ({
         ...prev,
         fetch: {
-          status: crypto.randomUUID ? 'success' : 'warning',
+          status: hasRandomUUID ? 'success' : 'warning',
           message: `Crypto.randomUUID: ${testUUID}`
         }
       }))
