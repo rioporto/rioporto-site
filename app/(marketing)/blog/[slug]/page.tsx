@@ -159,7 +159,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <div className="aspect-video bg-muted rounded-lg overflow-hidden">
                 <img 
                   src={post.featured_image_url} 
-                  alt={post.title}
+                  alt={post.title || ""}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -186,7 +186,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                     {post.author_avatar ? (
                       <img 
                         src={post.author_avatar} 
-                        alt={post.author_name}
+                        alt={post.author_name || ""}
                         className="h-full w-full rounded-full object-cover"
                       />
                     ) : (
