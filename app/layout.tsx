@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/auth-context"
 import { Toaster } from "react-hot-toast"
 import { Toaster as ShadcnToaster } from "@/components/ui/toaster"
+import { Toaster as Sonner } from "@/components/ui/sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -55,6 +56,7 @@ export default function RootLayout({
             {children}
             <Toaster position="top-right" />
             <ShadcnToaster />
+            <Sonner />
           </ThemeProvider>
         </AuthProvider>
       </body>

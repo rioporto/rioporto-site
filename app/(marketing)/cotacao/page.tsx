@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useAuth } from "@/contexts/auth-context"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -62,12 +62,43 @@ export default function CotacaoPage() {
     observacoes: "",
   })
 
+
+
+  // Função para buscar o preço do Bitcoin
+  const fetchBitcoinPrice = useCallback(async () => {
+    try {
+      setLoadingPrice(true)
+      setPriceError(false)
+      const price = await getBitcoinPriceBRL()
+      
+      if (price && price > 0) {
+        setBitcoinPrice(prevPrice => {
+          // Só calcula a mudança se não for o primeiro carregamento
+          if (prevPrice !== DEFAULT_BITCOIN_PRICE) {
+            setPriceChange(((price - prevPrice) / prevPrice) * 100)
+          }
+          return price
+        })
+        
+        setLastUpdate(new Date())
+      } else {
+        throw new Error('Invalid price')
+      }
+    } catch (error) {
+      console.error('Erro ao buscar preço do Bitcoin:', error)
+      setPriceError(true)
+      // Mantém o último preço válido
+    } finally {
+      setLoadingPrice(false)
+    }
+  }, [])
+
   // Busca o preço do Bitcoin ao carregar a página
   useEffect(() => {
     fetchBitcoinPrice()
     const interval = setInterval(fetchBitcoinPrice, 60000) // Atualiza a cada minuto
     return () => clearInterval(interval)
-  }, [])
+  }, [fetchBitcoinPrice]) // Adicionada dependência
 
   // Atualiza os dados do formulário quando o perfil do usuário é carregado
   useEffect(() => {
@@ -80,37 +111,6 @@ export default function CotacaoPage() {
       }))
     }
   }, [profile])
-
-  const fetchBitcoinPrice = async () => {
-    try {
-      setLoadingPrice(true)
-      setPriceError(false)
-      const price = await getBitcoinPriceBRL()
-      
-      if (price && price > 0) {
-        const oldPrice = bitcoinPrice
-        setBitcoinPrice(price)
-        
-        // Só calcula a mudança se não for o primeiro carregamento
-        if (oldPrice !== DEFAULT_BITCOIN_PRICE) {
-          setPriceChange(((price - oldPrice) / oldPrice) * 100)
-        }
-        
-        setLastUpdate(new Date())
-      } else {
-        throw new Error('Invalid price')
-      }
-    } catch (error) {
-      console.error('Erro ao buscar preço do Bitcoin:', error)
-      setPriceError(true)
-      // Mantém o último preço válido ou usa o padrão
-      if (bitcoinPrice === DEFAULT_BITCOIN_PRICE) {
-        setBitcoinPrice(DEFAULT_BITCOIN_PRICE)
-      }
-    } finally {
-      setLoadingPrice(false)
-    }
-  }
 
   const getCommissionRate = (value: number) => {
     const tier = COMMISSION_RATES.find(tier => value <= tier.limit)

@@ -13,6 +13,15 @@ import {
   PostViewRequest,
   BlogStats
 } from '@/types/blog'
+import { 
+  DatabaseError, 
+  NotFoundError, 
+  ValidationError,
+  mapSupabaseError,
+  logger,
+  withRetry,
+  withTimeout
+} from '@/lib/errors'
 
 // =====================================================
 // POSTS
@@ -79,8 +88,9 @@ export async function getBlogPosts(filters: BlogFilters = {}): Promise<BlogPosts
     const { data, error, count } = await query
 
     if (error) {
-      console.error('Error fetching blog posts:', error)
-      throw error
+      const appError = mapSupabaseError(error)
+      logger.error('Error fetching blog posts', appError, { filters })
+      throw appError
     }
 
     // Garantir que sempre retornamos um array
@@ -93,7 +103,7 @@ export async function getBlogPosts(filters: BlogFilters = {}): Promise<BlogPosts
       totalPages: Math.ceil((count || 0) / limit)
     }
   } catch (error) {
-    console.error('Error in getBlogPosts:', error)
+    logger.error('Error in getBlogPosts', error as Error, { filters })
     // Retornar estrutura vazia em caso de erro
     return {
       posts: [],
@@ -115,7 +125,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPostWithRelations
       .single()
 
     if (error) {
-      console.error('Error fetching post:', error)
+      const appError = mapSupabaseError(error)
+      logger.error('Error fetching post', appError, { slug })
       return null
     }
 
@@ -128,7 +139,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPostWithRelations
 
     return data
   } catch (error) {
-    console.error('Error in getPostBySlug:', error)
+    logger.error('Error in getPostBySlug', error as Error, { slug })
     return null
   }
 }
@@ -138,7 +149,7 @@ export async function getFeaturedPosts(limit: number = 3): Promise<BlogPostWithR
     const { posts } = await getBlogPosts({ featured: true, limit })
     return posts
   } catch (error) {
-    console.error('Error fetching featured posts:', error)
+    logger.error('Error fetching featured posts', error as Error, { limit })
     return []
   }
 }
@@ -158,7 +169,8 @@ export async function getRelatedPosts(postId: string, limit: number = 3): Promis
       .limit(limit)
 
     if (error) {
-      console.error('Error fetching related posts:', error)
+      const appError = mapSupabaseError(error)
+      logger.error('Error fetching related posts', appError, { postId, limit })
       return []
     }
 
@@ -168,7 +180,7 @@ export async function getRelatedPosts(postId: string, limit: number = 3): Promis
       .map((item: any) => item.related_post)
       .filter(Boolean) as BlogPostWithRelations[]
   } catch (error) {
-    console.error('Error in getRelatedPosts:', error)
+    logger.error('Error in getRelatedPosts', error as Error, { postId, limit })
     return []
   }
 }
@@ -187,13 +199,14 @@ export async function getCategories(): Promise<BlogCategory[]> {
       .order('name')
 
     if (error) {
-      console.error('Error fetching categories:', error)
+      const appError = mapSupabaseError(error)
+      logger.error('Error fetching categories', appError)
       return []
     }
 
     return data || []
   } catch (error) {
-    console.error('Error in getCategories:', error)
+    logger.error('Error in getCategories', error as Error)
     return []
   }
 }

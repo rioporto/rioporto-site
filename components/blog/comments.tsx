@@ -32,6 +32,7 @@ export function BlogComments({ postId }: BlogCommentsProps) {
   useEffect(() => {
     loadComments()
     checkUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId])
 
   async function checkUser() {
