@@ -8,6 +8,8 @@ import { Toaster } from "react-hot-toast"
 import { Toaster as ShadcnToaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 
+import WhatsAppButton from "@/components/whatsapp-button"
+
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -54,6 +56,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <WhatsAppButton />
             <Toaster position="top-right" />
             <ShadcnToaster />
             <Sonner />
