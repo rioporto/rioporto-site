@@ -85,7 +85,7 @@ export async function GET(request: Request) {
             { headers }
           )
           
-          let prices = {}
+          let prices: Record<string, { brl: number }> = {}
           if (priceResponse.ok) {
             prices = await priceResponse.json()
           }
@@ -116,7 +116,7 @@ export async function GET(request: Request) {
     }
     
     return NextResponse.json(
-      { error: 'Failed to fetch crypto data', details: error.message },
+      { error: 'Failed to fetch crypto data', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }

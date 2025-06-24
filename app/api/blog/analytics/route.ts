@@ -141,7 +141,7 @@ function getTopReferrers(data: any[]) {
   }, {} as Record<string, number>)
 
   return Object.entries(referrers)
-    .sort(([, a], [, b]) => b - a)
+    .sort(([, a], [, b]) => (b as number) - (a as number))
     .slice(0, 10)
     .map(([referrer, count]) => ({ referrer, count }))
 }
