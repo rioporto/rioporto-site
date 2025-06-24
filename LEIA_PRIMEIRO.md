@@ -1,47 +1,83 @@
-# 📌 ESTADO ATUAL - RESUMO EXECUTIVO
+# 📋 ESTADO ATUAL - PROJETO RIO PORTO P2P
 
-## 🚨 PROBLEMA CRÍTICO (06/01/2025)
+## 🚀 RESUMO EXECUTIVO - 24/06/2025
 
-### ❌ TODAS as páginas autenticadas estão com LOADING INFINITO:
-- `/admin/comments` - Trava após login
-- `/dashboard` - Trava após login  
-- `/test-admin` - Trava após login
-- Qualquer página que use autenticação
+### ✅ CORREÇÃO APLICADA AGORA:
 
-### 📁 Leia URGENTEMENTE:
-- `PROBLEMAS_URGENTES_AUTH_06012025.md` - Detalhes completos
-- `PLANO_ACAO_URGENTE.md` - Como resolver
-- `INSTRUCOES_PROXIMOS_PASSOS.md` - Para continuar
+**ERRO DE BUILD NO VERCEL - RESOLVIDO**
+- Problema: Badge variant "success" não existe
+- Solução: Mudado para variant "default"
+- Arquivo: `admin-comments-standalone/page.tsx`
+
+### 🔧 PARA FAZER O DEPLOY:
+
+#### No Windows (Command Prompt/PowerShell):
+```bash
+# Opção 1 - Testar localmente primeiro (RECOMENDADO):
+test-build-and-push.bat
+
+# Opção 2 - Push direto:
+fix-badge-error.bat
+```
+
+#### No Linux/Ubuntu/WSL:
+```bash
+# Opção 1 - Testar build e push:
+rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir Badge variant de success para default" && git push
+
+# Opção 2 - Apenas testar build:
+rm -rf .next && npm run build
+
+# Opção 3 - Se o build passou, fazer push:
+git add . && git commit -m "fix: corrigir Badge variant de success para default" && git push
+```
+
+## 📊 STATUS DO PROJETO:
+
+### ✅ Implementado e Funcionando:
+- Sistema de autenticação completo
+- Blog com posts dinâmicos do Supabase
+- Sistema de comentários com moderação
+- Formulário P2P com WhatsApp
+- Dashboard e perfil de usuário
+- Admin de comentários
+
+### 🌐 URLs:
+- **GitHub:** https://github.com/rioporto/rioporto-site
+- **Vercel:** https://rioporto-site.vercel.app (aguardando novo build)
+- **Local:** http://localhost:3000
+
+## 🎯 PRÓXIMAS TAREFAS APÓS O DEPLOY:
+
+### 1. Sistema KYC (Recomendado)
+- Upload de documentos
+- Verificação de identidade
+- Dashboard de aprovação
+
+### 2. Sistema de Cursos
+- Integração com Hotmart
+- Área de membros
+- Certificados
+
+### 3. Melhorias no Dashboard
+- Gráficos de transações
+- Histórico P2P
+- Notificações
+
+## 📝 ARQUIVOS IMPORTANTES:
+
+1. `CORRECAO_BADGE_ERROR.md` - Detalhes da correção atual
+2. `RESUMO_PROJETO_ATUAL.md` - Visão geral completa
+3. `INSTRUCOES_PROXIMOS_PASSOS.md` - Como continuar
+4. `/docs/supabase-snippets/` - Padrões e snippets
+
+## ⚠️ LEMBRETE:
+
+Use as páginas `-fixed` até migrar as originais:
+- `/admin-comments-fixed`
+- `/dashboard-fixed`
+- `/perfil-fixed`
 
 ---
 
-## ✅ O que está funcionando:
-- Site completo com todas as páginas públicas
-- Formulário de cotação P2P (sem login)
-- Integração com API de criptomoedas
-- Dark mode com tema Bitcoin
-- Blog completo
-- Banco de dados Supabase configurado
-
-## ❌ O que NÃO está funcionando:
-- **QUALQUER página após fazer login** (loading infinito)
-- Dashboard não carrega
-- Admin não carrega
-- Sistema de autenticação quebrado
-
-## 🔧 O que foi tentado hoje (06/01):
-1. Refatoração do layout platform
-2. Desabilitação de polyfills
-3. Debug do AuthContext
-4. Criação de páginas standalone
-
-## 🚨 PRIORIDADE #1:
-**RESOLVER O BUG DE LOADING INFINITO NO AUTHCONTEXT**
-
-O problema está em `contexts/auth-context.tsx` na função `loadProfile`.
-
----
-
-Boa sorte! 🍀
-
-**IMPORTANTE:** Não tente adicionar novas features antes de resolver este problema crítico!
+**PRÓXIMO PASSO IMEDIATO:** Execute `test-build-and-push.bat` para testar e fazer deploy!

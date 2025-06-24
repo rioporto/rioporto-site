@@ -295,7 +295,7 @@ export default function AdminCommentsStandalonePage() {
                 </a>
               </div>
             </div>
-            <Badge variant={comment.approved ? "success" : "secondary"}>
+            <Badge variant={comment.approved ? "default" : "secondary"}>
               {comment.approved ? "Aprovado" : "Pendente"}
             </Badge>
           </div>
