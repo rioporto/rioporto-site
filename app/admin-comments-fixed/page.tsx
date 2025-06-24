@@ -324,7 +324,7 @@ export default function AdminCommentsFixedPage() {
                 </a>
               </div>
             </div>
-            <Badge variant={comment.approved ? "success" : "secondary"}>
+            <Badge variant={comment.approved ? "default" : "secondary"} className={comment.approved ? "bg-green-600 hover:bg-green-700" : ""}>
               {comment.approved ? "Aprovado" : "Pendente"}
             </Badge>
           </div>
