@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const cookieStore = cookies()
     const supabase = createClient()
@@ -10,8 +10,8 @@ export async function GET() {
     // Fazer logout no servidor
     await supabase.auth.signOut()
     
-    // Criar resposta que limpa todos os cookies
-    const response = NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'))
+    // Criar resposta com redirecionamento relativo
+    const response = NextResponse.redirect(new URL('/', request.url))
     
     // Limpar todos os cookies relacionados ao Supabase
     cookieStore.getAll().forEach((cookie) => {
@@ -29,10 +29,10 @@ export async function GET() {
   } catch (error) {
     console.error('Erro no logout:', error)
     // Mesmo com erro, redirecionar
-    return NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'))
+    return NextResponse.redirect(new URL('/', request.url))
   }
 }
 
-export async function POST() {
-  return GET()
+export async function POST(request: Request) {
+  return GET(request)
 }
