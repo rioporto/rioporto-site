@@ -144,9 +144,33 @@ export async function getFeaturedPosts(limit: number = 3): Promise<BlogPostWithR
 }
 
 export async function getRelatedPosts(postId: string, limit: number = 3): Promise<BlogPostWithRelations[]> {
-  // TODO: Implementar posts relacionados após criar tabela no Supabase
-  // Por enquanto retornando array vazio para fazer o build passar
-  return []
+  try {
+    const supabase = createClient()
+    
+    const { data, error } = await supabase
+      .from('related_posts')
+      .select(`
+        relevance_score,
+        related_post:published_posts!related_post_id(*)
+      `)
+      .eq('post_id', postId)
+      .order('relevance_score', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error('Error fetching related posts:', error)
+      return []
+    }
+
+    if (!data || !Array.isArray(data)) return []
+
+    return data
+      .map((item: any) => item.related_post)
+      .filter(Boolean) as BlogPostWithRelations[]
+  } catch (error) {
+    console.error('Error in getRelatedPosts:', error)
+    return []
+  }
 }
 
 // =====================================================
