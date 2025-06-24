@@ -6,12 +6,12 @@
 
 ### ✅ Concluído
 - [x] 1.1 Implementar tabela related_posts ✅ (24/06/2025)
+- [x] 1.2 Otimizar imagens com next/image ✅ (24/06/2025)
 
 ### 🔄 Em Progresso
-- [ ] 1.2 Otimizar imagens com next/image
+- [ ] 1.3 Resolver warnings React Hooks
 
 ### 📋 Pendente
-- [ ] 1.3 Resolver warnings React Hooks
 - [ ] 1.4 Melhorar tratamento de erros
 
 ## 💾 COMANDOS SQL PRONTOS PARA EXECUTAR
@@ -124,24 +124,24 @@ export async function getRelatedPosts(postId: string, limit: number = 3): Promis
 }
 ```
 
-## ✅ RESUMO DA IMPLEMENTAÇÃO RELATED POSTS
+## ✅ RESUMO DAS TAREFAS CONCLUÍDAS
 
-### O que foi feito:
-1. **Tabela criada** no Supabase com sucesso
-2. **Policies de segurança** configuradas (leitura pública, admin level 3 para escrita)
-3. **Função TypeScript** reimplementada em `/lib/blog/api.ts`
-4. **Frontend** já estava preparado em `/app/(marketing)/blog/[slug]/page.tsx`
-5. **Documentação** atualizada
+### 1.1 - Posts Relacionados ✅
+- Tabela criada no Supabase
+- Função TypeScript implementada
+- 28 relacionamentos inseridos
+- Frontend já estava preparado
 
-### Próximos passos:
-- Testar no blog para verificar se os posts relacionados aparecem
-- Popular com mais relacionamentos se necessário
-- Fazer commit e deploy
+### 1.2 - Otimização de Imagens ✅
+- 5 warnings resolvidos
+- 3 arquivos otimizados
+- Componente Image do Next.js
+- Performance melhorada
 
 ## 🎯 PRÓXIMA AÇÃO
-Implementar otimização de imagens com next/image
+Resolver warnings do React Hooks (useEffect dependencies)
 
 ---
 
-**Status**: Sprint 1 - Tarefa 1/4 concluída
+**Status**: Sprint 1 - 50% concluído (2/4 tarefas)
 **Última atualização**: 24/06/2025

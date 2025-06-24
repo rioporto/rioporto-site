@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import Image from "next/image"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -258,10 +259,12 @@ export default function BlogPageClient() {
                     <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                       {post.featured_image_url && (
                         <div className="aspect-video bg-muted relative">
-                          <img 
+                          <Image 
                             src={post.featured_image_url} 
                             alt={post.title}
-                            className="object-cover w-full h-full"
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             loading="lazy"
                           />
                         </div>

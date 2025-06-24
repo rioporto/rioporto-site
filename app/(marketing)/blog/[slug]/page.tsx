@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from "next/navigation"
+import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -156,11 +157,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         {post.featured_image_url && (
           <section className="px-4 pb-8">
             <div className="mx-auto max-w-4xl">
-              <div className="aspect-video bg-muted rounded-lg overflow-hidden">
-                <img 
+              <div className="aspect-video bg-muted rounded-lg overflow-hidden relative">
+                <Image 
                   src={post.featured_image_url} 
-                  alt={post.title || ""}
-                  className="w-full h-full object-cover"
+                  alt={post.title || "Featured image"}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  priority
                 />
               </div>
             </div>
@@ -182,12 +186,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center">
+                  <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center relative overflow-hidden">
                     {post.author_avatar ? (
-                      <img 
+                      <Image 
                         src={post.author_avatar} 
-                        alt={post.author_name || ""}
-                        className="h-full w-full rounded-full object-cover"
+                        alt={post.author_name || "Author"}
+                        fill
+                        className="object-cover"
+                        sizes="64px"
                       />
                     ) : (
                       <User className="h-8 w-8 text-muted-foreground" />

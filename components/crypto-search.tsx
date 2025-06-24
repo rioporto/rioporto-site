@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { Check, Search, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -60,7 +61,17 @@ export function CryptoSearch({ value, onSelect, placeholder = "Buscar criptomoed
         >
           {value ? (
             <span className="flex items-center gap-2">
-              {value.image && <img src={value.image} alt={value.name} className="h-4 w-4" />}
+              {value.image && (
+                <div className="relative h-4 w-4">
+                  <Image 
+                    src={value.image} 
+                    alt={value.name} 
+                    fill
+                    className="object-contain"
+                    sizes="16px"
+                  />
+                </div>
+              )}
               {value.name} ({value.symbol})
             </span>
           ) : (
@@ -111,7 +122,15 @@ export function CryptoSearch({ value, onSelect, placeholder = "Buscar criptomoed
               className="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
             >
               {crypto.image && (
-                <img src={crypto.image} alt={crypto.name} className="h-4 w-4" />
+                <div className="relative h-4 w-4 shrink-0">
+                  <Image 
+                    src={crypto.image} 
+                    alt={crypto.name} 
+                    fill
+                    className="object-contain"
+                    sizes="16px"
+                  />
+                </div>
               )}
               <span className="flex-1 text-left">
                 {crypto.name} ({crypto.symbol})
