@@ -20,6 +20,12 @@
 - **Correção:** Tipado corretamente `prices: Record<string, { brl: number }>`
 - **Também:** Corrigido `error.message` com type guard
 
+### 4. TypeScript Error - Logout Route (RESOLVIDO)
+- **Arquivo:** `app/api/logout/route.ts`
+- **Linha:** 8
+- **Erro:** Expected 0 arguments, but got 1
+- **Correção:** Removido argumento de `createClient()` - função não recebe parâmetros
+
 ## 🚀 COMANDOS PARA DEPLOY (UBUNTU/LINUX):
 
 ### Opção 1 - Testar build localmente primeiro:
@@ -30,18 +36,19 @@ rm -rf .next && npm run build
 
 ### Opção 2 - Se o build passar, fazer commit e push:
 ```bash
-git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics e crypto API" && git push
+git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
 ```
 
 ### Opção 3 - Tudo em um comando (RECOMENDADO):
 ```bash
-rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics e crypto API" && git push
+rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
 ```
 
 ## 📊 STATUS DO BUILD:
 - ❌ Erro 1: Badge variant "success" → ✅ CORRIGIDO
 - ❌ Erro 2: TypeScript analytics → ✅ CORRIGIDO
 - ❌ Erro 3: TypeScript crypto API → ✅ CORRIGIDO
+- ❌ Erro 4: TypeScript logout route → ✅ CORRIGIDO
 - ⏳ Aguardando novo build no Vercel
 
 ## 🎯 PRÓXIMOS PASSOS:

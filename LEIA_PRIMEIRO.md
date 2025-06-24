@@ -19,6 +19,11 @@
 - Solução: Tipado corretamente o objeto prices
 - Arquivo: `app/api/crypto/route.ts`
 
+**4. ERRO DE TYPESCRIPT LOGOUT - RESOLVIDO**
+- Problema: Expected 0 arguments, but got 1 na linha 8
+- Solução: Removido argumento de createClient()
+- Arquivo: `app/api/logout/route.ts`
+
 ### 🔧 PARA FAZER O DEPLOY:
 
 #### No Windows (Command Prompt/PowerShell):
@@ -33,13 +38,13 @@ fix-badge-error.bat
 #### No Linux/Ubuntu/WSL:
 ```bash
 # Opção 1 - Testar build e push (RECOMENDADO):
-rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics e crypto API" && git push
+rm -rf .next && npm run build && git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
 
 # Opção 2 - Apenas testar build:
 rm -rf .next && npm run build
 
 # Opção 3 - Se o build passou, fazer push:
-git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics e crypto API" && git push
+git add . && git commit -m "fix: corrigir todos os type errors - Badge, analytics, crypto API e logout" && git push
 ```
 
 ## 📊 STATUS DO PROJETO:

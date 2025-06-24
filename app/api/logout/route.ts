@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 export async function GET() {
   try {
     const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const supabase = createClient()
     
     // Fazer logout no servidor
     await supabase.auth.signOut()
