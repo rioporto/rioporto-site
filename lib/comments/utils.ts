@@ -1,23 +1,21 @@
 // lib/comments/utils.ts
-import { createClient } from '@/lib/supabase/server';
+// Removido import do createClient - função checkIfUserIsAdmin precisa ser refatorada
 
 /**
  * Verifica se um usuário é administrador
+ * Por enquanto, verificação simplificada
+ * TODO: Mover para API route server-side
  */
 export async function checkIfUserIsAdmin(userId: string | undefined): Promise<boolean> {
   if (!userId) return false;
   
-  const supabase = await createClient();
+  // Por enquanto, verificação hardcoded
+  // Em produção, fazer chamada para API route que verifica no servidor
+  // const response = await fetch(`/api/users/${userId}/is-admin`);
+  // const { isAdmin } = await response.json();
+  // return isAdmin;
   
-  // Por enquanto, vamos verificar se o email é do admin
-  // TODO: Implementar sistema de roles apropriado
-  const { data: user } = await supabase
-    .from('users')
-    .select('email')
-    .eq('id', userId)
-    .single();
-  
-  return user?.email === 'johnnyhelder@gmail.com';
+  return false; // Por segurança, retorna false por padrão
 }
 
 /**
@@ -196,16 +194,17 @@ export async function checkForSpam(
 
 /**
  * Limita a profundidade de respostas aninhadas
+ * Nota: Esta função precisa ser chamada do servidor ou receber o cliente Supabase
  */
 export async function getCommentDepth(
   commentId: string,
-  supabase: any
+  supabaseClient: any
 ): Promise<number> {
   let depth = 0;
   let currentId = commentId;
 
   while (currentId && depth < 10) { // Limite de segurança
-    const { data } = await supabase
+    const { data } = await supabaseClient
       .from('blog_comments')
       .select('parent_id')
       .eq('id', currentId)
@@ -276,8 +275,8 @@ export function checkRateLimit(
   };
 }
 
-// Limpar registros expirados periodicamente
-setInterval(() => {
+// Função para limpar registros expirados
+export function cleanupExpiredRateLimits(): void {
   const now = Date.now();
   const entries = Array.from(rateLimitMap.entries());
   for (const [key, value] of entries) {
@@ -285,4 +284,7 @@ setInterval(() => {
       rateLimitMap.delete(key);
     }
   }
-}, 60000); // A cada minuto
+}
+
+// Nota: Para usar o cleanup periódico, chame esta função em um API route
+// ou use um cron job externo. setInterval não funciona bem em ambientes serverless.
