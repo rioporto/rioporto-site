@@ -236,8 +236,9 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('Erro ao criar comentário:', error);
+      console.error('Dados enviados:', commentData);
       return NextResponse.json(
-        { error: 'Erro ao criar comentário' },
+        { error: 'Erro ao criar comentário', details: error.message },
         { status: 500 }
       );
     }
