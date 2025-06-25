@@ -9,7 +9,7 @@ import { Bitcoin, Clock, User, Calendar, Share2, BookOpen, ArrowLeft, ArrowRight
 import Link from "next/link"
 import { getPostBySlug, getRelatedPosts, trackPostView } from "@/lib/blog/api"
 import { BlogPostContent } from "@/components/blog/post-content"
-import { BlogComments } from "@/components/blog/comments-masked"
+import { CommentSection } from "@/components/blog/comments/comment-section"
 import { ShareButtons } from "@/components/blog/share-buttons"
 import { generateBlogMetadata, generateArticleJsonLd } from "@/lib/blog/metadata"
 
@@ -212,16 +212,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         </section>
 
         {/* Comments Section */}
-        <section className="px-4 py-8 bg-muted/30">
+        <section className="px-4 py-8">
           <div className="mx-auto max-w-4xl">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Comentários</h2>
-              <Badge variant="outline" className="gap-1">
-                <MessageCircle className="h-3 w-3" />
-                Moderados
-              </Badge>
-            </div>
-            <BlogComments postId={post.id} />
+            <CommentSection postSlug={post.slug} />
           </div>
         </section>
 

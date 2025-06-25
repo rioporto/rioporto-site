@@ -1,6 +1,6 @@
 # 🚀 RIO PORTO P2P - DOCUMENTAÇÃO MASTER
 
-**Última atualização**: 24/06/2025  
+**Última atualização**: 25/06/2025  
 **Desenvolvedor**: Johnny Helder  
 **Ambiente**: Claude Code (Ubuntu) + Cursor  
 **Caminho do Projeto**: `D:\Projetos\rioporto-site`
@@ -27,7 +27,7 @@ Plataforma completa de negociação peer-to-peer de criptomoedas com foco no mer
 - ✅ **Sistema P2P**: Compra/venda de Bitcoin com cotação em tempo real
 - ✅ **Blog Educativo**: Conteúdo sobre Bitcoin e educação financeira
 - ✅ **Autenticação Completa**: Login seguro com Supabase
-- ✅ **WhatsApp Business**: Bot automático para cotações (25% implementado)
+- ⏸️ **WhatsApp Business**: Bot automático para cotações (30% - pausado)
 - ✅ **Dashboard Admin**: Gestão completa da plataforma
 
 ### Stack Tecnológica:
@@ -49,13 +49,13 @@ Plataforma completa de negociação peer-to-peer de criptomoedas com foco no mer
 
 ## 📊 STATUS ATUAL {#status-atual}
 
-### Progresso Total: 27%
+### Progresso Total: 33%
 
 ```
 Fase 1: [████████████████████] 100% ✅ Completa
-Fase 2: [██████░░░░░░░░░░░░░░] 31% 🔄 Em andamento
+Fase 2: [█████████░░░░░░░░░░░] 45% 🔄 Em andamento
   Sprint 1: [████████████████████] 100% ✅
-  Sprint 2: [█████░░░░░░░░░░░░░░░] 7.5% 🔄
+  Sprint 2: [█████░░░░░░░░░░░░░░░] 25% 🔄
 ```
 
 ### ✅ O que está pronto:
@@ -68,12 +68,9 @@ Fase 2: [██████░░░░░░░░░░░░░░] 31% 🔄 
    - Sistema de tratamento de erros
 
 ### 🔄 Em desenvolvimento:
-- **WhatsApp Business API** (30% completo)
-  - Estrutura criada ✅
-  - Bot automático ✅
-  - Variáveis documentadas ✅
-  - Script de teste criado ✅
-  - Falta: Configurar Meta Business
+- **Sprint 2 - Fase 2** (25% completo)
+  - WhatsApp API pausado (30% - aguardando configuração Meta Business)
+  - Sistema de Comentários: 75% (Backend ✅, Frontend ✅, Features avançadas ✅)
 
 ### 📋 Pendente:
 - Sistema completo de comentários
@@ -86,19 +83,21 @@ Fase 2: [██████░░░░░░░░░░░░░░] 31% 🔄 
 
 ## 🎯 PRÓXIMOS PASSOS {#próximos-passos}
 
-### Imediato (WhatsApp API - para completar):
-1. Executar `whatsapp_setup.sql` no Supabase
-2. Configurar tokens no `.env.local`
-3. Configurar webhook no Meta Business
-4. Testar bot
+### Imediato - Em andamento:
+**Sistema de Comentários** (75% completo)
+- ✅ Backend completo
+- ✅ Frontend completo
+- ✅ Features avançadas (markdown, reCAPTCHA, edição)
+- ✅ Sistema de notificações (base pronta)
+- 📋 Painel admin pendente (próxima e última etapa)
 
-### Sprint 2 - Escolher próxima funcionalidade:
-1. **Sistema de Comentários** (1 dia)
-2. **Newsletter Double Opt-in** (4 horas)
-3. **Dashboard com Métricas** (2 dias)
+### Próximas da Sprint 2:
+1. **Newsletter Double Opt-in** (4 horas)
+2. **Dashboard com Métricas** (2 dias)
+3. **WhatsApp API** (quando tiver acesso ao Meta Business)
 
-### Recomendação:
-Completar WhatsApp API primeiro (maior ROI para vendas)
+### Observação:
+WhatsApp API pausado temporariamente - código 30% pronto
 
 ---
 
@@ -158,8 +157,8 @@ Olá! Estou continuando o projeto Rio Porto P2P.
 
 Por favor, leia o arquivo PROJETO_MASTER.md que contém:
 - Visão geral completa
-- Status atual (26% completo)
-- Sprint 2 em andamento (WhatsApp API 25%)
+- Status atual (33% completo)
+- Sprint 2 em andamento (25% - WhatsApp pausado, Comentários 75%)
 - Próximos passos detalhados
 
 Utilizo Claude Code no Ubuntu e Cursor quando necessário.
@@ -211,7 +210,8 @@ WHATSAPP_VERIFY_TOKEN=rioporto_verify_token_2025
 Para detalhes específicos, consulte:
 - `CRONOGRAMA_COMPLETO_RIOPORTO.md` - Todas as fases e sprints
 - `PROGRESSO_FASE2.md` - Detalhes do Sprint atual
-- `WHATSAPP_API_IMPLEMENTACAO.md` - Status do WhatsApp
+- `SISTEMA_COMENTARIOS_PLANEJAMENTO.md` - Próxima funcionalidade
+- `PROMPT_INICIAL_RIOPORTO.md` - Como iniciar novo chat
 
 ---
 

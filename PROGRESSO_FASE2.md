@@ -14,9 +14,11 @@
 
 ## 🏃 SPRINT 2 - NOVAS FUNCIONALIDADES (EM ANDAMENTO)
 
-### 2.3 WhatsApp Business API (🔄 30% Concluído)
+### 2.3 WhatsApp Business API (⏸️ 30% - PAUSADO)
 **Iniciado**: 24/06/2025  
-**Prioridade**: 🔴 Alta  
+**Pausado**: 25/06/2025  
+**Motivo**: Aguardando configuração Meta Business  
+**Prioridade**: 🔴 Alta (quando retomar)  
 
 #### ✅ Implementado:
 - [x] Estrutura de pastas criada
@@ -43,10 +45,44 @@
 - [ ] Rate limiting
 - [ ] Dashboard de métricas
 
-### Outras Funcionalidades do Sprint 2 (Não iniciadas):
-- [ ] 2.1 Sistema Completo de Comentários
-- [ ] 2.2 Newsletter com Double Opt-in
-- [ ] 2.4 Dashboard com Métricas
+### 2.1 Sistema Completo de Comentários (🔄 EM ANDAMENTO - 75%)
+**Iniciado**: 25/06/2025  
+**Estimativa**: 1 dia  
+**Prioridade**: 🔴 Alta  
+
+#### ✅ Etapa 1 - Backend (100% Completo):
+- [x] Banco de dados com prefixo `blog_`
+- [x] API routes completas
+- [x] Sistema de reações (likes/dislikes)
+- [x] Sistema de reports
+- [x] Filtro de spam
+- [x] RLS configurado
+- [x] Tipos TypeScript
+
+#### ✅ Etapa 2 - Frontend Básico (100% Completo):
+- [x] Componente de formulário
+- [x] Lista de comentários
+- [x] Integração com API
+- [x] Estados de loading
+- [x] Sistema de likes/dislikes visual
+- [x] Respostas aninhadas (3 níveis)
+- [x] Ordenação e paginação
+- [x] Menu de ações
+
+#### ✅ Etapa 3 - Features Avançadas (100% Completo):
+- [x] Edição de comentários
+- [x] reCAPTCHA para anônimos
+- [x] Sistema de notificações (base pronta)
+- [x] Editor com preview markdown
+
+#### 📋 Etapa 4 - Painel Admin (0%):
+- [ ] Dashboard de moderação
+- [ ] Gestão de reports
+- [ ] Estatísticas
+
+### Outras Funcionalidades do Sprint 2:
+- [ ] 2.2 Newsletter com Double Opt-in (4 horas)
+- [ ] 2.4 Dashboard com Métricas (2 dias)
 
 ---
 
@@ -127,7 +163,7 @@ git push origin main
 
 **Status Geral**: 
 - Sprint 1: ✅ 100% completo
-- Sprint 2: 🔄 ~6% completo (1 de 4 funcionalidades iniciada)
-- Progresso Total da Fase 2: ~28%
+- Sprint 2: 🔄 ~25% completo (2 de 4 funcionalidades em andamento)
+- Progresso Total da Fase 2: ~40%
 
-**Última atualização**: 24/06/2025 - WhatsApp API estrutura base implementada
+**Última atualização**: 25/06/2025 - Sistema de Comentários 75% completo (Falta apenas painel admin)
