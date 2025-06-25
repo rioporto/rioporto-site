@@ -28,12 +28,13 @@ import Link from "next/link"
 interface Comment {
   id: string
   content: string
-  approved: boolean
+  status: 'pending' | 'approved' | 'rejected' | 'spam'
   created_at: string
-  post_id: string
-  user_id: string
+  post_slug: string
+  user_id: string | null
+  author_name: string | null
+  author_email: string | null
   user?: {
-    name: string
     email: string
   }
   post?: {
@@ -96,18 +97,14 @@ export default function AdminCommentsPage() {
     setLoading(true)
     try {
       let query = supabase
-        .from('comments')
-        .select(`
-          *,
-          user:profiles!comments_user_id_fkey(name, email),
-          post:blog_posts!comments_post_id_fkey(title, slug)
-        `)
+        .from('blog_comments')
+        .select('*')
         .order('created_at', { ascending: false })
 
       if (activeFilter === 'pending') {
-        query = query.eq('approved', false)
+        query = query.eq('status', 'pending')
       } else if (activeFilter === 'approved') {
-        query = query.eq('approved', true)
+        query = query.eq('status', 'approved')
       }
 
       const { data, error } = await query
@@ -133,8 +130,8 @@ export default function AdminCommentsPage() {
   async function handleApprove(commentId: string) {
     try {
       const { error } = await supabase
-        .from('comments')
-        .update({ approved: true })
+        .from('blog_comments')
+        .update({ status: 'approved', published_at: new Date().toISOString() })
         .eq('id', commentId)
 
       if (error) throw error
@@ -158,8 +155,8 @@ export default function AdminCommentsPage() {
   async function handleReject(commentId: string) {
     try {
       const { error } = await supabase
-        .from('comments')
-        .update({ approved: false })
+        .from('blog_comments')
+        .update({ status: 'rejected' })
         .eq('id', commentId)
 
       if (error) throw error
@@ -187,7 +184,7 @@ export default function AdminCommentsPage() {
 
     try {
       const { error } = await supabase
-        .from('comments')
+        .from('blog_comments')
         .delete()
         .eq('id', commentId)
 
@@ -262,8 +259,8 @@ export default function AdminCommentsPage() {
     )
   }
 
-  const pendingCount = comments.filter(c => !c.approved).length
-  const approvedCount = comments.filter(c => c.approved).length
+  const pendingCount = comments.filter(c => c.status === 'pending').length
+  const approvedCount = comments.filter(c => c.status === 'approved').length
 
   function renderComment(comment: Comment) {
     return (
@@ -273,8 +270,8 @@ export default function AdminCommentsPage() {
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4 text-muted-foreground" />
-                <span className="font-semibold">{comment.user?.name || "Anônimo"}</span>
-                <span className="text-sm text-muted-foreground">({comment.user?.email})</span>
+                <span className="font-semibold">{comment.author_name || comment.user?.email?.split('@')[0] || "Anônimo"}</span>
+                <span className="text-sm text-muted-foreground">({comment.author_email || comment.user?.email})</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Calendar className="h-4 w-4" />
@@ -282,17 +279,16 @@ export default function AdminCommentsPage() {
               </div>
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                <a 
-                  href={`/blog/${comment.post?.slug}`} 
-                  target="_blank"
-                  className="text-sm text-primary hover:underline"
-                >
-                  {comment.post?.title}
-                </a>
+                <span className="text-sm text-muted-foreground">
+                  Post: {comment.post_slug}
+                </span>
               </div>
             </div>
-            <Badge variant={comment.approved ? "default" : "secondary"} className={comment.approved ? "bg-green-600 hover:bg-green-700" : ""}>
-              {comment.approved ? "Aprovado" : "Pendente"}
+            <Badge 
+              variant={comment.status === 'approved' ? "default" : comment.status === 'rejected' ? "destructive" : "secondary"} 
+              className={comment.status === 'approved' ? "bg-green-600 hover:bg-green-700" : ""}
+            >
+              {comment.status === 'approved' ? "Aprovado" : comment.status === 'rejected' ? "Rejeitado" : "Pendente"}
             </Badge>
           </div>
         </CardHeader>
@@ -300,7 +296,7 @@ export default function AdminCommentsPage() {
           <p className="text-sm mb-4 whitespace-pre-wrap">{comment.content}</p>
           
           <div className="flex gap-2">
-            {!comment.approved && (
+            {comment.status === 'pending' && (
               <Button
                 size="sm"
                 onClick={() => handleApprove(comment.id)}
@@ -311,7 +307,7 @@ export default function AdminCommentsPage() {
               </Button>
             )}
             
-            {comment.approved && (
+            {comment.status === 'approved' && (
               <Button
                 size="sm"
                 variant="secondary"
@@ -338,7 +334,7 @@ export default function AdminCommentsPage() {
               variant="outline"
               asChild
             >
-              <a href={`/blog/${comment.post?.slug}#comments`} target="_blank" className="gap-2">
+              <a href={`/blog/${comment.post_slug}#comments`} target="_blank" className="gap-2">
                 <Eye className="h-4 w-4" />
                 Ver no Blog
               </a>
