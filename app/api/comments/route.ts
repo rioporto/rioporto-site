@@ -14,7 +14,7 @@ const createCommentSchema = z.object({
   parent_id: z.string().uuid().nullable().optional(),
   author_name: z.string().min(2).max(100).optional(),
   author_email: z.string().email().optional(),
-  recaptcha_token: z.string().optional(),
+  recaptcha_token: z.string().nullable().optional(),
 });
 
 // GET /api/comments - Listar comentários
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
       const commentIds = comments.map(c => c.id);
       
       const { data: replies } = await supabase
-        .from('comments_with_author')
+        .from('blog_comments_with_author')
         .select('*')
         .in('parent_id', commentIds)
         .eq('status', 'approved')
@@ -245,7 +245,7 @@ export async function POST(request: NextRequest) {
     // Se aprovado automaticamente, buscar dados completos
     if (status === 'approved') {
       const { data: fullComment } = await supabase
-        .from('comments_with_author')
+        .from('blog_comments_with_author')
         .select('*')
         .eq('id', newComment.id)
         .single();

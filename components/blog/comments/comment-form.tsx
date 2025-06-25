@@ -69,7 +69,7 @@ export function CommentForm({
         ...(user ? {} : {
           author_name: authorName.trim(),
           author_email: authorEmail.trim(),
-          recaptcha_token: recaptchaToken,
+          ...(recaptchaToken ? { recaptcha_token: recaptchaToken } : {}),
         }),
       };
 
