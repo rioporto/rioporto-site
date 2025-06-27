@@ -1,6 +1,6 @@
 # 🚀 RIO PORTO P2P - DOCUMENTAÇÃO MASTER
 
-**Última atualização**: 27/01/2025 - Chat #17  
+**Última atualização**: 27/01/2025 - Chat #18  
 **Desenvolvedor**: Johnny Helder  
 **Ambiente**: Claude Desktop (Windows) + Cursor  
 **Caminho do Projeto**: `D:\Projetos\rioporto-site`
@@ -220,7 +220,27 @@ rioporto-site/
 - ✅ Suspense boundary adicionado em verificar-telefone
 - ✅ ESLint movido para dependencies
 - ✅ Rotas dinâmicas marcadas corretamente
-- 🚀 PRONTO PARA DEPLOY FINAL!
+- ✅ DEPLOY BEM-SUCEDIDO EM PRODUÇÃO!
+
+### Chat #18 - Correções Pós-Deploy
+
+#### 1. WhatsApp Opcional
+- **Problema**: Sistema exigia WhatsApp mesmo para logados
+- **Solução**: Campo agora é opcional
+- **Validação**: Apenas nome/email para não logados
+- **Arquivo**: `app/(marketing)/cotacao/page.tsx`
+
+#### 2. Integração Zendesk Melhorada
+- **Criado**: `lib/zendesk-utils.ts` com funções robustas
+- **API**: `/api/zendesk/ticket` para criar tickets
+- **Widget**: Função openZendeskWidget() com 20 tentativas
+- **Tickets**: Criação automática após cotação
+
+#### 3. Documentação de Suporte
+- `COMO_TESTAR_MINICURSO.md` - Guia completo
+- `FIX_ZENDESK_WIDGET.md` - Correções aplicadas
+- `CORRECOES_APLICADAS_POS_DEPLOY.md` - Resumo
+- Scripts: `fix-zendesk.sh` e `fix-zendesk.bat`
 
 ### Chat #16 - Implementações
 
@@ -310,36 +330,26 @@ rioporto-site/
 
 ### Para novo chat no Claude:
 ```
-Olá! Estou continuando o projeto Rio Porto P2P - Chat #18.
+Olá! Estou continuando o projeto Rio Porto P2P - Chat #19.
 
 CONTEXTO ATUAL:
 - Projeto em: D:\Projetos\rioporto-site
-- Código 100% completo e testado ✅
-- TODOS os erros de deploy resolvidos ✅
-- Pronto para push final 🚀
+- Site em produção: https://rioporto-site.vercel.app ✅
+- WhatsApp agora é opcional na cotação ✅
+- Zendesk melhorado com nova integração 🔧
 
-TRABALHO REALIZADO (Chat #17):
-1. Resolvido 6 erros de build críticos ✅
-2. Criada documentação completa de deploy ✅
-3. Desenvolvidos scripts de diagnóstico ✅
-4. Todas as dependências corrigidas ✅
-5. Suspense boundary adicionado ✅
-6. Rotas dinâmicas configuradas ✅
+TRABALHO REALIZADO (Chat #18):
+1. Deploy bem-sucedido em produção ✅
+2. WhatsApp tornado opcional no formulário ✅
+3. Criação de função openZendeskWidget() robusta ✅
+4. API para criar tickets automaticamente ✅
+5. Melhorias na integração Zendesk ✅
 
-PENDENTE (último push):
-1. Executar: push-final.bat
-2. git add .
-3. git commit -m "fix: corrigir Suspense boundary e rotas dinâmicas"
-4. git push origin main
-
-Se o deploy foi bem-sucedido:
-- Verificar site em: https://rioporto-site.vercel.app
-- Configurar DNS no Resend
-- Testar todas as funcionalidades
-
-Se houve algum erro:
-- Compartilhar logs da Vercel
-- Analisar erro específico
+PENDENTE:
+1. Aplicar correções do Zendesk (executar fix-zendesk.sh)
+2. Configurar ZENDESK_API_TOKEN na Vercel (opcional)
+3. Configurar DNS no Resend para emails
+4. Testar minicurso completo
 
 Por favor, leia o PROJETO_MASTER.md para contexto completo.
 Uso Claude Desktop no Windows + CLAUDE CODE no terminal Ubuntu no Cursor quando necessário.
@@ -446,4 +456,4 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 
 ---
 
-**Última edição**: 27/01/2025 por Claude (Chat #17)
+**Última edição**: 27/01/2025 por Claude (Chat #18)
