@@ -287,7 +287,7 @@ Wallet: ${formData.wallet || 'Não informada'}
               // Abrir em nova aba
               window.open(zendeskUrl.toString(), '_blank');
               
-              toast.info('Abrindo formulário de suporte em nova aba...');
+              toast.success('Abrindo formulário de suporte em nova aba...');
             }
             
             // Sempre mostrar botão como backup
