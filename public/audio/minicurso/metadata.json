@@ -1,0 +1,18 @@
+{
+  "generated_at": "/mnt/d/Projetos/rioporto-site/scripts",
+  "voice": "pt-BR-AntonioNeural",
+  "total_files": 9,
+  "success": 9,
+  "failed": 0,
+  "files": [
+    "01-capa.mp3",
+    "02-introducao.mp3",
+    "03-cap1.mp3",
+    "04-cap2.mp3",
+    "05-cap3.mp3",
+    "06-cap4.mp3",
+    "07-cap5.mp3",
+    "08-cap6.mp3",
+    "09-conclusao.mp3"
+  ]
+}

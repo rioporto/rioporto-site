@@ -9,6 +9,8 @@ import { Toaster as ShadcnToaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 
 import WhatsAppButton from "@/components/whatsapp-button"
+import { LeadCaptureModal } from "@/components/lead-capture/lead-capture-modal"
+import { ZendeskProvider } from "@/app/providers/zendesk-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -57,6 +59,8 @@ export default function RootLayout({
           >
             {children}
             <WhatsAppButton />
+            <LeadCaptureModal />
+            <ZendeskProvider />
             <Toaster position="top-right" />
             <ShadcnToaster />
             <Sonner />

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual P2P: Negocie Bitcoin como um Profissional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .ebook-page {
+            display: none; /* As páginas começam ocultas */
+        }
+        .ebook-page.active {
+            display: block; /* A página ativa é exibida */
+        }
+        .brand-gradient {
+            background: linear-gradient(to right, #004aad, #002d6b);
+        }
+        .brand-text {
+            color: #60a5fa; /* Azul mais claro para contraste no tema escuro */
+        }
+        .brand-bg {
+            background-color: #004aad;
+        }
+        .brand-border {
+             border-color: #004aad;
+        }
+        .section-break {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #4b5563, transparent);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-300 antialiased">
+
+    <div id="ebook-container" class="max-w-4xl mx-auto my-8 bg-gray-800 shadow-2xl shadow-blue-900/20 rounded-lg overflow-hidden">
+        
+        <!-- PÁGINA 1: CAPA -->
+        <div class="ebook-page active">
+            <div class="bg-gray-800 text-white min-h-[80vh] flex flex-col justify-center items-center p-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">Manual P2P: Negocie Bitcoin como um Profissional</h1>
+                <p class="text-lg md:text-2xl text-gray-400 max-w-3xl">O Guia Definitivo para comprar ou vender seu Bitcoin com segurança e privacidade.</p>
+                <div class="mt-8 text-md text-gray-500">Por: Johnny Ferreira</div>
+            </div>
+        </div>
+        
+        <!-- PÁGINA 2: SOBRE O AUTOR -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h2 class="text-3xl font-bold brand-text mb-8 text-center">Sobre o Autor</h2>
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                    <div class="flex-shrink-0">
+                        <img src="https://storage.googleapis.com/maker-studio-attachments/v0/0e32b85e-ac4f-427b-a010-91bfce3e3612/Foto%20Johnny.jpg" alt="Foto de Johnny Ferreira" class="w-48 h-48 rounded-full object-cover shadow-lg border-4 border-gray-700">
+                    </div>
+                    <div class="text-gray-300 leading-relaxed text-center md:text-left">
+                         <h3 class="text-2xl font-bold text-white mb-2">Johnny Ferreira</h3>
+                        <p>Johnny Ferreira é um especialista em Bitcoin e criptomoedas, com uma trajetória de aprendizado e prática que começou em 2016. Autodidata e dedicado, investiu anos em cursos e treinamentos para se aprofundar em segurança de ativos digitais e transações P2P.</p>
+                        <p class="mt-4">Movido pela paixão pela liberdade financeira, geográfica e de tempo que as criptomoedas proporcionam, Johnny escreveu este eBook com o objetivo de democratizar o conhecimento. Nele, você encontrará um guia completo que aborda desde os **fundamentos do P2P e autocustódia** até **estratégias de segurança contra fraudes** e as **implicações legais no Brasil**.</p>
+                        <p class="mt-4">Com uma abordagem técnica, porém acessível, Johnny combina sua expertise com o compromisso de capacitar leitores a tomarem decisões conscientes, promovendo segurança e confiança em cada transação no universo cripto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 3: INTRODUÇÃO -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h2 class="text-3xl font-bold brand-text mb-6">Introdução: A Revolução Silenciosa do Dinheiro Ponto a Ponto</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p>Em 2008, um documento revolucionário intitulado "Bitcoin: Um Sistema de Dinheiro Eletrônico Peer-to-Peer" foi publicado por uma figura anônima conhecida como Satoshi Nakamoto. A visão era clara e poderosa: permitir que pagamentos online fossem enviados diretamente de uma parte para outra, sem a necessidade de passar por uma instituição financeira. Essa ideia de transação "ponto a ponto" (Peer-to-Peer, ou P2P) é a alma do Bitcoin e o fundamento de uma nova era de soberania financeira.</p>
+                    <p>Com o tempo, para facilitar o acesso, surgiram as corretoras (*exchanges*). Elas ofereceram conveniência, mas com um custo: a reintrodução de intermediários. Ao usar uma corretora centralizada, você confia seus fundos, seus dados e sua privacidade a uma terceira parte, um modelo semelhante ao sistema bancário tradicional.</p>
+                    <p>Hoje, investidores buscam evoluir. Eles perceberam que a verdadeira promessa das criptomoedas está no controle e na liberdade. Esse amadurecimento leva a um retorno inevitável às origens: a negociação P2P.</p>
+                    <p class="font-semibold text-gray-100">Este manual é seu guia. Nosso objetivo é fornecer o conhecimento para você negociar não como um espectador, mas como um profissional — com segurança, confiança e total controle sobre seu patrimônio.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 4: SUMÁRIO -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h2 class="text-3xl font-bold brand-text mb-8">Sumário</h2>
+                <ul class="space-y-3 text-lg text-gray-300">
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>Sobre o Autor</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>Introdução: A Revolução Silenciosa do Dinheiro Ponto a Ponto</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>**Capítulo 1:** Descomplicando o P2P</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>**Capítulo 2:** P2P vs. Corretoras</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>**Capítulo 3:** Sua Fortaleza Digital (Autocustódia)</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>**Capítulo 4:** Navegando em Águas Seguras</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>**Capítulo 5:** A Burocracia sem Medo</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>**Capítulo 6:** A Vantagem RIO PORTO P2P</li>
+                    <li class="flex items-start"><span class="brand-text font-bold mr-3">&bull;</span>Conclusão: Dê o Próximo Passo</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- PÁGINA 5: CAPÍTULO 1 -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-2xl font-bold brand-text mb-2">Capítulo 1: Descomplicando o P2P</h3>
+                <h4 class="text-xl font-semibold text-gray-200 mb-6">O Que é e Como Funciona na Prática?</h4>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p><span class="font-semibold text-white">P2P é a abreviação de Peer-to-Peer ("ponto a ponto").</span> Pense em vender um item usado online. Você negocia diretamente com o comprador, sem uma loja como intermediária. No mundo cripto, é a mesma lógica: comprar e vender criptomoedas diretamente entre duas pessoas, fora de uma corretora.</p>
+                    <p>A negociação P2P materializa a promessa de transações financeiras diretas, devolvendo o poder e o controle aos indivíduos.</p>
+                    <div class="section-break"></div>
+                    <h4 class="text-lg font-semibold text-gray-100 mb-4">O Passo a Passo de uma Negociação P2P</h4>
+                    <ol class="list-decimal list-inside space-y-3">
+                        <li><span class="font-semibold text-white">Contato e Cotação:</span> Você entra em contato com o vendedor (como a RIO PORTO P2P) e recebe a cotação.</li>
+                        <li><span class="font-semibold text-white">Acordo de Termos:</span> Vocês definem a quantidade de cripto e o meio de pagamento (geralmente PIX).</li>
+                        <li><span class="font-semibold text-white">Pagamento e Confirmação:</span> O comprador transfere o valor em Reais. O vendedor confirma o recebimento no extrato do banco.</li>
+                        <li><span class="font-semibold text-white">Liberação das Criptos:</span> Com o pagamento confirmado, o vendedor envia as criptomoedas para a carteira do comprador.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PÁGINA 6: CAPÍTULO 1 (Diagrama) -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                 <h3 class="text-2xl font-bold brand-text mb-6 text-center">O Fluxo da Negociação</h3>
+                 <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <!-- Caminho P2P Assistido -->
+                    <div class="bg-gray-700 border-l-4 brand-border p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-bold text-white mb-4">Caminho P2P Assistido (RIO PORTO P2P)</h4>
+                        <div class="space-y-3 text-gray-300">
+                            <div class="flex items-center"><span class="brand-text font-bold text-2xl mr-3">&rarr;</span>Você (Comprador)</div>
+                            <div class="flex items-center"><span class="brand-text font-bold text-2xl mr-3">&rarr;</span>Acordo Direto com RIO PORTO P2P</div>
+                            <div class="flex items-center"><span class="brand-text font-bold text-2xl mr-3">&rarr;</span>Envia Reais (PIX)</div>
+                            <div class="flex items-center"><span class="brand-text font-bold text-2xl mr-3">&rarr;</span>RIO PORTO P2P Confirma</div>
+                            <div class="flex items-center"><span class="text-green-400 font-bold text-2xl mr-3">&rarr;</span>Recebe Bitcoin na sua Carteira</div>
+                            <p class="mt-4 pt-4 border-t border-gray-600 text-sm font-semibold text-blue-400">Um caminho limpo, direto e seguro.</p>
+                        </div>
+                    </div>
+                    <!-- Caminho da Corretora -->
+                     <div class="bg-gray-900 border-l-4 border-gray-600 p-6 rounded-lg">
+                        <h4 class="text-xl font-bold text-gray-300 mb-4">Caminho da Corretora Tradicional</h4>
+                        <div class="space-y-3 text-gray-400">
+                            <div class="flex items-center"><span class="text-gray-500 font-bold text-2xl mr-3">&rarr;</span>Você (Comprador)</div>
+                            <div class="flex items-center"><span class="text-gray-500 font-bold text-2xl mr-3">&rarr;</span>Deposita Reais na Corretora</div>
+                            <div class="flex items-center"><span class="text-gray-500 font-bold text-2xl mr-3">&rarr;</span>Cria Ordem de Compra</div>
+                            <div class="flex items-center"><span class="text-gray-500 font-bold text-2xl mr-3">&rarr;</span>Corretora Processa e Credita</div>
+                            <div class="flex items-center"><span class="text-gray-500 font-bold text-2xl mr-3">&rarr;</span>Você Solicita Saque</div>
+                            <p class="mt-4 pt-4 border-t border-gray-700 text-sm font-semibold text-gray-500">Mais etapas e seus fundos sob custódia de terceiros.</p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 7: CAPÍTULO 2 -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-2xl font-bold brand-text mb-2">Capítulo 2: P2P vs. Corretoras</h3>
+                <h4 class="text-xl font-semibold text-gray-200 mb-6">Qual o Melhor Caminho para Você?</h4>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p><span class="font-semibold text-white">A negociação P2P oferece vantagens que as corretoras não conseguem replicar:</span></p>
+                    <ul class="list-disc list-inside space-y-2 pl-4">
+                        <li><span class="font-bold">Privacidade e Controle:</span> Menos dados pessoais compartilhados.</li>
+                        <li><span class="font-bold">Flexibilidade de Pagamento:</span> Vasta gama de métodos aceitos.</li>
+                        <li><span class="font-bold">Custos Menores:</span> Taxas mais competitivas e transparentes.</li>
+                        <li><span class="font-bold">Soberania e Autocustódia:</span> Seus fundos nunca ficam sob custódia de um terceiro. Você tem o controle real.</li>
+                    </ul>
+                    <div class="bg-gray-700 border border-blue-500/30 p-4 rounded-lg mt-6">
+                        <p class="font-bold text-blue-400">Cansado de taxas surpresa e valores que mudam a todo instante?</p>
+                        <p class="text-gray-300">Na RIO PORTO P2P, a regra é clara: o preço é fixo e você sabe exatamente quanto vai receber antes mesmo de fechar o negócio. <a href="https://rioporto.com/" target="_blank" class="font-bold underline hover:text-white">Acesse o site e faça uma cotação!</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PÁGINA 8: CAPÍTULO 2 (Tabela Comparativa) -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-2xl font-bold brand-text mb-6 text-center">Tabela Comparativa</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-900">
+                                <th class="p-4 font-semibold text-gray-300 border-b-2 border-gray-700">Característica</th>
+                                <th class="p-4 font-semibold text-gray-300 border-b-2 border-gray-700">Corretora (CEX)</th>
+                                <th class="p-4 font-semibold text-white border-b-2 border-blue-700 brand-bg">RIO PORTO P2P (Assistido)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 border-b border-gray-700 font-semibold">Segurança</td>
+                                <td class="p-4 border-b border-gray-700">Risco de custódia (hacks, falências)</td>
+                                <td class="p-4 border-b border-gray-700 bg-gray-900/50 font-bold text-green-400">Altíssima (processo seguro, sem custódia)</td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 border-b border-gray-700 font-semibold">Privacidade</td>
+                                <td class="p-4 border-b border-gray-700">Baixa (KYC obrigatório)</td>
+                                <td class="p-4 border-b border-gray-700 bg-gray-900/50 font-bold text-green-400">Alta (com conformidade legal)</td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 border-b border-gray-700 font-semibold">Taxas</td>
+                                <td class="p-4 border-b border-gray-700">Média a Alta (trade, saque, etc.)</td>
+                                <td class="p-4 border-b border-gray-700 bg-gray-900/50 font-bold text-green-400">Competitiva e Transparente</td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 border-b border-gray-700 font-semibold">Suporte</td>
+                                <td class="p-4 border-b border-gray-700">Automatizado / Lento</td>
+                                <td class="p-4 border-b border-gray-700 bg-gray-900/50 font-bold text-green-400">Humano, Especializado e Imediato</td>
+                            </tr>
+                            <tr class="hover:bg-gray-700/50">
+                                <td class="p-4 border-b-2 border-gray-700 font-semibold">Controle dos Fundos</td>
+                                <td class="p-4 border-b-2 border-gray-700">Nenhum (em custódia da corretora)</td>
+                                <td class="p-4 border-b-2 border-gray-700 bg-gray-900/50 font-bold text-green-400">Total (autocustódia)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <p class="text-center text-gray-400 mt-6 italic">A RIO PORTO P2P oferece o melhor dos dois mundos: a segurança e simplicidade de um serviço profissional com a soberania e privacidade do P2P.</p>
+            </div>
+        </div>
+
+        <!-- PÁGINA 9: CAPÍTULO 3 -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-2xl font-bold brand-text mb-2">Capítulo 3: Sua Fortaleza Digital</h3>
+                <h4 class="text-xl font-semibold text-gray-200 mb-6">O Poder da Autocustódia e das Carteiras</h4>
+                
+                <div class="bg-yellow-900/40 border-l-4 border-yellow-500 text-yellow-300 p-6 rounded-lg shadow-md my-6">
+                    <h5 class="font-bold text-2xl text-center text-yellow-200">"Not Your Keys, Not Your Coins"</h5>
+                    <p class="text-center mt-2">"Se as chaves não são suas, as moedas não são suas."</p>
+                </div>
+
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p>Este é o mantra da soberania. Deixar suas criptos em uma corretora é como deixar ouro no cofre de um banco: você confia que eles cuidarão bem. Mas se o banco (ou a corretora) falir, for hackeado ou congelar sua conta, você perde acesso aos seus ativos.</p>
+                    <p class="font-semibold text-white">A negociação P2P, combinada com a autocustódia, resolve isso. Ao negociar conosco, você recebe as criptomoedas diretamente em uma carteira que só você controla.</p>
+                    <p>Assumir a autocustódia é uma mudança de mentalidade. Exige responsabilidade pessoal, mas garante sua soberania financeira.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PÁGINA 10: CAPÍTULO 3 (Wallets & Consultoria) -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-2xl font-bold brand-text mb-6 text-center">Hot vs. Cold Wallets</h3>
+                <div class="grid md:grid-cols-2 gap-8 mt-6">
+                    <!-- Hot Wallets -->
+                    <div class="flex flex-col items-center text-center p-6 bg-gray-700 rounded-lg shadow-md">
+                        <svg class="w-16 h-16 text-orange-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.657 7.343A8 8 0 0117.657 18.657z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1014.12 11.88a3 3 0 00-4.242 4.242z"></path></svg>
+                        <h4 class="text-xl font-bold text-orange-300 mb-2">Hot Wallets (Quentes)</h4>
+                        <p class="text-gray-400"><span class="font-semibold text-white">Ótimas para o dia a dia e pequenas quantias.</span></p>
+                        <p class="font-semibold mt-2 text-green-400">Vantagem: Conveniência</p>
+                        <p class="font-semibold mt-1 text-red-400">Risco: Conectadas à internet</p>
+                    </div>
+                    <!-- Cold Wallets -->
+                    <div class="flex flex-col items-center text-center p-6 bg-gray-700 rounded-lg shadow-md">
+                        <svg class="w-16 h-16 text-sky-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v2"></path></svg>
+                        <h4 class="text-xl font-bold text-sky-300 mb-2">Cold Wallets (Frias)</h4>
+                        <p class="text-gray-400"><span class="font-semibold text-white">Ideais para guardar grandes valores a longo prazo.</span></p>
+                        <p class="font-semibold mt-2 text-green-400">Vantagem: Segurança Máxima</p>
+                        <p class="font-semibold mt-1 text-red-400">Risco: Menos práticas para o uso diário</p>
+                    </div>
+                </div>
+                 <div class="mt-8 bg-gray-900/80 border border-blue-500/30 p-6 rounded-lg">
+                    <h4 class="font-bold text-white text-xl text-center">Precisa de Ajuda? Consultoria de Autocustódia.</h4>
+                    <p class="text-center text-gray-300 mt-2">A autocustódia pode parecer um grande passo. Para garantir que você faça essa transição com 100% de segurança, oferecemos um serviço exclusivo de <span class="font-bold text-blue-400">consultoria e mentoria individual</span>. Nós guiamos você, passo a passo, na escolha e configuração da sua carteira ideal.</p>
+                    <div class="text-center mt-4">
+                       <a href="https://rioporto.com/" target="_blank" class="font-bold text-blue-400 underline hover:text-white">Agende sua mentoria em nosso site e proteja seu patrimônio.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 11: CAPÍTULO 4 -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-2xl font-bold brand-text mb-2">Capítulo 4: Navegando em Águas Seguras</h3>
+                <h4 class="text-xl font-semibold text-gray-200 mb-6">O Guia Antifraude Definitivo</h4>
+                <p class="text-gray-300 leading-relaxed mb-6">O medo de ser enganado é uma grande barreira no P2P. Ao entender como os golpes funcionam, você se torna capaz de evitá-los.</p>
+                
+                <div class="space-y-4">
+                    <div class="bg-red-900/40 border-l-4 border-red-500 p-4 rounded-r-lg">
+                        <h5 class="font-bold text-red-300">Golpe do Comprovante Falso</h5>
+                        <p class="text-red-400">O golpista envia um comprovante de PIX/TED falso e pressiona pela liberação das criptos.</p>
+                    </div>
+                    <div class="bg-red-900/40 border-l-4 border-red-500 p-4 rounded-r-lg">
+                        <h5 class="font-bold text-red-300">Golpe da Triangulação</h5>
+                        <p class="text-red-400">O golpista usa uma terceira vítima para depositar dinheiro na sua conta. Você envia as criptos para o golpista e sua conta bancária fica comprometida.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PÁGINA 12: CAPÍTULO 4 (Checklist) -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                 <h3 class="text-2xl font-bold brand-text mb-6 text-center">Seu Escudo de Proteção</h3>
+                 <div class="bg-green-900/20 border-t-4 border-green-500 p-6 rounded-b-lg shadow-lg space-y-4">
+                     <h4 class="text-xl font-bold text-green-200 mb-4">Checklist de Segurança P2P</h4>
+                     <div class="flex items-start"><svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><span class="font-bold text-white">Confie APENAS no seu extrato bancário.</span> Nunca em imagens de comprovante.</span></div>
+                     <div class="flex items-start"><svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><span class="font-bold text-white">Negocie apenas com o titular da conta.</span> Pagamento de terceiros é sinal de alerta máximo.</span></div>
+                     <div class="flex items-start"><svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><span class="font-bold text-white">Comece com pouco</span> ao negociar com alguém novo.</span></div>
+                     <div class="flex items-start"><svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span><span class="font-bold text-white">Desconfie de ofertas milagrosas.</span> Preços muito abaixo do mercado são iscas.</span></div>
+                 </div>
+                 <div class="mt-8 bg-gray-700 p-6 rounded-lg text-center">
+                    <h4 class="text-xl font-bold text-blue-400 mb-2">A Tranquilidade de Ter um Especialista ao Lado</h4>
+                    <p class="text-gray-300">Nosso principal produto não é Bitcoin; é <span class="font-bold text-white">paz de espírito</span>. A RIO PORTO P2P gerencia todos esses riscos para você. Deixe a complexidade conosco e foque no que importa: construir seu patrimônio.</p>
+                    <a href="https://rioporto.com/" target="_blank" class="mt-4 inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Pronto para uma experiência P2P superior?</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 13: CAPÍTULO 5 -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-2xl font-bold brand-text mb-2">Capítulo 5: A Burocracia sem Medo</h3>
+                <h4 class="text-xl font-semibold text-gray-200 mb-6">Legalidade e Impostos no Brasil</h4>
+                 <div class="space-y-6 text-gray-300 leading-relaxed">
+                    <p class="p-4 bg-gray-700/50 rounded-lg"><span class="font-bold text-white">P2P é Legal no Brasil?</span> Sim. Não há nenhuma lei que proíba a compra e venda de criptomoedas diretamente entre pessoas. O Marco Legal das Criptos (Lei nº 14.478/2022) trouxe mais segurança jurídica ao setor.</p>
+                    <div>
+                        <h5 class="font-bold text-gray-100">IN 1888 da Receita Federal:</h5>
+                        <p>É uma declaração *informativa mensal*. Você deve declarar se o total das suas operações (compras + vendas) em P2P ou corretoras estrangeiras <span class="font-bold text-white">ultrapassar R$ 30.000 no mês</span>.</p>
+                    </div>
+                     <div>
+                        <h5 class="font-bold text-gray-100">Imposto de Renda (Ganhos de Capital):</h5>
+                        <p>Há <span class="font-bold text-green-400">isenção de imposto</span> sobre o lucro para vendas totais de criptoativos de até <span class="font-bold text-white">R$ 35.000 por mês</span>. Acima disso, o lucro é tributado.</p>
+                    </div>
+                     <p class="text-xs text-gray-500 italic mt-6">*Aviso Legal: As informações são para fins educativos. Consulte sempre um contador especializado.*</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 14: CAPÍTULO 6 -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h3 class="text-3xl font-bold brand-text mb-6 text-center">Capítulo 6: A Vantagem RIO PORTO P2P</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-gray-300">
+                    <div class="bg-gray-700 p-4 rounded-lg"><span class="font-bold text-blue-400">Segurança Garantida:</span> Nossos processos rigorosos atuam como um escudo contra fraudes.</div>
+                    <div class="bg-gray-700 p-4 rounded-lg"><span class="font-bold text-blue-400">Simplicidade e Suporte Humano:</span> Atendimento ágil e especializado. Você fala com pessoas, não robôs.</div>
+                    <div class="bg-gray-700 p-4 rounded-lg"><span class="font-bold text-blue-400">Soberania com Tranquilidade:</span> Somos defensores da autocustódia. Os ativos são enviados direto para sua carteira.</div>
+                    <div class="bg-gray-700 p-4 rounded-lg"><span class="font-bold text-blue-400">Conformidade e Paz de Espírito:</span> Operamos com uma empresa estabelecida no país.</div>
+                </div>
+                 <div class="mt-8 text-center bg-gray-900/50 p-6 rounded-lg">
+                    <h4 class="text-2xl font-bold text-white">Bitcoin a partir de R$100, com taxa fixa e sem asteriscos.</h4>
+                    <p class="mt-2 text-lg text-gray-300">Na RIO PORTO P2P, a transparência vem em primeiro lugar. O valor que você vê é o valor que você recebe.</p>
+                     <a href="https://rioporto.com/" target="_blank" class="mt-4 inline-block bg-green-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition-colors text-lg shadow-md">Chega de complicações. Negocie agora!</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PÁGINA 15: CONCLUSÃO -->
+        <div class="ebook-page">
+            <div class="p-8 md:p-12">
+                <h2 class="text-3xl font-bold brand-text mb-6">Conclusão: Dê o Próximo Passo com Confiança</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p>Você chegou ao final. A complexidade do P2P se transformou em conhecimento claro. Você agora entende como negociar, proteger seus ativos, praticar a autocustódia e navegar pelo cenário regulatório.</p>
+                    <p class="font-bold text-white">A mensagem central é poderosa: o P2P, feito da maneira correta, é a expressão máxima de controle e soberania sobre seu patrimônio digital.</p>
+                    <p>Agora que você tem o conhecimento, o próximo passo é a ação. Chega de correr riscos desnecessários. Chega de entregar o controle dos seus ativos para grandes corporações.</p>
+                    <p class="text-xl font-semibold text-white mt-6">Você está pronto para negociar Bitcoin com a segurança, a privacidade e a agilidade que você merece.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 16: CTA FINAL -->
+        <div class="ebook-page">
+             <div class="brand-gradient text-white min-h-[80vh] flex flex-col justify-center items-center p-8 text-center">
+                 <svg class="w-20 h-20 text-white opacity-80 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                <h2 class="text-3xl md:text-4xl font-bold leading-tight mb-4">A RIO PORTO P2P é sua parceira de confiança.</h2>
+                <p class="text-lg md:text-xl text-blue-200 max-w-2xl mb-8">Descubra por que nossos clientes negociam com total confiança. Oferecemos uma experiência P2P com comissão diferenciada, atendimento exclusivo e cotação travada.</p>
+                <a href="https://rioporto.com/" target="_blank" class="bg-white text-blue-900 font-bold py-4 px-10 rounded-lg hover:bg-blue-100 transition-transform transform hover:scale-105 text-xl shadow-2xl">
+                    Quero conhecer a vantagem de operar com a RIO PORTO P2P
+                </a>
+             </div>
+        </div>
+
+
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <div id="ebook-navigation" class="max-w-4xl mx-auto mb-8 px-4 sm:px-0 flex justify-between items-center">
+        <button id="prev-button" class="bg-gray-700 text-gray-200 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Anterior</button>
+        <div id="page-counter" class="text-gray-400 font-medium">Página 1 de 16</div>
+        <button id="next-button" class="brand-bg text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Próxima</button>
+    </div>
+
+    <script>
+        // Lógica de navegação do eBook
+        const pages = document.querySelectorAll('.ebook-page');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const pageCounter = document.getElementById('page-counter');
+        
+        let currentPage = 0;
+        const totalPages = pages.length;
+
+        function updatePage() {
+            pages.forEach(page => page.classList.remove('active'));
+            pages[currentPage].classList.add('active');
+            pageCounter.textContent = `Página ${currentPage + 1} de ${totalPages}`;
+            prevButton.disabled = currentPage === 0;
+            nextButton.disabled = currentPage === totalPages - 1;
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updatePage();
+                window.scrollTo(0, 0);
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                updatePage();
+                window.scrollTo(0, 0);
+            }
+        });
+
+        updatePage();
+    </script>
+
+</body>
+</html>
