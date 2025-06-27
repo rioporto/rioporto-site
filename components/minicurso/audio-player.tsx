@@ -24,6 +24,7 @@ interface AudioPlayerProps {
   src: string;
   title?: string;
   autoPlay?: boolean;
+  onPlay?: () => void;
   onComplete?: () => void;
   onTimeUpdate?: (currentTime: number, duration: number) => void;
   className?: string;
@@ -32,7 +33,8 @@ interface AudioPlayerProps {
 export function AudioPlayer({ 
   src, 
   title, 
-  autoPlay = false, 
+  autoPlay = false,
+  onPlay, 
   onComplete,
   onTimeUpdate,
   className 
@@ -81,7 +83,12 @@ export function AudioPlayer({
       setIsLoading(false);
     };
 
-    const handlePlay = () => setIsPlaying(true);
+    const handlePlay = () => {
+      setIsPlaying(true);
+      if (onPlay) {
+        onPlay();
+      }
+    };
     const handlePause = () => setIsPlaying(false);
 
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -99,7 +106,7 @@ export function AudioPlayer({
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
     };
-  }, [autoPlay, onComplete, onTimeUpdate]);
+  }, [autoPlay, onPlay, onComplete, onTimeUpdate]);
 
   const togglePlayPause = () => {
     const audio = audioRef.current;
@@ -109,6 +116,9 @@ export function AudioPlayer({
       audio.pause();
     } else {
       audio.play();
+      if (onPlay && !isPlaying) {
+        onPlay();
+      }
     }
   };
 
