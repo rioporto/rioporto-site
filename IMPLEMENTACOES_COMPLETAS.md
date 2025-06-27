@@ -9,11 +9,11 @@
 - **Status**: 100% implementado e testado
 
 ### ✅ Integração Zendesk
-- **Widget**: Chat ao vivo integrado no site
+- **Widget**: Programático - oculto por padrão, abre apenas quando necessário
 - **Personalização**: Totalmente em PT-BR com cores da marca
-- **Automação**: Pré-preenchimento com dados do usuário logado
-- **Webhooks**: Sincronização bidirecional com banco de dados
-- **Status**: Código pronto, aguardando chave API
+- **Automação**: Pré-preenchimento com dados do usuário e cotação
+- **Integração**: Com formulário de cotação e preparado para IA
+- **Status**: 100% implementado e configurado
 
 ### ✅ Sistema de Email Automatizado
 - **Serviço**: Resend (moderno e confiável)
@@ -31,12 +31,21 @@ const { trackPageView, trackAudioPlay } = useMinicursoTracking({
   onError: handleError
 });
 
-// Widget Zendesk com contexto
-<ZendeskWidget 
-  zendeskKey={key}
-  userEmail={user.email}
-  userName={user.name}
-/>
+// Zendesk programático - abre com contexto
+import { openZendeskChat, waitForZendesk } from '@/lib/zendesk';
+
+waitForZendesk(() => {
+  openZendeskChat({
+    name: userData.name,
+    email: userData.email,
+    whatsapp: userData.phone,
+    cotacao: {
+      tipo: 'compra',
+      moeda: 'Bitcoin (BTC)',
+      valor: 10000
+    }
+  });
+});
 ```
 
 ### Backend
@@ -94,10 +103,10 @@ support_tickets {
 
 ## 🚀 Próximos Passos Imediatos
 
-### 1. Configurar Zendesk (5 minutos)
+### 1. Zendesk já configurado ✅
 ```bash
-# Adicionar ao .env.local
-NEXT_PUBLIC_ZENDESK_KEY=sua_chave_aqui
+# Já adicionado ao .env.local
+NEXT_PUBLIC_ZENDESK_KEY=91137f06-867b-4536-9657-dd64d4f92617
 ```
 
 ### 2. Configurar Resend (10 minutos)
@@ -106,18 +115,19 @@ NEXT_PUBLIC_ZENDESK_KEY=sua_chave_aqui
 RESEND_API_KEY=re_sua_key_aqui
 ```
 
-### 3. Executar Migrações (2 minutos)
+### 3. Migrações já executadas ✅
 ```sql
--- No Supabase SQL Editor
--- Copiar e executar: supabase/migrations/20240127_add_tracking_tables.sql
+-- Tabelas criadas e verificadas:
+-- minicurso_activities
+-- support_tickets
+-- Colunas de progresso em leads
 ```
 
 ### 4. Deploy (5 minutos)
 ```bash
 git add .
-git commit -m "feat: complete tracking, zendesk and email systems"
-git push
-vercel --prod
+git commit -m "feat: zendesk programmatic integration - remove whatsapp widget"
+git push origin main
 ```
 
 ## 📊 Métricas de Sucesso Esperadas
@@ -139,16 +149,20 @@ vercel --prod
 3. **Dark Mode**: Suporte completo em todos os novos componentes
 4. **Mobile First**: Tudo responsivo e otimizado
 5. **SEO Ready**: Metadados e estrutura otimizada
+6. **Zendesk Programático**: Interface limpa sem widgets visíveis
+7. **Integração IA Ready**: Funções para handoff do agente de IA
 
 ## 🏆 Conclusão
 
 O projeto Rio Porto P2P agora conta com:
 - ✅ Sistema completo de educação (minicurso)
 - ✅ Rastreamento detalhado de engajamento
-- ✅ Suporte profissional integrado
+- ✅ Suporte profissional integrado (Zendesk programático)
 - ✅ Comunicação automatizada por email
 - ✅ Base sólida para crescimento
+- ✅ Interface limpa sem widgets flutuantes
+- ✅ Integração pronta para IA
 
-**Tempo total para ativar tudo**: ~20 minutos
+**Tempo total para ativar tudo**: ~10 minutos (apenas configurar Vercel e DNS)
 
 Parabéns pela visão e execução do projeto! 🚀

@@ -1,6 +1,6 @@
 # 🚀 RIO PORTO P2P - DOCUMENTAÇÃO MASTER
 
-**Última atualização**: 27/01/2025 - Chat #14  
+**Última atualização**: 27/01/2025 - Chat #15  
 **Desenvolvedor**: Johnny Helder  
 **Ambiente**: Claude Desktop (Windows) + Cursor  
 **Caminho do Projeto**: `D:\Projetos\rioporto-site`
@@ -32,8 +32,8 @@ Plataforma completa de negociação peer-to-peer de Bitcoin com foco no mercado 
 - ✅ **Dashboard Admin**: Gestão da plataforma
 - ✅ **Minicurso P2P**: Manual educativo online com tracking completo
 - ✅ **Sistema de Email**: Templates profissionais com Resend
-- ✅ **Suporte Zendesk**: Chat integrado com webhook
-- ⛔ **WhatsApp Business**: BLOQUEADO pela Meta
+- ✅ **Suporte Zendesk**: Integração programática (sem widget visível)
+- ⛔ **WhatsApp Business**: Removido (substituído pelo Zendesk)
 - 🔜 **Sistema de Cursos**: Plataforma completa de EAD (Fase 3)
 - 🔜 **Sistema KYC**: Verificação de identidade (Fase 4)
 
@@ -58,7 +58,7 @@ Plataforma completa de negociação peer-to-peer de Bitcoin com foco no mercado 
 
 ## 📊 STATUS ATUAL {#status-atual}
 
-### Progresso Total: ~55%
+### Progresso Total: ~60%
 
 ```
 Fase 1: [████████████████████] 100% ✅ Completa
@@ -77,12 +77,12 @@ Fase 4: [░░░░░░░░░░░░░░░░░░░░] 0% 🔜 F
 5. **Blog dinâmico** com posts do Supabase
 6. **Minicurso interativo** com tracking detalhado
 7. **Sistema de Email** com templates profissionais
-8. **Integração Zendesk** com widget e webhook
+8. **Integração Zendesk** programática (abre com dados da cotação)
 
-### 🔧 Pendente apenas configuração:
-- **Chaves API**: Adicionar no Vercel
-- **Migrações SQL**: Executar no Supabase
-- **DNS Email**: Verificar domínio no Resend
+### 🔧 100% Configurado:
+- **Chaves API**: Configuradas no .env.local ✅
+- **Migrações SQL**: Executadas no Supabase ✅
+- **Zendesk**: Totalmente integrado ✅
 
 ### 🔜 Próximas fases (planejado):
 - **Sistema de Cursos**: Plataforma EAD completa (Fase 3)
@@ -114,13 +114,13 @@ Templates implementados:
 - Recuperação de senha (futuro)
 - Newsletter (próximo sprint)
 
-### 4. Status do Chat #14
+### 4. Status do Chat #15
 Implementamos hoje:
-- Sistema completo de tracking
-- Integração total com Zendesk
-- Sistema de email profissional
-- Correções de build e deploy
-- Documentação atualizada
+- Zendesk programático (sem widget visível)
+- Integração com formulário de cotação
+- Funções para abrir chat com contexto
+- Removido widget WhatsApp
+- Documentação de integração IA
 
 ---
 
@@ -165,6 +165,32 @@ rioporto-site/
 
 ## ✅ TRABALHO COMPLETADO {#trabalho-completado}
 
+### Chat #15 - Implementações
+
+#### 1. Zendesk Programático
+- **Widget oculto por padrão**: Interface limpa sem botões flutuantes
+- **Função openZendeskChat**: Abre com dados pré-preenchidos
+- **Integração com cotação**: Dados da cotação vão direto pro suporte
+- **Preparado para IA**: Funções de handoff do agente
+- **Documentação completa**: Guia de integração detalhado
+
+#### 2. Remoção do WhatsApp
+- **Widget removido**: Substituído pelo Zendesk
+- **Melhor UX**: Sem múltiplos botões de chat
+- **Suporte unificado**: Tudo centralizado no Zendesk
+
+#### 3. Melhorias de Integração
+- **lib/zendesk.ts**: Funções utilitárias criadas
+- **Contexto preservado**: Informações da jornada do usuário
+- **Pré-preenchimento**: Nome, email, WhatsApp e cotação
+- **Página de teste**: /test-config para verificação
+
+#### 4. Configurações Validadas
+- **Migrações SQL**: Tabelas verificadas via MCP
+- **Variáveis locais**: Todas configuradas
+- **Widget funcional**: Testado e operacional
+- **APIs testadas**: Tracking e webhook funcionando
+
 ### Chat #14 - Implementações
 
 #### 1. Sistema de Tracking do Minicurso
@@ -200,27 +226,27 @@ rioporto-site/
 
 ### Para novo chat no Claude:
 ```
-Olá! Estou continuando o projeto Rio Porto P2P - Chat #15.
+Olá! Estou continuando o projeto Rio Porto P2P - Chat #16.
 
 CONTEXTO ATUAL:
 - Projeto em: D:\Projetos\rioporto-site
 - Sistema de comentários 100% completo ✅
 - Minicurso 100% completo (com tracking) ✅
 - Sistema de email 100% (código pronto) ✅
-- Zendesk integrado (falta configurar chaves) ✅
-- WhatsApp bloqueado pela Meta
+- Zendesk 100% integrado (programático) ✅
+- WhatsApp removido (substituído pelo Zendesk)
 
-TRABALHO REALIZADO (Chat #14):
-1. Sistema de tracking do minicurso ✅
-2. Integração Zendesk completa ✅
-3. Sistema de email com Resend ✅
-4. Correções de build ✅
-5. Deploy funcionando ✅
+TRABALHO REALIZADO (Chat #15):
+1. Zendesk programático implementado ✅
+2. Widget oculto por padrão ✅
+3. Integração com formulário de cotação ✅
+4. Funções para handoff de IA ✅
+5. WhatsApp removido ✅
 
-PENDENTE DE CONFIGURAÇÃO:
-1. Adicionar chaves API no Vercel/env
-2. Executar migrações no Supabase
-3. Configurar DNS para email
+PENDENTE:
+1. Configurar variáveis na Vercel (produção)
+2. Configurar DNS para email (Resend)
+3. Deploy final
 
 Por favor, leia o PROJETO_MASTER.md para contexto completo.
 Uso Claude Desktop no Windows + CLAUDE CODE no terminal Ubuntu no Cursor quando necessário.
@@ -230,15 +256,10 @@ Como podemos continuar?
 
 ### Configurações pendentes:
 ```bash
-# 1. Variáveis de ambiente (.env.local ou Vercel)
-NEXT_PUBLIC_ZENDESK_KEY=sua_chave_widget
-ZENDESK_WEBHOOK_SECRET=seu_secret
-RESEND_API_KEY=re_sua_api_key
+# 1. Variáveis de ambiente na Vercel
+# Acessar dashboard e adicionar as mesmas do .env.local
 
-# 2. Executar migrações no Supabase
-# Copiar conteúdo de: /supabase/migrations/20240127_add_tracking_tables.sql
-
-# 3. Verificar domínio no Resend
+# 2. Verificar domínio no Resend
 # Adicionar registros DNS conforme instruções
 ```
 
@@ -261,9 +282,10 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 1. `GUIA_CONFIGURACAO.md` - Passos para finalizar setup
 2. `IMPLEMENTACOES_COMPLETAS.md` - Resumo do que foi feito
 3. `docs/ZENDESK_CONFIG.md` - Configurar Zendesk
-4. `/app/api/zendesk/webhook/route.ts` - Webhook API
-5. `/hooks/use-minicurso-tracking.ts` - Hook tracking
-6. `/lib/email.ts` - Sistema de email
+4. `/lib/zendesk.ts` - Funções do Zendesk programático
+5. `/app/test-config/page.tsx` - Página de teste
+6. `/hooks/use-minicurso-tracking.ts` - Hook tracking
+7. `/lib/email.ts` - Sistema de email
 
 ---
 
@@ -279,10 +301,10 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 ## 🔗 PRÓXIMAS PRIORIDADES
 
 1. **Imediato** (configuração):
-   - Adicionar chaves API
-   - Executar migrações
+   - Adicionar variáveis na Vercel
    - Verificar domínio email
-   - Testar integrações
+   - Deploy final
+   - Testar em produção
 
 2. **Próximo Sprint** (features):
    - Dashboard de métricas
@@ -309,9 +331,9 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 1. **Build**: Todos os erros foram corrigidos ✅
 2. **Deploy**: Funcionando em produção ✅
 3. **Tracking**: Sistema completo e testado ✅
-4. **Zendesk**: Código pronto, falta chave ⏳
-5. **Email**: Código pronto, falta configurar ⏳
-6. **Migrações**: SQL pronto para executar ⏳
+4. **Zendesk**: 100% integrado e funcional ✅
+5. **Email**: Código pronto, falta DNS ⏳
+6. **Migrações**: Executadas e verificadas ✅
 
 ---
 
@@ -322,7 +344,7 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 - **Deploy**: https://rioporto-site.vercel.app
 - **Uptime**: 99.9%
 - **PageSpeed**: 85+ (mobile e desktop)
-- **Funcionalidades**: 55% completo
+- **Funcionalidades**: 60% completo
 
 ---
 
@@ -330,4 +352,4 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 
 ---
 
-**Última edição**: 27/01/2025 por Claude (Chat #14)
+**Última edição**: 27/01/2025 por Claude (Chat #15)
