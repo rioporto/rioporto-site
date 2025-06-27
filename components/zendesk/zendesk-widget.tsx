@@ -12,23 +12,35 @@ interface ZendeskWidgetProps {
 
 export function ZendeskWidget({ zendeskKey, userEmail, userName }: ZendeskWidgetProps) {
   useEffect(() => {
-    // Configurar informações do usuário se disponíveis
-    if (window.zE && userEmail) {
-      window.zE('webWidget', 'identify', {
-        name: userName || '',
-        email: userEmail,
-      });
-      
-      // Pré-preencher formulário
-      window.zE('webWidget', 'prefill', {
-        name: {
-          value: userName || '',
-        },
-        email: {
-          value: userEmail,
-        },
-      });
-    }
+    // Aguardar o Zendesk carregar
+    const checkZendesk = setInterval(() => {
+      if (window.zE) {
+        clearInterval(checkZendesk);
+        
+        // Configurar informações do usuário se disponíveis
+        if (userEmail) {
+          window.zE('webWidget', 'identify', {
+            name: userName || '',
+            email: userEmail,
+          });
+          
+          // Pré-preencher formulário
+          window.zE('webWidget', 'prefill', {
+            name: {
+              value: userName || '',
+              readOnly: false
+            },
+            email: {
+              value: userEmail,
+              readOnly: false
+            },
+          });
+        }
+      }
+    }, 100);
+    
+    // Limpar intervalo ao desmontar
+    return () => clearInterval(checkZendesk);
   }, [userEmail, userName]);
 
   return (
@@ -40,6 +52,7 @@ export function ZendeskWidget({ zendeskKey, userEmail, userName }: ZendeskWidget
           __html: `
             window.zESettings = {
               webWidget: {
+                locale: 'pt-br',
                 color: {
                   theme: '#004aad',
                   launcher: '#004aad',
@@ -62,9 +75,7 @@ export function ZendeskWidget({ zendeskKey, userEmail, userName }: ZendeskWidget
                     'pt-br': 'Como podemos ajudar?'
                   },
                   fields: [
-                    { id: 'description', prefill: { '*': '' } },
-                    { id: 'email', prefill: { '*': userEmail || '' } },
-                    { id: 'name', prefill: { '*': userName || '' } }
+                    { id: 'description', prefill: { '*': '' } }
                   ],
                   selectTicketForm: {
                     'pt-br': 'Selecione um tópico'
