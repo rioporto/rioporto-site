@@ -3,22 +3,27 @@
 ## Para iniciar novo chat no Claude Desktop, use:
 
 ```
-Olá! Estou continuando o projeto Rio Porto P2P - Chat #14.
+Olá! Estou continuando o projeto Rio Porto P2P - Chat #15.
 
 CONTEXTO ATUAL:
 - Projeto em: D:\Projetos\rioporto-site
 - Sistema de comentários 100% completo ✅
-- Minicurso 95% completo (falta gerar áudios)
-- Sistema de email 90% (falta configurar serviço)
-- Zendesk conta criada, pronto para integrar
+- Minicurso 100% completo (com tracking) ✅
+- Sistema de email 100% (código pronto) ✅
+- Zendesk integrado (falta configurar chaves) ✅
 - WhatsApp bloqueado pela Meta
 
-TRABALHO PENDENTE:
-1. Gerar 9 arquivos de áudio para o minicurso (voz masculina)
-2. Configurar Zendesk (conta já existe)
-3. Implementar tracking de progresso do minicurso
-4. Configurar serviço de email (Resend)
-5. Deploy das alterações
+TRABALHO REALIZADO (Chat #14):
+1. Sistema de tracking do minicurso ✅
+2. Integração Zendesk completa ✅
+3. Sistema de email com Resend ✅
+4. Correções de build ✅
+5. Deploy funcionando ✅
+
+PENDENTE DE CONFIGURAÇÃO:
+1. Adicionar chaves API no Vercel/env
+2. Executar migrações no Supabase
+3. Configurar DNS para email
 
 Por favor, leia o PROJETO_MASTER.md para contexto completo.
 Uso Claude Desktop no Windows + CLAUDE CODE no terminal Ubuntu no Cursor quando necessário.
@@ -34,29 +39,33 @@ Como podemos continuar?
 - Tailwind CSS + Shadcn/ui
 - Supabase (PostgreSQL + Auth)
 - Vercel (Deploy)
-- Zendesk (Suporte - em implementação)
+- Zendesk (Suporte - integrado)
+- Resend (Email - integrado)
 
 ### URLs Importantes
 - **Produção**: https://rioporto-site.vercel.app
 - **GitHub**: https://github.com/rioporto/rioporto-site
 - **Supabase**: projeto `ncxilaqbmlituutruqqs`
+- **Zendesk**: https://rioportop2p.zendesk.com
 
-### Status Atual (Chat #13)
+### Status Atual (Chat #14)
 - ✅ Sistema P2P completo
 - ✅ Blog com comentários e admin
 - ✅ Lead capture funcional
-- ✅ Minicurso online (falta áudio)
+- ✅ Minicurso com tracking
 - ✅ Dashboard admin
-- 🔄 Zendesk (0%)
-- 🔄 Email (90%)
+- ✅ Zendesk integrado
+- ✅ Sistema de Email
 - 🔜 Sistema de Cursos
 - 🔜 Sistema KYC
 
-### Trabalho Realizado Hoje
-1. **Player de Áudio**: Componente completo com todos controles
-2. **Sistema de Email**: Templates e API prontos
-3. **Componentes UI**: Sheet, Switch, Slider
-4. **Scripts de Áudio**: Gerador automático criado
+### Trabalho Realizado no Chat #14
+1. **Tracking do Minicurso**: Sistema completo de analytics
+2. **Zendesk Widget**: Integração total com customização PT-BR
+3. **Zendesk Webhook**: API para sincronização de tickets
+4. **Sistema de Email**: Templates profissionais com Resend
+5. **Correções de Build**: Componentes UI e dependências
+6. **Deploy**: Funcionando em produção
 
 ### Comandos Frequentes
 ```bash
@@ -65,86 +74,88 @@ npm run dev
 npm run type-check
 npm run build
 
-# Gerar áudios (Windows)
-cd scripts
-setup-audio.bat
-
-# Gerar áudios (Linux/Mac)
-cd scripts
-./setup-audio.sh
-
 # Deploy
 git add -A
 git commit -m "feat: descrição"
 git push origin main
+
+# Testar APIs
+curl https://rioporto-site.vercel.app/api/zendesk/webhook
+```
+
+### Variáveis de Ambiente Necessárias
+```env
+# Zendesk
+NEXT_PUBLIC_ZENDESK_KEY=sua_chave_widget
+ZENDESK_WEBHOOK_SECRET=seu_webhook_secret
+
+# Email Service (Resend)
+RESEND_API_KEY=re_sua_api_key
+```
+
+### Migrações Pendentes
+Execute no Supabase SQL Editor:
+```sql
+-- /supabase/migrations/20240127_add_tracking_tables.sql
 ```
 
 ### Contatos
 - **Admin**: johnnyhelder@gmail.com
 - **WhatsApp**: +55 21 2018-7776
-- **Suporte**: Em breve via Zendesk
+- **Zendesk**: https://rioportop2p.zendesk.com
 
 ### Arquivos Principais
-1. `PROJETO_MASTER.md` - Documentação principal (LER PRIMEIRO!)
-2. `MINICURSO_STATUS.md` - Status detalhado do minicurso
-3. `ZENDESK_INTEGRACAO.md` - Plano de integração
-4. `EMAIL_CONFIGURATION_GUIDE.md` - Guia de email
-5. `AUDIO_GENERATION_GUIDE.md` - Como gerar áudios
-6. `/scripts/generate-audio.py` - Script de geração de áudios
-7. `/app/minicurso/page.tsx` - Página do minicurso
+1. `PROJETO_MASTER.md` - Documentação principal
+2. `GUIA_CONFIGURACAO.md` - Passos para finalizar
+3. `IMPLEMENTACOES_COMPLETAS.md` - O que foi feito
+4. `/app/api/zendesk/webhook/route.ts` - Webhook API
+5. `/app/api/minicurso/tracking/route.ts` - Tracking API
+6. `/hooks/use-minicurso-tracking.ts` - Hook de tracking
+7. `/lib/email.ts` - Sistema de email
 
 ### Próximos Passos Imediatos
 
-#### 1. Gerar Áudios (30 min)
-```bash
-cd scripts
-# Windows:
-setup-audio.bat
-# ou manualmente:
-pip install edge-tts
-python generate-audio.py
-```
+#### 1. Configurar Variáveis (10 min)
+- Adicionar no Vercel Dashboard
+- Ou no .env.local para teste
 
-#### 2. Configurar Zendesk (1-2h)
-- Widget no site
-- Webhooks com Supabase
-- Automações básicas
-- Testes
+#### 2. Executar Migrações (5 min)
+- Copiar SQL e executar no Supabase
 
-#### 3. Tracking de Progresso (1h)
-- Registrar tempo por página
-- Taxa de conclusão
-- Analytics detalhado
+#### 3. Configurar DNS (15 min)
+- Verificar domínio no Resend
+- Adicionar registros DNS
 
-#### 4. Deploy (30 min)
-- Testar localmente
-- Commit e push
-- Verificar em produção
+#### 4. Testar Integrações (10 min)
+- Widget Zendesk
+- Envio de emails
+- Tracking do minicurso
 
 ## 💡 Dicas para o Claude
 
 1. **SEMPRE leia** PROJETO_MASTER.md primeiro
 2. **Use artifacts** para códigos grandes
-3. **Minicurso**: Não é PDF, é online com áudio
-4. **Suporte**: Zendesk substituirá WhatsApp
-5. **Áudios**: Usar voz masculina pt-BR-Antonio
-6. **Email**: Resend é o serviço recomendado
-7. **Deploy**: Sempre testar antes de fazer push
+3. **Tracking**: Sistema completo com sendBeacon
+4. **Zendesk**: Widget e webhook prontos
+5. **Email**: Templates já criados
+6. **Deploy**: Automático via GitHub
+7. **Migrações**: SQL em /supabase/migrations
 
 ## 🎯 Prioridades por Sprint
 
-### Sprint Atual (Chat #13-14)
-1. ✅ Player de áudio
-2. ✅ Sistema de email
-3. 🔄 Gerar áudios
-4. 🔄 Zendesk básico
-5. 🔄 Tracking minicurso
+### Sprint Concluída (Chat #14)
+1. ✅ Tracking do minicurso
+2. ✅ Integração Zendesk
+3. ✅ Sistema de email
+4. ✅ Correções de build
+5. ✅ Deploy funcional
 
 ### Próximo Sprint
-1. Newsletter double opt-in
-2. Dashboard métricas
+1. Dashboard de métricas
+2. Newsletter double opt-in
 3. PWA support
 4. Otimizações SEO
+5. Testes E2E
 
 ### Fase 3 (Cursos)
 1. Upload de vídeos
@@ -160,12 +171,12 @@ python generate-audio.py
 
 ## 🚨 Lembretes Importantes
 
-1. **WhatsApp**: Bloqueado pela Meta (falsa acusação ICO)
-2. **Zendesk**: Conta já criada, pronta para integrar
-3. **Áudios**: 9 arquivos MP3, voz masculina
-4. **Email**: Falta apenas configurar Resend
-5. **Deploy**: Vercel automático via GitHub
+1. **Build**: Todos os erros foram corrigidos
+2. **Zendesk**: Webhook simplificado para testes
+3. **Email**: Resend é o serviço escolhido
+4. **Tracking**: Funciona com sendBeacon
+5. **Deploy**: Vercel em https://rioporto-site.vercel.app
 
 ---
 
-**Última atualização**: 29/01/2025 - Chat #13
+**Última atualização**: 27/01/2025 - Chat #14

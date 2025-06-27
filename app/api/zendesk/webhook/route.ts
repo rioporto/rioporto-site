@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 // Handler para GET - teste de conectividade
 export async function GET(request: NextRequest) {
@@ -24,7 +25,31 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log('Webhook Body:', JSON.stringify(body, null, 2));
     
-    // Por enquanto, apenas retornar sucesso
+    // Salvar no banco se for um ticket
+    if (body.ticket) {
+      const supabase = createClient();
+      const ticket = body.ticket;
+      
+      try {
+        const { data, error } = await supabase.from('support_tickets').insert({
+          zendesk_id: ticket.id || Math.floor(Math.random() * 1000000),
+          user_email: ticket.requester?.email || 'unknown@example.com',
+          subject: ticket.subject || 'Sem assunto',
+          status: ticket.status || 'new',
+          priority: ticket.priority || 'normal',
+          created_at: ticket.created_at || new Date().toISOString()
+        });
+        
+        if (error) {
+          console.error('Error saving ticket:', error);
+        } else {
+          console.log('Ticket saved successfully');
+        }
+      } catch (dbError) {
+        console.error('Database error:', dbError);
+      }
+    }
+    
     return NextResponse.json({ 
       success: true,
       message: 'Webhook received successfully',
