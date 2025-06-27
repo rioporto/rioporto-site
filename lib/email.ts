@@ -20,11 +20,16 @@ export async function sendEmail({
   replyTo = 'contato@rioporto.com'
 }: SendEmailOptions) {
   try {
+    // Resend requer html ou react, não pode ser undefined
+    if (!html && !text) {
+      throw new Error('Email must have html or text content');
+    }
+
     const data = await resend.emails.send({
       from,
       to,
       subject,
-      html,
+      html: html || `<p>${text}</p>`, // Fallback para text se html não existir
       text,
       reply_to: replyTo,
     });
