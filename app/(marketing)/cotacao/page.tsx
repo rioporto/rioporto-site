@@ -17,7 +17,7 @@ import Link from "next/link"
 import toast from "react-hot-toast"
 import { formatBRL, cn } from "@/lib/utils"
 import { getBitcoinPriceBRL, type CryptoPrice } from "@/lib/api/crypto"
-import { openZendeskChat, waitForZendesk } from "@/lib/zendesk"
+import { openZendeskWidget, createZendeskTicket } from "@/lib/zendesk-utils"
 
 interface CotacaoForm {
   tipo: "compra" | "venda"
@@ -213,67 +213,66 @@ export default function CotacaoPage() {
       if (response.ok) {
         toast.success("Cotação enviada com sucesso!")
         
-        // Mostrar alerta e forçar abertura do Zendesk
-        setTimeout(() => {
-          const abrirChat = confirm("Deseja abrir o chat de suporte para acompanhar sua cotação?")
+        // Criar ticket no Zendesk
+        try {
+          const ticketData = {
+            name: nome,
+            email: email,
+            subject: `Cotação ${formData.tipo === 'compra' ? 'Compra' : 'Venda'} - ${cryptoName}`,
+            description: `
+Nova cotação recebida:\n\n
+Tipo: ${formData.tipo === 'compra' ? 'Compra' : 'Venda'}\n
+Criptomoeda: ${cryptoName}\n
+Valor em R$: ${formData.valorBRL}\n
+Valor em Cripto: ${formData.valorCripto}\n
+Preço: R$ ${getCurrentPrice().toFixed(2)}\n\n
+Dados do Cliente:\n
+Nome: ${nome}\n
+Email: ${email}\n
+WhatsApp: ${telefone || 'Não informado'}\n\n
+Observações: ${formData.observacoes || 'Nenhuma'}\n
+Wallet: ${formData.wallet || 'Não informada'}
+`,
+            tags: ['cotacao', formData.tipo, cryptoName.toLowerCase().replace(/\s+/g, '-')]
+          };
+          
+          await createZendeskTicket(ticketData);
+          console.log('[Cotação] Ticket criado no Zendesk');
+        } catch (error) {
+          console.error('[Cotação] Erro ao criar ticket:', error);
+          // Não bloquear o fluxo se falhar
+        }
+        
+        // Aguardar um pouco e tentar abrir o widget
+        setTimeout(async () => {
+          const abrirChat = confirm(
+            "Cotação enviada com sucesso!\n\n" +
+            "Deseja abrir o chat de suporte para acompanhar sua cotação?"
+          );
           
           if (abrirChat) {
-            // Tentar abrir o Zendesk várias vezes
-            const tentativas = 5
-            let tentativa = 0
+            const mensagemChat = `Olá! Acabei de enviar uma cotação de ${formData.tipo} de ${cryptoName}.\n\nValor: R$ ${formData.valorBRL}`;
             
-            const tentarAbrir = () => {
-              tentativa++
-              console.log(`Tentativa ${tentativa} de abrir Zendesk...`)
-              
-              if (window.zE) {
-                try {
-                  // Mostrar o widget primeiro
-                  window.zE('webWidget', 'show')
-                  
-                  // Identificar usuário
-                  window.zE('webWidget', 'identify', {
-                    name: nome,
-                    email: email
-                  })
-                  
-                  // Pré-preencher
-                  window.zE('webWidget', 'prefill', {
-                    name: { value: nome },
-                    email: { value: email }
-                  })
-                  
-                  // Abrir o widget
-                  setTimeout(() => {
-                    window.zE('webWidget', 'open')
-                    console.log('Widget Zendesk aberto com sucesso!')
-                  }, 500)
-                  
-                } catch (error) {
-                  console.error('Erro ao abrir Zendesk:', error)
-                  if (tentativa < tentativas) {
-                    setTimeout(tentarAbrir, 2000)
-                  } else {
-                    alert('Não foi possível abrir o chat. Por favor, clique no botão de suporte no canto inferior direito.')
-                  }
-                }
-              } else {
-                console.log('Zendesk ainda não carregado...')
-                if (tentativa < tentativas) {
-                  setTimeout(tentarAbrir, 2000)
-                } else {
-                  alert('O chat está carregando. Por favor, aguarde alguns segundos e clique no botão de suporte no canto inferior direito.')
-                  setShowSupportButton(true)
-                }
-              }
+            const opened = await openZendeskWidget({
+              name: nome,
+              email: email,
+              message: mensagemChat,
+              subject: `Cotação ${formData.tipo} - ${cryptoName}`
+            });
+            
+            if (!opened) {
+              // Se não conseguiu abrir, mostrar botão manual
+              setShowSupportButton(true);
+              alert(
+                "Não foi possível abrir o chat automaticamente.\n\n" +
+                "Por favor, clique no botão de suporte no canto inferior direito da tela."
+              );
             }
-            
-            tentarAbrir()
           } else {
-            // Se o usuário não quiser abrir o chat, mostrar o botão
-            setShowSupportButton(true)
+            // Mostrar botão caso o usuário queira abrir depois
+            setShowSupportButton(true);
           }
-        }, 2000) // Aguardar 2 segundos para garantir que a página carregou
+        }, 1500); // Aguardar 1.5 segundos
         
         // Limpar formulário mantendo dados do usuário se logado
         setFormData({
@@ -593,12 +592,14 @@ export default function CotacaoPage() {
                         variant="outline"
                         size="lg"
                         className="w-full"
-                        onClick={() => {
-                          if (window.zE) {
-                            window.zE('webWidget', 'show')
-                            window.zE('webWidget', 'open')
-                          } else {
-                            alert('Chat de suporte ainda carregando. Tente novamente em alguns segundos.')
+                        onClick={async () => {
+                          const opened = await openZendeskWidget({
+                            name: profile?.name || formData.nome,
+                            email: profile?.email || formData.email
+                          });
+                          
+                          if (!opened) {
+                            alert('Chat de suporte ainda carregando. Tente novamente em alguns segundos.');
                           }
                         }}
                       >
