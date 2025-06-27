@@ -172,16 +172,18 @@ export default function CotacaoPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Validar dados essenciais - usar dados do formulário como fallback
-    const nome = profile?.name || formData.nome || ""
-    const email = profile?.email || formData.email || ""
-    const telefone = profile?.phone || formData.telefone || ""
-    
-    // Validar apenas se todos estão vazios
-    if (!nome.trim() || !email.trim() || !telefone.trim()) {
-      toast.error('Por favor, preencha todos os dados pessoais')
-      return
+    // Validar dados essenciais
+    if (!user) {
+      // Usuário não logado - nome e email são obrigatórios
+      if (!formData.nome.trim() || !formData.email.trim()) {
+        toast.error('Por favor, preencha nome e email')
+        return
+      }
     }
+    // Para usuários logados, usar dados do perfil
+    const nome = user ? (profile?.name || formData.nome) : formData.nome
+    const email = user ? (profile?.email || formData.email) : formData.email
+    const telefone = profile?.phone || formData.telefone || ""
     
     setLoading(true)
 
@@ -370,17 +372,16 @@ export default function CotacaoPage() {
                     {/* Campo de telefone para usuários logados sem telefone */}
                     {user && (!profile?.phone || !profile.phone.trim()) && (
                       <div className="space-y-2">
-                        <Label htmlFor="telefone-logado">WhatsApp (necessário para contato)</Label>
+                        <Label htmlFor="telefone-logado">WhatsApp (opcional - para contato rápido)</Label>
                         <Input
                           id="telefone-logado"
                           type="tel"
                           placeholder="+55 21 99999-9999"
                           value={formData.telefone}
                           onChange={(e) => setFormData(prev => ({ ...prev, telefone: e.target.value }))}
-                          required
                         />
                         <p className="text-sm text-muted-foreground">
-                          Por favor, adicione seu WhatsApp para recebermos a cotação
+                          Adicione seu WhatsApp para facilitar o contato sobre sua cotação
                         </p>
                       </div>
                     )}
@@ -539,15 +540,17 @@ export default function CotacaoPage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="telefone">WhatsApp</Label>
+                            <Label htmlFor="telefone">WhatsApp (opcional)</Label>
                             <Input
                               id="telefone"
                               type="tel"
                               placeholder="+55 21 99999-9999"
                               value={formData.telefone}
                               onChange={(e) => setFormData(prev => ({ ...prev, telefone: e.target.value }))}
-                              required
                             />
+                            <p className="text-xs text-muted-foreground">
+                              Adicione para receber notificações importantes
+                            </p>
                           </div>
                         </div>
                       </div>
