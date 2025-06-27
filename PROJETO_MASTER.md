@@ -164,7 +164,7 @@ rioporto-site/
 
 ## ✅ TRABALHO COMPLETADO {#trabalho-completado}
 
-### Chat #17 - Documentação Final
+### Chat #17 - Documentação Final e Correção de Build
 
 #### 1. Guias de Configuração
 - **VERCEL_VARIAVEIS_CONFIG.md**: Passo a passo detalhado
@@ -183,6 +183,12 @@ rioporto-site/
 - **Documentação**: 100% atualizada ✅
 - **Integrações**: 100% funcionais ✅
 - **Pendente**: Apenas configurações de produção
+
+#### 4. Correção de Build
+- **Problema**: autoprefixer, postcss, tailwindcss em devDependencies
+- **Solução**: Movidas para dependencies
+- **Arquivo**: `.vercelignore` criado para otimização
+- **Guia**: `FIX_VERCEL_BUILD_ERROR.md` criado
 
 ### Chat #16 - Implementações
 
