@@ -17,6 +17,7 @@ import Link from "next/link"
 import toast from "react-hot-toast"
 import { formatBRL, cn } from "@/lib/utils"
 import { getBitcoinPriceBRL, type CryptoPrice } from "@/lib/api/crypto"
+import { openZendeskChat, waitForZendesk } from "@/lib/zendesk"
 
 interface CotacaoForm {
   tipo: "compra" | "venda"
@@ -206,12 +207,22 @@ export default function CotacaoPage() {
       })
 
       if (response.ok) {
-        toast.success("Cotação enviada com sucesso! Entraremos em contato em breve.")
+        toast.success("Cotação enviada com sucesso! Abrindo o chat de suporte...")
         
-        const whatsappMessage = encodeURIComponent(
-          `Olá! Gostaria de ${formData.tipo === "compra" ? "comprar" : "vender"} ${formData.valorCripto} ${cryptoName} por ${formatBRL(parseFloat(formData.valorBRL))}`
-        )
-        window.open(`https://wa.me/5521340003259?text=${whatsappMessage}`, "_blank")
+        // Abrir o Zendesk com os dados da cotação
+        waitForZendesk(() => {
+          openZendeskChat({
+            name: nome,
+            email: email,
+            whatsapp: telefone,
+            cotacao: {
+              tipo: formData.tipo,
+              moeda: cryptoName,
+              valor: parseFloat(formData.valorBRL),
+              formaPagamento: formData.tipo === "compra" ? "PIX" : "Conta Bancária"
+            }
+          })
+        })
         
         // Limpar formulário mantendo dados do usuário se logado
         setFormData({

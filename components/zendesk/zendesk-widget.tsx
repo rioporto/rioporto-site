@@ -17,6 +17,9 @@ export function ZendeskWidget({ zendeskKey, userEmail, userName }: ZendeskWidget
       if (window.zE) {
         clearInterval(checkZendesk);
         
+        // Ocultar o widget por padrão
+        window.zE('webWidget', 'hide');
+        
         // Configurar informações do usuário se disponíveis
         if (userEmail) {
           window.zE('webWidget', 'identify', {
@@ -53,6 +56,12 @@ export function ZendeskWidget({ zendeskKey, userEmail, userName }: ZendeskWidget
             window.zESettings = {
               webWidget: {
                 locale: 'pt-br',
+                zIndex: 999999,
+                launcher: {
+                  chatLabel: {
+                    'pt-br': 'Suporte'
+                  }
+                },
                 color: {
                   theme: '#004aad',
                   launcher: '#004aad',
