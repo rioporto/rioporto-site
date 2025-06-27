@@ -17,7 +17,7 @@ import Link from "next/link"
 import toast from "react-hot-toast"
 import { formatBRL, cn } from "@/lib/utils"
 import { getBitcoinPriceBRL, type CryptoPrice } from "@/lib/api/crypto"
-import { openZendeskWidget, createZendeskTicket } from "@/lib/zendesk-utils"
+import { abrirZendeskChat, debugZendesk, mostrarBotaoZendesk } from "@/lib/zendesk-simple"
 
 interface CotacaoForm {
   tipo: "compra" | "venda"
@@ -64,7 +64,25 @@ export default function CotacaoPage() {
     observacoes: "",
   })
 
-
+  // Debug - verificar estado inicial do Zendesk
+  useEffect(() => {
+    // Verificar a cada 2 segundos se o Zendesk carregou
+    const checkInterval = setInterval(() => {
+      if (window.zE) {
+        console.log('[Cotação] Zendesk detectado!');
+        mostrarBotaoZendesk();
+        clearInterval(checkInterval);
+      }
+    }, 2000);
+    
+    // Debug inicial após 3 segundos
+    setTimeout(() => {
+      console.log('[Cotação] Debug do Zendesk:');
+      debugZendesk();
+    }, 3000);
+    
+    return () => clearInterval(checkInterval);
+  }, []);
 
   // Função para buscar o preço do Bitcoin
   const fetchBitcoinPrice = useCallback(async () => {
@@ -213,66 +231,72 @@ export default function CotacaoPage() {
       if (response.ok) {
         toast.success("Cotação enviada com sucesso!")
         
-        // Criar ticket no Zendesk
-        try {
-          const ticketData = {
-            name: nome,
-            email: email,
-            subject: `Cotação ${formData.tipo === 'compra' ? 'Compra' : 'Venda'} - ${cryptoName}`,
-            description: `
-Nova cotação recebida:\n\n
+        // Debug antes de tentar abrir
+        console.log('[Cotação] Resposta OK, preparando para abrir Zendesk...');
+        debugZendesk();
+        
+        // Aguardar um pouco e perguntar sobre o chat
+        setTimeout(() => {
+          // Primeiro, garantir que o botão está visível
+          mostrarBotaoZendesk();
+          
+          const abrirChat = confirm(
+            "Cotação enviada com sucesso!\n\n" +
+            "Deseja abrir o chat de suporte para acompanhar sua cotação?\n\n" +
+            "(Se o chat não abrir automaticamente, clique no botão de suporte no canto inferior direito)"
+          );
+          
+          if (abrirChat) {
+            console.log('[Cotação] Usuário escolheu abrir o chat');
+            
+            // Preparar dados para o Zendesk
+            const assunto = `Cotação ${formData.tipo === 'compra' ? 'Compra' : 'Venda'} - ${cryptoName}`;
+            const descricao = `
+Olá! Acabei de enviar uma cotação através do site:\n\n
 Tipo: ${formData.tipo === 'compra' ? 'Compra' : 'Venda'}\n
 Criptomoeda: ${cryptoName}\n
 Valor em R$: ${formData.valorBRL}\n
 Valor em Cripto: ${formData.valorCripto}\n
-Preço: R$ ${getCurrentPrice().toFixed(2)}\n\n
-Dados do Cliente:\n
+Preço atual: R$ ${getCurrentPrice().toFixed(2)}\n\n
+Dados de contato:\n
 Nome: ${nome}\n
 Email: ${email}\n
 WhatsApp: ${telefone || 'Não informado'}\n\n
 Observações: ${formData.observacoes || 'Nenhuma'}\n
 Wallet: ${formData.wallet || 'Não informada'}
-`,
-            tags: ['cotacao', formData.tipo, cryptoName.toLowerCase().replace(/\s+/g, '-')]
-          };
-          
-          await createZendeskTicket(ticketData);
-          console.log('[Cotação] Ticket criado no Zendesk');
-        } catch (error) {
-          console.error('[Cotação] Erro ao criar ticket:', error);
-          // Não bloquear o fluxo se falhar
-        }
-        
-        // Aguardar um pouco e tentar abrir o widget
-        setTimeout(async () => {
-          const abrirChat = confirm(
-            "Cotação enviada com sucesso!\n\n" +
-            "Deseja abrir o chat de suporte para acompanhar sua cotação?"
-          );
-          
-          if (abrirChat) {
-            const mensagemChat = `Olá! Acabei de enviar uma cotação de ${formData.tipo} de ${cryptoName}.\n\nValor: R$ ${formData.valorBRL}`;
+            `.trim();
             
-            const opened = await openZendeskWidget({
-              name: nome,
+            // Tentar abrir o widget primeiro
+            const resultado = abrirZendeskChat({
+              nome: nome,
               email: email,
-              message: mensagemChat,
-              subject: `Cotação ${formData.tipo} - ${cryptoName}`
+              mensagem: `Olá! Acabei de enviar uma cotação de ${formData.tipo} de ${cryptoName}. Valor: R$ ${formData.valorBRL}`
             });
             
-            if (!opened) {
-              // Se não conseguiu abrir, mostrar botão manual
-              setShowSupportButton(true);
-              alert(
-                "Não foi possível abrir o chat automaticamente.\n\n" +
-                "Por favor, clique no botão de suporte no canto inferior direito da tela."
-              );
+            // Se não funcionar, abrir link direto
+            if (!resultado) {
+              console.log('[Cotação] Widget não abriu, usando link direto');
+              
+              // Criar URL do Zendesk com dados preenchidos
+              const zendeskUrl = new URL('https://rioportop2p.zendesk.com/hc/pt-br/requests/new');
+              zendeskUrl.searchParams.append('tf_subject', assunto);
+              zendeskUrl.searchParams.append('tf_description', descricao);
+              zendeskUrl.searchParams.append('tf_email', email);
+              zendeskUrl.searchParams.append('tf_name', nome);
+              
+              // Abrir em nova aba
+              window.open(zendeskUrl.toString(), '_blank');
+              
+              toast.info('Abrindo formulário de suporte em nova aba...');
             }
+            
+            // Sempre mostrar botão como backup
+            setShowSupportButton(true);
           } else {
-            // Mostrar botão caso o usuário queira abrir depois
+            // Mostrar botão para abrir depois
             setShowSupportButton(true);
           }
-        }, 1500); // Aguardar 1.5 segundos
+        }, 2000); // Aguardar 2 segundos
         
         // Limpar formulário mantendo dados do usuário se logado
         setFormData({
@@ -592,14 +616,26 @@ Wallet: ${formData.wallet || 'Não informada'}
                         variant="outline"
                         size="lg"
                         className="w-full"
-                        onClick={async () => {
-                          const opened = await openZendeskWidget({
-                            name: profile?.name || formData.nome,
+                        onClick={() => {
+                          console.log('[Cotação] Botão manual clicado');
+                          debugZendesk();
+                          
+                          // Tentar abrir widget
+                          const resultado = abrirZendeskChat({
+                            nome: profile?.name || formData.nome,
                             email: profile?.email || formData.email
                           });
                           
-                          if (!opened) {
-                            alert('Chat de suporte ainda carregando. Tente novamente em alguns segundos.');
+                          // Se não funcionar, usar link direto
+                          if (!resultado) {
+                            console.log('[Cotação] Abrindo link direto do Zendesk');
+                            
+                            const zendeskUrl = new URL('https://rioportop2p.zendesk.com/hc/pt-br/requests/new');
+                            zendeskUrl.searchParams.append('tf_subject', 'Suporte - Cotação P2P');
+                            zendeskUrl.searchParams.append('tf_email', profile?.email || formData.email);
+                            zendeskUrl.searchParams.append('tf_name', profile?.name || formData.nome);
+                            
+                            window.open(zendeskUrl.toString(), '_blank');
                           }
                         }}
                       >
