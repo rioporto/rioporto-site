@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Phone, Loader2, RefreshCw } from "lucide-react"
 import toast from "react-hot-toast"
 
-export default function VerificarTelefonePage() {
+function VerificarTelefoneContent() {
   const [code, setCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [resending, setResending] = useState(false)
@@ -183,5 +183,17 @@ export default function VerificarTelefonePage() {
         </CardFooter>
       </form>
     </Card>
+  )
+}
+
+export default function VerificarTelefonePage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    }>
+      <VerificarTelefoneContent />
+    </Suspense>
   )
 }
