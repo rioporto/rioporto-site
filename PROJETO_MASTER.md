@@ -190,6 +190,15 @@ rioporto-site/
 - **Arquivo**: `.vercelignore` criado para otimização
 - **Guia**: `FIX_VERCEL_BUILD_ERROR.md` criado
 
+#### 5. Correção Module Resolution
+- **Problema**: Imports com `@/` não resolvidos na Vercel
+- **Soluções aplicadas**:
+  - Adicionado `baseUrl` ao tsconfig.json
+  - Mudado `moduleResolution` para "node"
+  - Adicionado `.nvmrc` com Node 18
+  - Criado scripts de pré-deploy
+- **Guias**: `FIX_MODULE_RESOLUTION_ERROR.md` e `DEPLOY_FIXES_SUMMARY.md`
+
 ### Chat #16 - Implementações
 
 #### 1. Simplificação do Cadastro
