@@ -1,6 +1,6 @@
 # 🚀 RIO PORTO P2P - DOCUMENTAÇÃO MASTER
 
-**Última atualização**: 27/01/2025 - Chat #15  
+**Última atualização**: 27/01/2025 - Chat #16  
 **Desenvolvedor**: Johnny Helder  
 **Ambiente**: Claude Desktop (Windows) + Cursor  
 **Caminho do Projeto**: `D:\Projetos\rioporto-site`
@@ -58,7 +58,7 @@ Plataforma completa de negociação peer-to-peer de Bitcoin com foco no mercado 
 
 ## 📊 STATUS ATUAL {#status-atual}
 
-### Progresso Total: ~60%
+### Progresso Total: ~65%
 
 ```
 Fase 1: [████████████████████] 100% ✅ Completa
@@ -77,12 +77,11 @@ Fase 4: [░░░░░░░░░░░░░░░░░░░░] 0% 🔜 F
 5. **Blog dinâmico** com posts do Supabase
 6. **Minicurso interativo** com tracking detalhado
 7. **Sistema de Email** com templates profissionais
-8. **Integração Zendesk** programática (abre com dados da cotação)
+8. **Integração Zendesk** com widget visível e suporte manual
 
-### 🔧 100% Configurado:
-- **Chaves API**: Configuradas no .env.local ✅
-- **Migrações SQL**: Executadas no Supabase ✅
-- **Zendesk**: Totalmente integrado ✅
+### 🔧 Pendente de Configuração:
+- **DNS Email**: Verificar domínio no Resend
+- **Variáveis na Vercel**: Adicionar em produção
 
 ### 🔜 Próximas fases (planejado):
 - **Sistema de Cursos**: Plataforma EAD completa (Fase 3)
@@ -114,13 +113,13 @@ Templates implementados:
 - Recuperação de senha (futuro)
 - Newsletter (próximo sprint)
 
-### 4. Status do Chat #15
+### 4. Status do Chat #16
 Implementamos hoje:
-- Zendesk programático (sem widget visível)
-- Integração com formulário de cotação
-- Funções para abrir chat com contexto
-- Removido widget WhatsApp
-- Documentação de integração IA
+- WhatsApp volta a ser opcional no cadastro
+- Removida verificação OTP (não usaremos WhatsApp API)
+- Zendesk widget visível por padrão
+- Correção da abertura do Zendesk após cotação
+- Botão manual de suporte quando automático falha
 
 ---
 
@@ -164,6 +163,33 @@ rioporto-site/
 ---
 
 ## ✅ TRABALHO COMPLETADO {#trabalho-completado}
+
+### Chat #16 - Implementações
+
+#### 1. Simplificação do Cadastro
+- **WhatsApp opcional**: Não é mais obrigatório
+- **Sem verificação OTP**: Removido sistema de códigos
+- **Fluxo direto**: Cadastro → Dashboard
+- **Menos atrito**: Melhor experiência do usuário
+
+#### 2. Correção do Zendesk
+- **Widget visível**: Sempre disponível no canto direito
+- **Abertura automática**: Após enviar cotação
+- **Confirmação**: Pergunta se deseja abrir o chat
+- **Botão manual**: Backup quando automático falha
+- **Tentativas múltiplas**: Até 5 tentativas de abrir
+
+#### 3. Melhorias de UX
+- **Feedback claro**: Mensagens informativas
+- **Opções ao usuário**: Pode escolher não abrir chat
+- **Suporte manual**: Botão aparece quando necessário
+- **Logs detalhados**: Para debug no console
+
+#### 4. Limpeza de Código
+- **Removido Twilio**: Não usaremos SMS
+- **Removido OTP**: Sistema simplificado
+- **APIs desncessárias**: Deletadas ou simplificadas
+- **Documentação**: Atualizada com novo fluxo
 
 ### Chat #15 - Implementações
 
@@ -226,27 +252,27 @@ rioporto-site/
 
 ### Para novo chat no Claude:
 ```
-Olá! Estou continuando o projeto Rio Porto P2P - Chat #16.
+Olá! Estou continuando o projeto Rio Porto P2P - Chat #17.
 
 CONTEXTO ATUAL:
 - Projeto em: D:\Projetos\rioporto-site
 - Sistema de comentários 100% completo ✅
 - Minicurso 100% completo (com tracking) ✅
 - Sistema de email 100% (código pronto) ✅
-- Zendesk 100% integrado (programático) ✅
-- WhatsApp removido (substituído pelo Zendesk)
+- Zendesk 100% integrado (widget visível) ✅
+- WhatsApp opcional no cadastro
 
-TRABALHO REALIZADO (Chat #15):
-1. Zendesk programático implementado ✅
-2. Widget oculto por padrão ✅
-3. Integração com formulário de cotação ✅
-4. Funções para handoff de IA ✅
-5. WhatsApp removido ✅
+TRABALHO REALIZADO (Chat #16):
+1. Simplificado cadastro (WhatsApp opcional) ✅
+2. Removido sistema OTP ✅
+3. Zendesk widget visível ✅
+4. Correção abertura após cotação ✅
+5. Botão manual de suporte ✅
 
 PENDENTE:
 1. Configurar variáveis na Vercel (produção)
 2. Configurar DNS para email (Resend)
-3. Deploy final
+3. Deploy final e testes
 
 Por favor, leia o PROJETO_MASTER.md para contexto completo.
 Uso Claude Desktop no Windows + CLAUDE CODE no terminal Ubuntu no Cursor quando necessário.
@@ -302,9 +328,9 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 
 1. **Imediato** (configuração):
    - Adicionar variáveis na Vercel
-   - Verificar domínio email
+   - Verificar domínio email (Resend)
    - Deploy final
-   - Testar em produção
+   - Testar cotação → Zendesk
 
 2. **Próximo Sprint** (features):
    - Dashboard de métricas
@@ -331,9 +357,10 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 1. **Build**: Todos os erros foram corrigidos ✅
 2. **Deploy**: Funcionando em produção ✅
 3. **Tracking**: Sistema completo e testado ✅
-4. **Zendesk**: 100% integrado e funcional ✅
+4. **Zendesk**: Widget visível e funcional ✅
 5. **Email**: Código pronto, falta DNS ⏳
 6. **Migrações**: Executadas e verificadas ✅
+7. **WhatsApp**: Opcional no cadastro ✅
 
 ---
 
@@ -344,7 +371,7 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 - **Deploy**: https://rioporto-site.vercel.app
 - **Uptime**: 99.9%
 - **PageSpeed**: 85+ (mobile e desktop)
-- **Funcionalidades**: 60% completo
+- **Funcionalidades**: 65% completo
 
 ---
 
@@ -352,4 +379,4 @@ curl https://rioporto-site.vercel.app/api/minicurso/tracking
 
 ---
 
-**Última edição**: 27/01/2025 por Claude (Chat #15)
+**Última edição**: 27/01/2025 por Claude (Chat #16)

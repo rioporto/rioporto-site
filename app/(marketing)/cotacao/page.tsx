@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { CryptoSearch } from "@/components/crypto-search"
-import { Bitcoin, DollarSign, Info, ArrowRight, Calculator, Shield, TrendingUp, TrendingDown, Loader2, User } from "lucide-react"
+import { Bitcoin, DollarSign, Info, ArrowRight, Calculator, Shield, TrendingUp, TrendingDown, Loader2, User, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import toast from "react-hot-toast"
 import { formatBRL, cn } from "@/lib/utils"
@@ -50,6 +50,7 @@ export default function CotacaoPage() {
   const [priceChange, setPriceChange] = useState(0)
   const [lastUpdate, setLastUpdate] = useState(new Date())
   const [priceError, setPriceError] = useState(false)
+  const [showSupportButton, setShowSupportButton] = useState(false)
   
   const [formData, setFormData] = useState<CotacaoForm>({
     tipo: "compra",
@@ -208,25 +209,69 @@ export default function CotacaoPage() {
       })
 
       if (response.ok) {
-        toast.success("Cotação enviada com sucesso! Abrindo o chat de suporte...")
+        toast.success("Cotação enviada com sucesso!")
         
-        // Aguardar um pouco antes de tentar abrir o Zendesk
+        // Mostrar alerta e forçar abertura do Zendesk
         setTimeout(() => {
-          // Abrir o Zendesk com os dados da cotação
-          waitForZendesk(() => {
-            openZendeskChat({
-              name: nome,
-              email: email,
-              whatsapp: telefone,
-              cotacao: {
-                tipo: formData.tipo,
-                moeda: cryptoName,
-                valor: parseFloat(formData.valorBRL),
-                formaPagamento: formData.tipo === "compra" ? "PIX" : "Conta Bancária"
+          const abrirChat = confirm("Deseja abrir o chat de suporte para acompanhar sua cotação?")
+          
+          if (abrirChat) {
+            // Tentar abrir o Zendesk várias vezes
+            const tentativas = 5
+            let tentativa = 0
+            
+            const tentarAbrir = () => {
+              tentativa++
+              console.log(`Tentativa ${tentativa} de abrir Zendesk...`)
+              
+              if (window.zE) {
+                try {
+                  // Mostrar o widget primeiro
+                  window.zE('webWidget', 'show')
+                  
+                  // Identificar usuário
+                  window.zE('webWidget', 'identify', {
+                    name: nome,
+                    email: email
+                  })
+                  
+                  // Pré-preencher
+                  window.zE('webWidget', 'prefill', {
+                    name: { value: nome },
+                    email: { value: email }
+                  })
+                  
+                  // Abrir o widget
+                  setTimeout(() => {
+                    window.zE('webWidget', 'open')
+                    console.log('Widget Zendesk aberto com sucesso!')
+                  }, 500)
+                  
+                } catch (error) {
+                  console.error('Erro ao abrir Zendesk:', error)
+                  if (tentativa < tentativas) {
+                    setTimeout(tentarAbrir, 2000)
+                  } else {
+                    alert('Não foi possível abrir o chat. Por favor, clique no botão de suporte no canto inferior direito.')
+                  }
+                }
+              } else {
+                console.log('Zendesk ainda não carregado...')
+                if (tentativa < tentativas) {
+                  setTimeout(tentarAbrir, 2000)
+                } else {
+                  alert('O chat está carregando. Por favor, aguarde alguns segundos e clique no botão de suporte no canto inferior direito.')
+                  setShowSupportButton(true)
+                }
               }
-            })
-          }, 15000) // Aumentar timeout para 15 segundos
-        }, 1000) // Aguardar 1 segundo antes de tentar
+            }
+            
+            tentarAbrir()
+          } else {
+            // Se o usuário não quiser abrir o chat, mostrar o botão
+            setShowSupportButton(true)
+          }
+        }, 2000) // Aguardar 2 segundos para garantir que a página carregou
         
         // Limpar formulário mantendo dados do usuário se logado
         setFormData({
@@ -537,6 +582,27 @@ export default function CotacaoPage() {
                       {loading ? "Enviando..." : "Enviar Cotação"}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
+                    
+                    {/* Botão de suporte manual */}
+                    {showSupportButton && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="lg"
+                        className="w-full"
+                        onClick={() => {
+                          if (window.zE) {
+                            window.zE('webWidget', 'show')
+                            window.zE('webWidget', 'open')
+                          } else {
+                            alert('Chat de suporte ainda carregando. Tente novamente em alguns segundos.')
+                          }
+                        }}
+                      >
+                        <MessageSquare className="mr-2 h-4 w-4" />
+                        Abrir Chat de Suporte
+                      </Button>
+                    )}
                   </form>
                 </CardContent>
               </Card>

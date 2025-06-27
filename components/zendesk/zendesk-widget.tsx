@@ -17,12 +17,16 @@ export function ZendeskWidget({ zendeskKey, userEmail, userName }: ZendeskWidget
       if (window.zE) {
         clearInterval(checkZendesk);
         
-        // Ocultar o widget por padrão após 2 segundos
-        // Isso dá tempo para o widget carregar completamente
+        console.log('Widget Zendesk carregado');
+        
+        // Não ocultar mais por padrão - deixar visível
+        // Se quiser ocultar, descomente as linhas abaixo:
+        /*
         setTimeout(() => {
           window.zE('webWidget', 'hide');
           console.log('Widget Zendesk ocultado');
         }, 2000);
+        */
         
         // Configurar informações do usuário se disponíveis
         if (userEmail) {

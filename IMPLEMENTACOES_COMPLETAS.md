@@ -9,10 +9,10 @@
 - **Status**: 100% implementado e testado
 
 ### ✅ Integração Zendesk
-- **Widget**: Programático - oculto por padrão, abre apenas quando necessário
+- **Widget**: Visível no canto inferior direito
 - **Personalização**: Totalmente em PT-BR com cores da marca
-- **Automação**: Pré-preenchimento com dados do usuário e cotação
-- **Integração**: Com formulário de cotação e preparado para IA
+- **Automação**: Abre após enviar cotação com confirmação
+- **Botão Manual**: Backup quando automático falha
 - **Status**: 100% implementado e configurado
 
 ### ✅ Sistema de Email Automatizado
@@ -31,21 +31,17 @@ const { trackPageView, trackAudioPlay } = useMinicursoTracking({
   onError: handleError
 });
 
-// Zendesk programático - abre com contexto
-import { openZendeskChat, waitForZendesk } from '@/lib/zendesk';
+// Zendesk widget sempre visível
+// Abre automaticamente após cotação com confirmação
+if (window.zE) {
+  window.zE('webWidget', 'show');
+  window.zE('webWidget', 'open');
+}
 
-waitForZendesk(() => {
-  openZendeskChat({
-    name: userData.name,
-    email: userData.email,
-    whatsapp: userData.phone,
-    cotacao: {
-      tipo: 'compra',
-      moeda: 'Bitcoin (BTC)',
-      valor: 10000
-    }
-  });
-});
+// Botão manual de suporte como fallback
+<Button onClick={() => window.zE && window.zE('webWidget', 'open')}>
+  Abrir Chat de Suporte
+</Button>
 ```
 
 ### Backend
@@ -157,12 +153,12 @@ git push origin main
 O projeto Rio Porto P2P agora conta com:
 - ✅ Sistema completo de educação (minicurso)
 - ✅ Rastreamento detalhado de engajamento
-- ✅ Suporte profissional integrado (Zendesk programático)
+- ✅ Suporte profissional integrado (Zendesk visível)
 - ✅ Comunicação automatizada por email
 - ✅ Base sólida para crescimento
-- ✅ Interface limpa sem widgets flutuantes
-- ✅ Integração pronta para IA
+- ✅ Cadastro simplificado (WhatsApp opcional)
+- ✅ Fluxo otimizado de cotação para suporte
 
-**Tempo total para ativar tudo**: ~10 minutos (apenas configurar Vercel e DNS)
+**Tempo total para ativar tudo**: ~30 minutos (configurar Vercel e DNS)
 
 Parabéns pela visão e execução do projeto! 🚀

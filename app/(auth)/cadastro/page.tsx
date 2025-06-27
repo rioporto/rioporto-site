@@ -141,7 +141,7 @@ export default function CadastroPage() {
               disabled={loading}
             />
             <p className="text-xs text-muted-foreground">
-              Usado para notificações de transações
+              Para receber notificações importantes
             </p>
           </div>
           
