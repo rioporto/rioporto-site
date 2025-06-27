@@ -171,12 +171,13 @@ export default function CotacaoPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Validar dados essenciais
-    const nome = profile?.name || formData.nome
-    const email = profile?.email || formData.email
-    const telefone = profile?.phone || formData.telefone
+    // Validar dados essenciais - usar dados do formulário como fallback
+    const nome = profile?.name || formData.nome || ""
+    const email = profile?.email || formData.email || ""
+    const telefone = profile?.phone || formData.telefone || ""
     
-    if (!nome || !email || !telefone) {
+    // Validar apenas se todos estão vazios
+    if (!nome.trim() || !email.trim() || !telefone.trim()) {
       toast.error('Por favor, preencha todos os dados pessoais')
       return
     }
@@ -209,20 +210,23 @@ export default function CotacaoPage() {
       if (response.ok) {
         toast.success("Cotação enviada com sucesso! Abrindo o chat de suporte...")
         
-        // Abrir o Zendesk com os dados da cotação
-        waitForZendesk(() => {
-          openZendeskChat({
-            name: nome,
-            email: email,
-            whatsapp: telefone,
-            cotacao: {
-              tipo: formData.tipo,
-              moeda: cryptoName,
-              valor: parseFloat(formData.valorBRL),
-              formaPagamento: formData.tipo === "compra" ? "PIX" : "Conta Bancária"
-            }
-          })
-        })
+        // Aguardar um pouco antes de tentar abrir o Zendesk
+        setTimeout(() => {
+          // Abrir o Zendesk com os dados da cotação
+          waitForZendesk(() => {
+            openZendeskChat({
+              name: nome,
+              email: email,
+              whatsapp: telefone,
+              cotacao: {
+                tipo: formData.tipo,
+                moeda: cryptoName,
+                valor: parseFloat(formData.valorBRL),
+                formaPagamento: formData.tipo === "compra" ? "PIX" : "Conta Bancária"
+              }
+            })
+          }, 15000) // Aumentar timeout para 15 segundos
+        }, 1000) // Aguardar 1 segundo antes de tentar
         
         // Limpar formulário mantendo dados do usuário se logado
         setFormData({
@@ -316,6 +320,24 @@ export default function CotacaoPage() {
                           </div>
                         </AlertDescription>
                       </Alert>
+                    )}
+                    
+                    {/* Campo de telefone para usuários logados sem telefone */}
+                    {user && (!profile?.phone || !profile.phone.trim()) && (
+                      <div className="space-y-2">
+                        <Label htmlFor="telefone-logado">WhatsApp (necessário para contato)</Label>
+                        <Input
+                          id="telefone-logado"
+                          type="tel"
+                          placeholder="+55 21 99999-9999"
+                          value={formData.telefone}
+                          onChange={(e) => setFormData(prev => ({ ...prev, telefone: e.target.value }))}
+                          required
+                        />
+                        <p className="text-sm text-muted-foreground">
+                          Por favor, adicione seu WhatsApp para recebermos a cotação
+                        </p>
+                      </div>
                     )}
                     {/* Tipo de Operação */}
                     <div className="space-y-3">
@@ -606,7 +628,7 @@ export default function CotacaoPage() {
                     </li>
                     <li className="flex gap-2">
                       <span className="font-semibold text-primary">2.</span>
-                      <span>Receba a cotação final via WhatsApp</span>
+                      <span>Converse com nosso suporte via chat</span>
                     </li>
                     <li className="flex gap-2">
                       <span className="font-semibold text-primary">3.</span>

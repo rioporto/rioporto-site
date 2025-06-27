@@ -15,6 +15,8 @@ interface ZendeskUserData {
  * Abre o widget do Zendesk com dados pré-preenchidos
  */
 export function openZendeskChat(userData: ZendeskUserData) {
+  console.log('Tentando abrir Zendesk com dados:', userData);
+  
   if (typeof window === 'undefined' || !window.zE) {
     console.warn('Zendesk widget não está carregado');
     return false;
@@ -72,9 +74,11 @@ export function openZendeskChat(userData: ZendeskUserData) {
 
     // Mostrar o widget
     window.zE('webWidget', 'show');
+    console.log('Widget mostrado');
     
     // Abrir o widget
     window.zE('webWidget', 'open');
+    console.log('Widget aberto');
 
     // Se houver mensagem de cotação, adicionar ao campo de mensagem
     if (userData.cotacao) {
@@ -106,15 +110,25 @@ export function isZendeskReady(): boolean {
  * Aguarda o Zendesk carregar antes de executar uma ação
  */
 export function waitForZendesk(callback: () => void, timeout = 10000) {
+  console.log('Aguardando Zendesk carregar...');
   const startTime = Date.now();
   
   const checkInterval = setInterval(() => {
     if (isZendeskReady()) {
       clearInterval(checkInterval);
+      console.log('Zendesk carregado após', Date.now() - startTime, 'ms');
       callback();
     } else if (Date.now() - startTime > timeout) {
       clearInterval(checkInterval);
       console.error('Timeout esperando Zendesk carregar');
+      // Tentar forçar a abertura mesmo assim
+      if (window.zE) {
+        console.log('Zendesk encontrado após timeout, tentando abrir...');
+        callback();
+      } else {
+        // Mostrar mensagem alternativa para o usuário
+        alert('Não foi possível abrir o chat automaticamente. Por favor, recarregue a página e tente novamente.');
+      }
     }
   }, 100);
 }
