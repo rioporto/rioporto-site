@@ -12,12 +12,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { CryptoSearch } from "@/components/crypto-search"
-import { Bitcoin, DollarSign, Info, ArrowRight, Calculator, Shield, TrendingUp, TrendingDown, Loader2, User, MessageSquare } from "lucide-react"
+import { Bitcoin, DollarSign, Info, ArrowRight, Calculator, Shield, TrendingUp, TrendingDown, Loader2, User, CheckCircle2, XCircle, MessageSquare } from "lucide-react"
 import Link from "next/link"
 import toast from "react-hot-toast"
 import { formatBRL, cn } from "@/lib/utils"
 import { getBitcoinPriceBRL, type CryptoPrice } from "@/lib/api/crypto"
-import { abrirZendeskChat, debugZendesk, mostrarBotaoZendesk } from "@/lib/zendesk-simple"
+import { abrirWhatsApp } from "@/lib/whatsapp-simple"
 
 interface CotacaoForm {
   tipo: "compra" | "venda"
@@ -50,7 +50,7 @@ export default function CotacaoPage() {
   const [priceChange, setPriceChange] = useState(0)
   const [lastUpdate, setLastUpdate] = useState(new Date())
   const [priceError, setPriceError] = useState(false)
-  const [showSupportButton, setShowSupportButton] = useState(false)
+  const [cotacaoEnviada, setCotacaoEnviada] = useState(false)
   
   const [formData, setFormData] = useState<CotacaoForm>({
     tipo: "compra",
@@ -63,26 +63,6 @@ export default function CotacaoPage() {
     wallet: "",
     observacoes: "",
   })
-
-  // Debug - verificar estado inicial do Zendesk
-  useEffect(() => {
-    // Verificar a cada 2 segundos se o Zendesk carregou
-    const checkInterval = setInterval(() => {
-      if (window.zE) {
-        console.log('[Cotação] Zendesk detectado!');
-        mostrarBotaoZendesk();
-        clearInterval(checkInterval);
-      }
-    }, 2000);
-    
-    // Debug inicial após 3 segundos
-    setTimeout(() => {
-      console.log('[Cotação] Debug do Zendesk:');
-      debugZendesk();
-    }, 3000);
-    
-    return () => clearInterval(checkInterval);
-  }, []);
 
   // Função para buscar o preço do Bitcoin
   const fetchBitcoinPrice = useCallback(async () => {
@@ -118,7 +98,7 @@ export default function CotacaoPage() {
     fetchBitcoinPrice()
     const interval = setInterval(fetchBitcoinPrice, 60000) // Atualiza a cada minuto
     return () => clearInterval(interval)
-  }, [fetchBitcoinPrice]) // Adicionada dependência
+  }, [fetchBitcoinPrice])
 
   // Atualiza os dados do formulário quando o perfil do usuário é carregado
   useEffect(() => {
@@ -198,10 +178,6 @@ export default function CotacaoPage() {
         return
       }
     }
-    // Para usuários logados, usar dados do perfil
-    const nome = user ? (profile?.name || formData.nome) : formData.nome
-    const email = user ? (profile?.email || formData.email) : formData.email
-    const telefone = profile?.phone || formData.telefone || ""
     
     setLoading(true)
 
@@ -228,75 +204,25 @@ export default function CotacaoPage() {
         body: JSON.stringify(dadosEnvio),
       })
 
+      const data = await response.json()
+
       if (response.ok) {
         toast.success("Cotação enviada com sucesso!")
+        setCotacaoEnviada(true)
         
-        // Debug antes de tentar abrir
-        console.log('[Cotação] Resposta OK, preparando para abrir Zendesk...');
-        debugZendesk();
-        
-        // Aguardar um pouco e perguntar sobre o chat
+        // Abrir WhatsApp automaticamente após 2 segundos
         setTimeout(() => {
-          // Primeiro, garantir que o botão está visível
-          mostrarBotaoZendesk();
-          
-          const abrirChat = confirm(
-            "Cotação enviada com sucesso!\n\n" +
-            "Deseja abrir o chat de suporte para acompanhar sua cotação?\n\n" +
-            "(Se o chat não abrir automaticamente, clique no botão de suporte no canto inferior direito)"
-          );
-          
-          if (abrirChat) {
-            console.log('[Cotação] Usuário escolheu abrir o chat');
-            
-            // Preparar dados para o Zendesk
-            const assunto = `Cotação ${formData.tipo === 'compra' ? 'Compra' : 'Venda'} - ${cryptoName}`;
-            const descricao = `
-Olá! Acabei de enviar uma cotação através do site:\n\n
-Tipo: ${formData.tipo === 'compra' ? 'Compra' : 'Venda'}\n
-Criptomoeda: ${cryptoName}\n
-Valor em R$: ${formData.valorBRL}\n
-Valor em Cripto: ${formData.valorCripto}\n
-Preço atual: R$ ${getCurrentPrice().toFixed(2)}\n\n
-Dados de contato:\n
-Nome: ${nome}\n
-Email: ${email}\n
-WhatsApp: ${telefone || 'Não informado'}\n\n
-Observações: ${formData.observacoes || 'Nenhuma'}\n
-Wallet: ${formData.wallet || 'Não informada'}
-            `.trim();
-            
-            // Tentar abrir o widget primeiro
-            const resultado = abrirZendeskChat({
-              nome: nome,
-              email: email,
-              mensagem: `Olá! Acabei de enviar uma cotação de ${formData.tipo} de ${cryptoName}. Valor: R$ ${formData.valorBRL}`
-            });
-            
-            // Se não funcionar, abrir link direto
-            if (!resultado) {
-              console.log('[Cotação] Widget não abriu, usando link direto');
-              
-              // Criar URL do Zendesk com dados preenchidos
-              const zendeskUrl = new URL('https://rioportop2p.zendesk.com/hc/pt-br/requests/new');
-              zendeskUrl.searchParams.append('tf_subject', assunto);
-              zendeskUrl.searchParams.append('tf_description', descricao);
-              zendeskUrl.searchParams.append('tf_email', email);
-              zendeskUrl.searchParams.append('tf_name', nome);
-              
-              // Abrir em nova aba
-              window.open(zendeskUrl.toString(), '_blank');
-              
-              toast.success('Abrindo formulário de suporte em nova aba...');
-            }
-            
-            // Sempre mostrar botão como backup
-            setShowSupportButton(true);
-          } else {
-            // Mostrar botão para abrir depois
-            setShowSupportButton(true);
-          }
-        }, 2000); // Aguardar 2 segundos
+          abrirWhatsApp({
+            tipo: formData.tipo,
+            moeda: cryptoName,
+            valorBRL: formData.valorBRL,
+            valorCripto: formData.valorCripto,
+            nome: profile?.name || formData.nome,
+            email: profile?.email || formData.email,
+            telefone: profile?.phone || formData.telefone,
+            observacoes: formData.observacoes
+          });
+        }, 2000);
         
         // Limpar formulário mantendo dados do usuário se logado
         setFormData({
@@ -310,11 +236,17 @@ Wallet: ${formData.wallet || 'Não informada'}
           wallet: "",
           observacoes: "",
         })
+        
+        // Resetar estado após 10 segundos
+        setTimeout(() => {
+          setCotacaoEnviada(false)
+        }, 10000)
       } else {
-        throw new Error("Erro ao enviar cotação")
+        throw new Error(data.error || "Erro ao enviar cotação")
       }
     } catch (error) {
-      toast.error("Erro ao enviar cotação. Tente novamente.")
+      console.error('Erro:', error)
+      toast.error(error instanceof Error ? error.message : "Erro ao enviar cotação. Tente novamente.")
     } finally {
       setLoading(false)
     }
@@ -339,6 +271,58 @@ Wallet: ${formData.wallet || 'Não informada'}
               </Badge>
             </div>
           </div>
+
+          {/* Alerta de sucesso após envio */}
+          {cotacaoEnviada && (
+            <Alert className="mb-8 border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
+              <CheckCircle2 className="h-4 w-4 text-green-600" />
+              <AlertTitle className="text-green-900 dark:text-green-100">Cotação enviada com sucesso!</AlertTitle>
+              <AlertDescription className="space-y-2">
+                <p>Recebemos sua solicitação e nossa equipe entrará em contato em breve.</p>
+                <div className="mt-3 space-y-2">
+                  <p className="font-semibold">Próximos passos:</p>
+                  <ul className="list-disc list-inside space-y-1 text-sm">
+                    <li>Sua cotação foi salva em nosso sistema</li>
+                    <li>O WhatsApp abrirá automaticamente em instantes</li>
+                    <li>Envie a mensagem pré-formatada para nossa equipe</li>
+                    <li>Aguarde nosso contato para finalizar a operação</li>
+                  </ul>
+                  <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                    <Button
+                      variant="default"
+                      onClick={() => {
+                        abrirWhatsApp({
+                          tipo: formData.tipo,
+                          moeda: formData.moeda === "btc" ? "Bitcoin (BTC)" : formData.moedaSelecionada?.name || "Criptomoeda",
+                          valorBRL: formData.valorBRL,
+                          valorCripto: formData.valorCripto,
+                          nome: profile?.name || formData.nome,
+                          email: profile?.email || formData.email,
+                          telefone: profile?.phone || formData.telefone,
+                          observacoes: formData.observacoes
+                        });
+                      }}
+                    >
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      Abrir WhatsApp Novamente
+                    </Button>
+                    <Button
+                      variant="outline"
+                      asChild
+                    >
+                      <a 
+                        href="https://wa.me/552120187776" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        Contato Direto
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
 
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Formulário Principal */}
@@ -408,6 +392,7 @@ Wallet: ${formData.wallet || 'Não informada'}
                         </p>
                       </div>
                     )}
+
                     {/* Tipo de Operação */}
                     <div className="space-y-3">
                       <Label>Tipo de Operação</Label>
@@ -605,44 +590,18 @@ Wallet: ${formData.wallet || 'Não informada'}
                     </div>
 
                     <Button type="submit" size="lg" className="w-full" disabled={loading}>
-                      {loading ? "Enviando..." : "Enviar Cotação"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      {loading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Enviando...
+                        </>
+                      ) : (
+                        <>
+                          Enviar Cotação
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </>
+                      )}
                     </Button>
-                    
-                    {/* Botão de suporte manual */}
-                    {showSupportButton && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="lg"
-                        className="w-full"
-                        onClick={() => {
-                          console.log('[Cotação] Botão manual clicado');
-                          debugZendesk();
-                          
-                          // Tentar abrir widget
-                          const resultado = abrirZendeskChat({
-                            nome: profile?.name || formData.nome,
-                            email: profile?.email || formData.email
-                          });
-                          
-                          // Se não funcionar, usar link direto
-                          if (!resultado) {
-                            console.log('[Cotação] Abrindo link direto do Zendesk');
-                            
-                            const zendeskUrl = new URL('https://rioportop2p.zendesk.com/hc/pt-br/requests/new');
-                            zendeskUrl.searchParams.append('tf_subject', 'Suporte - Cotação P2P');
-                            zendeskUrl.searchParams.append('tf_email', profile?.email || formData.email);
-                            zendeskUrl.searchParams.append('tf_name', profile?.name || formData.nome);
-                            
-                            window.open(zendeskUrl.toString(), '_blank');
-                          }
-                        }}
-                      >
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        Abrir Chat de Suporte
-                      </Button>
-                    )}
                   </form>
                 </CardContent>
               </Card>
@@ -734,7 +693,7 @@ Wallet: ${formData.wallet || 'Não informada'}
                     </li>
                     <li className="flex gap-2">
                       <span className="font-semibold text-primary">2.</span>
-                      <span>Converse com nosso suporte via chat</span>
+                      <span>Nossa equipe analisará sua solicitação</span>
                     </li>
                     <li className="flex gap-2">
                       <span className="font-semibold text-primary">3.</span>
@@ -753,6 +712,34 @@ Wallet: ${formData.wallet || 'Não informada'}
                       </span>
                     </li>
                   </ol>
+                </CardContent>
+              </Card>
+
+              {/* Contato Direto */}
+              <Card className="border-primary">
+                <CardHeader>
+                  <CardTitle>Atendimento Direto</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm">
+                    Prefere falar diretamente com nossa equipe?
+                  </p>
+                  <Button 
+                    asChild 
+                    className="w-full"
+                    variant="outline"
+                  >
+                    <a 
+                      href="https://wa.me/552120187776?text=Olá!%20Gostaria%20de%20fazer%20uma%20cotação%20P2P"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      💬 WhatsApp: +55 21 2018-7776
+                    </a>
+                  </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Atendimento de segunda a sábado
+                  </p>
                 </CardContent>
               </Card>
             </div>

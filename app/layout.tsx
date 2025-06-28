@@ -9,7 +9,7 @@ import { Toaster as ShadcnToaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 
 import { LeadCaptureModal } from "@/components/lead-capture/lead-capture-modal"
-import { ZendeskProvider } from "@/app/providers/zendesk-provider"
+// import { ZendeskProvider } from "@/app/providers/zendesk-provider" // Removido - não funciona
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -58,7 +58,7 @@ export default function RootLayout({
           >
             {children}
             <LeadCaptureModal />
-            <ZendeskProvider />
+            {/* <ZendeskProvider /> - Removido temporariamente */}
             <Toaster position="top-right" />
             <ShadcnToaster />
             <Sonner />

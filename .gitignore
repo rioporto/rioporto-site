@@ -70,3 +70,8 @@ coverage
 # Temporary files
 tmp/
 temp/
+
+# Backup files
+backup-chat19/
+*.backup
+*.old
