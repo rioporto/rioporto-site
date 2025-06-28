@@ -1,12 +1,10 @@
 'use client';
 
+import { MINICURSO_CONFIG } from '@/lib/minicurso-config';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { 
   BookOpen, 
@@ -22,17 +20,15 @@ import {
   TrendingUp,
   Users,
   Loader2,
-  Volume2,
   Settings,
   BarChart3,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  Play
 } from 'lucide-react';
 import Link from 'next/link';
-import { AudioPlayer } from '@/components/minicurso/audio-player';
-import { useAudioSettings } from '@/hooks/use-audio-settings';
+import { VimeoPlayer } from '@/components/minicurso/vimeo-player';
 import { useMinicursoTracking } from '@/hooks/use-minicurso-tracking';
-import { getChapterAudio, getTotalCourseDuration, formatDuration } from '@/data/minicurso-audio';
 import {
   Sheet,
   SheetContent,
@@ -42,6 +38,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { toast } from 'sonner';
+import Header from "@/components/layout/header"
+import Footer from "@/components/layout/footer"
 
 function MinicursoContent() {
   const searchParams = useSearchParams();
@@ -53,13 +51,10 @@ function MinicursoContent() {
   const [currentPage, setCurrentPage] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
   const [courseProgress, setCourseProgress] = useState<any>(null);
-  const { settings, updateSettings } = useAudioSettings();
   
   // Tracking
   const { 
     trackPageView, 
-    trackAudioPlay, 
-    trackAudioComplete, 
     trackCourseComplete,
     getProgress 
   } = useMinicursoTracking({ 
@@ -67,12 +62,13 @@ function MinicursoContent() {
     onError: (error) => console.error('Tracking error:', error)
   });
 
-  // Conteúdo do minicurso
+  // Conteúdo do minicurso - Todos com vídeo
   const chapters = [
     {
       id: 'capa',
-      title: 'Manual P2P: Negocie Bitcoin como um Profissional',
-      icon: <BookOpen className="w-6 h-6" />,
+      title: 'Manual P2P',
+      fullTitle: 'Manual P2P: Negocie Bitcoin como um Profissional',
+      icon: <BookOpen className="w-5 h-5" />,
       content: `
         <div class="text-center space-y-6">
           <h1 class="text-4xl md:text-5xl font-bold text-primary">Manual P2P: Negocie Bitcoin como um Profissional</h1>
@@ -82,12 +78,15 @@ function MinicursoContent() {
             <p class="text-sm text-muted-foreground mt-2">Especialista em Bitcoin e Criptomoedas</p>
           </div>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'introducao',
       title: 'Introdução',
-      icon: <Home className="w-6 h-6" />,
+      fullTitle: 'A Revolução Silenciosa do Dinheiro Ponto a Ponto',
+      icon: <Home className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6">A Revolução Silenciosa do Dinheiro Ponto a Ponto</h2>
         <div class="space-y-4 text-lg">
@@ -96,12 +95,15 @@ function MinicursoContent() {
           <p>Essa ideia de transação "ponto a ponto" (Peer-to-Peer, ou P2P) é a alma do Bitcoin e o fundamento de uma nova era de soberania financeira.</p>
           <p class="font-semibold text-primary">Este manual é seu guia. Nosso objetivo é fornecer o conhecimento para você negociar não como um espectador, mas como um profissional — com segurança, confiança e total controle sobre seu patrimônio.</p>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'cap1',
-      title: 'Capítulo 1: Descomplicando o P2P',
-      icon: <Users className="w-6 h-6" />,
+      title: 'Capítulo 1',
+      fullTitle: 'Descomplicando o P2P',
+      icon: <Users className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6">Descomplicando o P2P</h2>
         <h3 class="text-xl font-semibold mb-4">O Que é e Como Funciona na Prática?</h3>
@@ -117,12 +119,15 @@ function MinicursoContent() {
             <li><strong>Liberação das Criptos:</strong> Com o pagamento confirmado, o vendedor envia as criptomoedas.</li>
           </ol>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'cap2',
-      title: 'Capítulo 2: P2P vs. Corretoras',
-      icon: <TrendingUp className="w-6 h-6" />,
+      title: 'Capítulo 2',
+      fullTitle: 'P2P vs. Corretoras',
+      icon: <TrendingUp className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6">P2P vs. Corretoras</h2>
         <h3 class="text-xl font-semibold mb-4">Qual o Melhor Caminho para Você?</h3>
@@ -140,12 +145,15 @@ function MinicursoContent() {
             <p class="mt-2">Na RIO PORTO P2P, a regra é clara: o preço é fixo e você sabe exatamente quanto vai receber antes mesmo de fechar o negócio.</p>
           </div>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'cap3',
-      title: 'Capítulo 3: Sua Fortaleza Digital',
-      icon: <Shield className="w-6 h-6" />,
+      title: 'Capítulo 3',
+      fullTitle: 'Sua Fortaleza Digital',
+      icon: <Shield className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6">Sua Fortaleza Digital</h2>
         <h3 class="text-xl font-semibold mb-4">O Poder da Autocustódia e das Carteiras</h3>
@@ -160,12 +168,15 @@ function MinicursoContent() {
           <p>Mas se o banco (ou a corretora) falir, for hackeado ou congelar sua conta, você perde acesso aos seus ativos.</p>
           <p class="font-semibold">A negociação P2P, combinada com a autocustódia, resolve isso. Ao negociar conosco, você recebe as criptomoedas diretamente em uma carteira que só você controla.</p>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'cap4',
-      title: 'Capítulo 4: Navegando em Águas Seguras',
-      icon: <Shield className="w-6 h-6" />,
+      title: 'Capítulo 4',
+      fullTitle: 'Navegando em Águas Seguras',
+      icon: <Shield className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6">Navegando em Águas Seguras</h2>
         <h3 class="text-xl font-semibold mb-4">O Guia Antifraude Definitivo</h3>
@@ -193,12 +204,15 @@ function MinicursoContent() {
             </ul>
           </div>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'cap5',
-      title: 'Capítulo 5: A Burocracia sem Medo',
-      icon: <FileText className="w-6 h-6" />,
+      title: 'Capítulo 5',
+      fullTitle: 'A Burocracia sem Medo',
+      icon: <FileText className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6">A Burocracia sem Medo</h2>
         <h3 class="text-xl font-semibold mb-4">Legalidade e Impostos no Brasil</h3>
@@ -221,12 +235,15 @@ function MinicursoContent() {
           
           <p class="text-sm text-muted-foreground italic mt-6">*Aviso Legal: As informações são para fins educativos. Consulte sempre um contador especializado.</p>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'cap6',
-      title: 'Capítulo 6: A Vantagem RIO PORTO P2P',
-      icon: <Award className="w-6 h-6" />,
+      title: 'Capítulo 6',
+      fullTitle: 'A Vantagem RIO PORTO P2P',
+      icon: <Award className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6 text-center">A Vantagem RIO PORTO P2P</h2>
         
@@ -256,12 +273,15 @@ function MinicursoContent() {
           <h3 class="text-2xl font-bold mb-2">Bitcoin a partir de R$100, com taxa fixa e sem asteriscos.</h3>
           <p class="text-lg">Na RIO PORTO P2P, a transparência vem em primeiro lugar. O valor que você vê é o valor que você recebe.</p>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     },
     {
       id: 'conclusao',
       title: 'Conclusão',
-      icon: <BookOpen className="w-6 h-6" />,
+      fullTitle: 'Dê o Próximo Passo com Confiança',
+      icon: <BookOpen className="w-5 h-5" />,
       content: `
         <h2 class="text-3xl font-bold mb-6">Conclusão: Dê o Próximo Passo com Confiança</h2>
         
@@ -275,12 +295,14 @@ function MinicursoContent() {
           <div class="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground p-8 rounded-lg mt-8 text-center">
             <h3 class="text-2xl font-bold mb-4">A RIO PORTO P2P é sua parceira de confiança.</h3>
             <p class="mb-6">Descubra por que nossos clientes negociam com total confiança.</p>
-            <a href="https://rioporto.com" target="_blank" class="inline-block bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
-              Quero conhecer a vantagem RIO PORTO P2P
+            <a href="/cotacao" class="inline-block bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+              Quero fazer minha primeira negociação
             </a>
           </div>
         </div>
-      `
+      `,
+      hasVideo: true,
+      videoId: MINICURSO_CONFIG.vimeoVideoId
     }
   ];
 
@@ -341,21 +363,6 @@ function MinicursoContent() {
     }
   };
 
-  const handleAudioPlay = () => {
-    trackAudioPlay(chapters[currentPage].id);
-  };
-
-  const handleAudioComplete = () => {
-    const audio = getChapterAudio(chapters[currentPage].id);
-    if (audio) {
-      trackAudioComplete(chapters[currentPage].id, audio.duration);
-    }
-    
-    if (settings.continuousPlay) {
-      goToNextPage();
-    }
-  };
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -369,260 +376,200 @@ function MinicursoContent() {
 
   if (error || !isAuthorized) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="max-w-md w-full p-6">
-          <div className="text-center">
-            <X className="h-12 w-12 text-destructive mx-auto mb-4" />
-            <h1 className="text-2xl font-bold mb-2">Acesso Negado</h1>
-            <p className="text-muted-foreground mb-6">{error || 'Você não tem permissão para acessar este conteúdo.'}</p>
-            <div className="space-y-3">
-              <Button asChild className="w-full">
-                <Link href="/">Voltar ao Início</Link>
-              </Button>
-              <Button asChild variant="outline" className="w-full">
-                <Link href="/blog">Ler Nosso Blog</Link>
-              </Button>
+      <>
+        <Header />
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <Card className="max-w-md w-full p-6">
+            <div className="text-center">
+              <X className="h-12 w-12 text-destructive mx-auto mb-4" />
+              <h1 className="text-2xl font-bold mb-2">Acesso Negado</h1>
+              <p className="text-muted-foreground mb-6">{error || 'Você não tem permissão para acessar este conteúdo.'}</p>
+              <div className="space-y-3">
+                <Button asChild className="w-full">
+                  <Link href="/">Voltar ao Início</Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full">
+                  <Link href="/cursos">Ver Cursos</Link>
+                </Button>
+              </div>
             </div>
-          </div>
-        </Card>
-      </div>
+          </Card>
+        </div>
+        <Footer />
+      </>
     );
   }
 
   const currentChapter = chapters[currentPage];
-  const chapterAudio = getChapterAudio(currentChapter.id);
-  const totalDuration = getTotalCourseDuration();
   const progressPercentage = Math.round(((currentPage + 1) / chapters.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-background border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowMenu(!showMenu)}
-                className="md:hidden"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-              <div className="flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-primary" />
-                <span className="font-bold text-lg">Manual P2P</span>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground hidden sm:inline">
-                Olá, {leadInfo?.name?.split(' ')[0]}!
-              </span>
-              
-              {/* Progress Indicator */}
-              <div className="hidden sm:flex items-center gap-2">
-                <Progress value={progressPercentage} className="w-24 h-2" />
-                <span className="text-xs text-muted-foreground">{progressPercentage}%</span>
+    <>
+      <Header />
+      <div className="min-h-screen bg-background">
+        <div className="flex">
+          {/* Sidebar Melhorado */}
+          <aside className={`fixed md:sticky top-16 left-0 h-[calc(100vh-4rem)] w-80 bg-card border-r overflow-y-auto transition-transform ${showMenu ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 z-40 shadow-lg`}>
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="font-bold text-lg">Conteúdo do Curso</h3>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden"
+                  onClick={() => setShowMenu(false)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
               </div>
               
-              {/* Configurações */}
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Settings className="h-5 w-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>Configurações e Progresso</SheetTitle>
-                    <SheetDescription>
-                      Personalize sua experiência e acompanhe seu progresso
-                    </SheetDescription>
-                  </SheetHeader>
-                  
-                  {/* Progresso Detalhado */}
-                  {courseProgress && (
-                    <div className="mt-6 space-y-4 border-b pb-6">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <BarChart3 className="h-4 w-4" />
-                        Seu Progresso
-                      </h4>
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>Progresso geral</span>
-                          <span className="font-semibold">{courseProgress.progress}%</span>
-                        </div>
-                        <Progress value={courseProgress.progress} className="h-2" />
-                        
-                        <div className="grid grid-cols-2 gap-2 mt-4 text-sm">
-                          <div className="flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            <span>{courseProgress.pagesViewed} páginas lidas</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Volume2 className="h-4 w-4 text-blue-500" />
-                            <span>{courseProgress.audioPlays} áudios ouvidos</span>
-                          </div>
-                          <div className="flex items-center gap-2 col-span-2">
-                            <Clock className="h-4 w-4 text-orange-500" />
-                            <span>Tempo total: {Math.round(courseProgress.totalTimeSpent / 60)} min</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Configurações de Áudio */}
-                  <div className="mt-6 space-y-6">
-                    <h4 className="font-semibold">Configurações de Áudio</h4>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="autoplay" className="flex items-center gap-2">
-                        <Volume2 className="h-4 w-4" />
-                        Reproduzir automaticamente
-                      </Label>
-                      <Switch
-                        id="autoplay"
-                        checked={settings.autoPlay}
-                        onCheckedChange={(checked) => updateSettings({ autoPlay: checked })}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="continuous" className="flex items-center gap-2">
-                        <ChevronRight className="h-4 w-4" />
-                        Reprodução contínua
-                      </Label>
-                      <Switch
-                        id="continuous"
-                        checked={settings.continuousPlay}
-                        onCheckedChange={(checked) => updateSettings({ continuousPlay: checked })}
-                      />
-                    </div>
-                    
-                    <div className="pt-4 text-sm text-muted-foreground">
-                      <p>Tempo total do curso: {formatDuration(totalDuration)}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Botão de Download */}
-                  <div className="mt-6 pt-6 border-t">
-                    <Button 
-                      onClick={handleDownload}
-                      variant="outline"
-                      className="w-full gap-2"
-                    >
-                      <Download className="h-4 w-4" />
-                      Baixar PDF do Manual
-                    </Button>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
-          </div>
-        </div>
-      </header>
+              {/* Progress Overview */}
+              <div className="mb-6 p-4 bg-muted rounded-lg">
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-muted-foreground">Progresso Geral</span>
+                  <span className="font-semibold">{progressPercentage}%</span>
+                </div>
+                <Progress value={progressPercentage} className="h-2" />
+              </div>
 
-      <div className="flex">
-        {/* Sidebar */}
-        <aside className={`fixed md:sticky top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-muted/50 border-r overflow-y-auto transition-transform ${showMenu ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 z-40`}>
-          <nav className="p-4">
-            <h3 className="font-semibold mb-4">Sumário</h3>
-            <ul className="space-y-2">
-              {chapters.map((chapter, index) => {
-                const audio = getChapterAudio(chapter.id);
-                const isCompleted = courseProgress?.pagesViewed && index < currentPage;
-                return (
-                  <li key={chapter.id}>
+              {/* Chapters List */}
+              <nav className="space-y-2">
+                {chapters.map((chapter, index) => {
+                  const isCompleted = courseProgress?.pagesViewed && index < currentPage;
+                  const isCurrent = currentPage === index;
+                  
+                  return (
                     <button
+                      key={chapter.id}
                       onClick={() => {
                         setCurrentPage(index);
                         setShowMenu(false);
                       }}
-                      className={`w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center justify-between ${
-                        currentPage === index 
-                          ? 'bg-primary text-primary-foreground' 
+                      className={`w-full text-left p-4 rounded-lg transition-all duration-200 group ${
+                        isCurrent 
+                          ? 'bg-primary text-primary-foreground shadow-md' 
                           : 'hover:bg-muted'
                       }`}
                     >
-                      <div className="flex items-center gap-2 flex-1">
-                        {isCompleted ? (
-                          <CheckCircle2 className="h-5 w-5 text-green-500" />
-                        ) : (
-                          chapter.icon
+                      <div className="flex items-start gap-3">
+                        <div className={`mt-0.5 ${isCurrent ? 'text-primary-foreground' : ''}`}>
+                          {isCompleted ? (
+                            <CheckCircle2 className="h-5 w-5 text-green-500" />
+                          ) : (
+                            chapter.icon
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className={`font-medium text-sm ${isCurrent ? '' : 'group-hover:text-primary'}`}>
+                            {chapter.title}
+                          </div>
+                          <div className={`text-xs mt-1 ${isCurrent ? 'text-primary-foreground/80' : 'text-muted-foreground'} truncate`}>
+                            {chapter.fullTitle}
+                          </div>
+                        </div>
+                        {chapter.hasVideo && (
+                          <Play className={`h-4 w-4 flex-shrink-0 ${isCurrent ? 'text-primary-foreground/60' : 'text-muted-foreground'}`} />
                         )}
-                        <span className="text-sm truncate">{chapter.title}</span>
                       </div>
-                      {audio && (
-                        <Volume2 className="h-3 w-3 flex-shrink-0" />
-                      )}
                     </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </aside>
+                  );
+                })}
+              </nav>
 
-        {/* Content */}
-        <main className="flex-1 max-w-4xl mx-auto p-4 md:p-8 space-y-6">
-          {/* Audio Player */}
-          {chapterAudio && (
-            <AudioPlayer
-              src={chapterAudio.audioUrl}
-              title={`Narração: ${currentChapter.title}`}
-              autoPlay={settings.autoPlay}
-              onPlay={handleAudioPlay}
-              onComplete={handleAudioComplete}
-              className="mb-6"
-            />
-          )}
+              {/* Download Button */}
+              <div className="mt-6 pt-6 border-t">
+                <Button 
+                  onClick={handleDownload}
+                  variant="outline"
+                  className="w-full gap-2"
+                  size="sm"
+                >
+                  <Download className="h-4 w-4" />
+                  Baixar PDF Completo
+                </Button>
+              </div>
+            </div>
+          </aside>
 
-          {/* Chapter Content */}
-          <Card className="p-6 md:p-10">
-            <div 
-              className="prose prose-lg dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: currentChapter.content }}
-            />
-          </Card>
+          {/* Main Content */}
+          <main className="flex-1">
+            {/* Mobile Header */}
+            <div className="sticky top-16 z-30 bg-background border-b p-4 flex items-center justify-between md:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowMenu(true)}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+              <span className="text-sm font-medium">{currentChapter.title}</span>
+              <div className="flex items-center gap-2">
+                <Progress value={progressPercentage} className="w-16 h-2" />
+                <span className="text-xs text-muted-foreground">{progressPercentage}%</span>
+              </div>
+            </div>
 
-          {/* Navigation */}
-          <div className="flex justify-between items-center">
-            <Button
-              onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
-              disabled={currentPage === 0}
-              variant="outline"
-              className="gap-2"
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Anterior
-            </Button>
-            
-            <span className="text-sm text-muted-foreground">
-              Página {currentPage + 1} de {chapters.length}
-            </span>
-            
-            <Button
-              onClick={goToNextPage}
-              disabled={currentPage === chapters.length - 1}
-              variant="outline"
-              className="gap-2"
-            >
-              Próximo
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </main>
+            <div className="max-w-4xl mx-auto p-4 md:p-8 space-y-6">
+              {/* Video Player */}
+              {currentChapter.hasVideo && currentChapter.videoId && (
+                <VimeoPlayer
+                  videoId={currentChapter.videoId}
+                  title={`Vídeo: ${currentChapter.fullTitle}`}
+                  className="mb-6"
+                  onComplete={() => {
+                    toast.success('Vídeo concluído! Continue com o conteúdo abaixo.');
+                  }}
+                />
+              )}
+
+              {/* Chapter Content */}
+              <Card className="p-6 md:p-10">
+                <div 
+                  className="prose prose-lg dark:prose-invert max-w-none"
+                  dangerouslySetInnerHTML={{ __html: currentChapter.content }}
+                />
+              </Card>
+
+              {/* Navigation */}
+              <div className="flex justify-between items-center py-6">
+                <Button
+                  onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                  disabled={currentPage === 0}
+                  variant="outline"
+                  className="gap-2"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  <span className="hidden sm:inline">Anterior</span>
+                </Button>
+                
+                <span className="text-sm text-muted-foreground">
+                  Página {currentPage + 1} de {chapters.length}
+                </span>
+                
+                <Button
+                  onClick={goToNextPage}
+                  className="gap-2"
+                >
+                  <span className="hidden sm:inline">
+                    {currentPage === chapters.length - 1 ? 'Concluir' : 'Próximo'}
+                  </span>
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </main>
+        </div>
+
+        {/* Mobile menu overlay */}
+        {showMenu && (
+          <div 
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 md:hidden"
+            onClick={() => setShowMenu(false)}
+          />
+        )}
       </div>
-
-      {/* Mobile menu overlay */}
-      {showMenu && (
-        <div 
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-30 md:hidden"
-          onClick={() => setShowMenu(false)}
-        />
-      )}
-    </div>
+      <Footer />
+    </>
   );
 }
 

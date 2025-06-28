@@ -75,3 +75,52 @@ temp/
 backup-chat19/
 *.backup
 *.old
+
+# Development files (not needed for production)
+_desenvolvimento/
+organize-files.bat
+
+# Documentation files
+*.md
+!README.md
+!LICENSE.md
+
+# Scripts
+*.bat
+*.sh
+!package.json
+!package-lock.json
+
+# SQL files
+*.sql
+
+# Test files
+**/test/**
+**/tests/**
+**/__tests__/**
+*.test.*
+*.spec.*
+
+# Temporary files
+*.tmp
+*.temp
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+.Trash-*

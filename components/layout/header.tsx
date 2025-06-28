@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, Moon, Sun, X, User, LogOut } from "lucide-react"
+import { Menu, Moon, Sun, X, User, LogOut, LayoutDashboard } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState } from "react"
 import { useAuth } from "@/contexts/auth-context"
@@ -22,6 +22,7 @@ const navigation = [
   { name: "Serviços", href: "/servicos" },
   { name: "Artigos", href: "/blog" },
   { name: "Cursos", href: "/cursos" },
+  { name: "Minicurso Grátis", href: "/minicurso-gratis" },
   { name: "Sobre", href: "/sobre" },
   { name: "Contato", href: "/contato" },
 ]
@@ -102,6 +103,12 @@ export default function Header() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                  <Link href="/admin/dashboard" className="cursor-pointer">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Admin - Cotações
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href="/perfil" className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     Meu Perfil
@@ -173,6 +180,13 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Dashboard
+                </Link>
+                <Link
+                  href="/admin/dashboard"
+                  className="block rounded-md px-3 py-2 text-base font-medium hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Admin - Cotações
                 </Link>
                 <button
                   className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-accent hover:text-accent-foreground text-red-600"

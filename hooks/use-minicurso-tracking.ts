@@ -11,7 +11,7 @@ export function useMinicursoTracking({ token, onError }: TrackingOptions) {
 
   // Função para enviar dados de tracking
   const track = useCallback(async (
-    activity_type: 'page_view' | 'audio_play' | 'audio_complete' | 'course_complete',
+    activity_type: 'page_view' | 'course_complete',
     data?: {
       page_id?: string;
       duration_seconds?: number;
@@ -55,19 +55,6 @@ export function useMinicursoTracking({ token, onError }: TrackingOptions) {
 
     // Rastrear nova página
     track('page_view', { page_id: pageId });
-  }, [track]);
-
-  // Rastrear reprodução de áudio
-  const trackAudioPlay = useCallback((pageId: string) => {
-    track('audio_play', { page_id: pageId });
-  }, [track]);
-
-  // Rastrear conclusão de áudio
-  const trackAudioComplete = useCallback((pageId: string, duration: number) => {
-    track('audio_complete', { 
-      page_id: pageId,
-      duration_seconds: Math.round(duration)
-    });
   }, [track]);
 
   // Rastrear conclusão do curso
@@ -118,8 +105,6 @@ export function useMinicursoTracking({ token, onError }: TrackingOptions) {
 
   return {
     trackPageView,
-    trackAudioPlay,
-    trackAudioComplete,
     trackCourseComplete,
     getProgress
   };

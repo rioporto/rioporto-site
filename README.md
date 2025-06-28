@@ -1,121 +1,79 @@
-# Rio Porto P2P - Plataforma de Negociação de Criptomoedas
+# Rio Porto P2P - Plataforma de Negociação P2P de Bitcoin
 
-## 🚀 Sobre o Projeto
+Plataforma completa para compra e venda de Bitcoin através de negociação peer-to-peer (P2P), com foco em segurança, privacidade e experiência do usuário.
 
-Rio Porto P2P é uma plataforma completa para negociação peer-to-peer de Bitcoin e criptomoedas, com foco em segurança, simplicidade e educação financeira.
+## 🚀 Funcionalidades
 
-### ✨ Principais Funcionalidades
+- **Sistema de Cotação P2P** - Formulário inteligente com integração WhatsApp
+- **Minicurso Gratuito** - Manual completo com vídeo aulas sobre negociação P2P
+- **Lead Capture** - Sistema automatizado com envio de emails via Resend
+- **Autenticação Completa** - Login, cadastro e perfil de usuário
+- **Dashboard Administrativo** - Gestão de cotações e leads
 
-- **Sistema P2P Completo** - Compra e venda de Bitcoin com cálculo automático de taxas
-- **Blog Educativo** - Conteúdo sobre Bitcoin, criptomoedas e educação financeira
-- **Sistema de Autenticação** - Login seguro com Supabase
-- **Painel Administrativo** - Gestão de usuários e conteúdo
-- **Dark Mode** - Interface adaptável com tema claro/escuro
-- **Mobile First** - Design responsivo para todos os dispositivos
+## 🛠️ Tecnologias
 
-## 🛠️ Tecnologias Utilizadas
-
-- **[Next.js 14](https://nextjs.org/)** - Framework React com App Router
-- **[TypeScript](https://www.typescriptlang.org/)** - Tipagem estática
-- **[Tailwind CSS](https://tailwindcss.com/)** - Estilização utility-first
-- **[Shadcn/ui](https://ui.shadcn.com/)** - Componentes UI modernos
-- **[Supabase](https://supabase.com/)** - Backend as a Service
-- **[Vercel](https://vercel.com/)** - Hospedagem e deploy
+- **Next.js 14** - Framework React com App Router
+- **TypeScript** - Type safety em todo o projeto
+- **Tailwind CSS** - Estilização moderna e responsiva
+- **Supabase** - Backend as a Service (Auth + Database)
+- **Resend** - Envio de emails transacionais
+- **Vimeo** - Hospedagem de vídeos do minicurso
 
 ## 📦 Instalação
 
-### Pré-requisitos
-
-- Node.js 18+ 
-- NPM ou Yarn
-- Conta no Supabase
-
-### Passo a passo
-
-1. Clone o repositório:
 ```bash
-git clone https://github.com/SEU_USUARIO/rioporto-site.git
+# Clone o repositório
+git clone https://github.com/seu-usuario/rioporto-site.git
+
+# Entre no diretório
 cd rioporto-site
-```
 
-2. Instale as dependências:
-```bash
+# Instale as dependências
 npm install
-```
 
-3. Configure as variáveis de ambiente:
-```bash
+# Configure as variáveis de ambiente
 cp .env.example .env.local
-# Edite .env.local com suas credenciais do Supabase
-```
 
-4. Execute o projeto:
-```bash
+# Execute o projeto
 npm run dev
 ```
 
-5. Acesse `http://localhost:3000`
+## 🔧 Configuração
 
-## 🗄️ Configuração do Banco de Dados
+Crie um arquivo `.env.local` com as seguintes variáveis:
 
-1. Crie um projeto no [Supabase](https://supabase.com)
-2. Execute os scripts SQL na seguinte ordem:
-   - `supabase_setup.sql` - Estrutura base
-   - `supabase_blog_setup.sql` - Sistema de blog
-   - `supabase_blog_data_migration.sql` - Dados iniciais
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=sua_url_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anon
+SUPABASE_SERVICE_ROLE_KEY=sua_chave_service
 
-## 🌐 Deploy
+# Resend
+RESEND_API_KEY=sua_api_key_resend
+RESEND_FROM_EMAIL=noreply@seudominio.com
 
-### Deploy no Vercel
-
-1. Conecte seu repositório GitHub ao Vercel
-2. Configure as variáveis de ambiente:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-3. Deploy!
-
-## 📁 Estrutura do Projeto
-
-```
-rioporto-site/
-├── app/                    # App Router do Next.js
-│   ├── (auth)/            # Páginas de autenticação
-│   ├── (marketing)/       # Páginas públicas
-│   ├── (platform)/        # Área autenticada
-│   └── api/               # API Routes
-├── components/            # Componentes React
-├── contexts/              # Context API
-├── lib/                   # Utilitários e configurações
-├── types/                 # TypeScript types
-└── public/                # Assets estáticos
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-## 🔧 Scripts Disponíveis
+## 📱 URLs Principais
 
-```bash
-npm run dev        # Desenvolvimento
-npm run build      # Build de produção
-npm run start      # Iniciar produção
-npm run lint       # Verificar código
-npm run type-check # Verificar tipos
-```
+- `/` - Homepage
+- `/cotacao` - Sistema de cotação P2P
+- `/minicurso-gratis` - Landing page do minicurso
+- `/cursos` - Lista de cursos disponíveis
+- `/blog` - Artigos e conteúdo educativo
 
-## 🤝 Contribuindo
+## 🚀 Deploy
 
-1. Faça um Fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+O projeto está configurado para deploy automático na Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/seu-usuario/rioporto-site)
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 📞 Contato
-
-Rio Porto P2P - [www.rioporto.com](https://www.rioporto.com)
+Este projeto é proprietário e confidencial. Todos os direitos reservados.
 
 ---
 
-Desenvolvido com ❤️ pela equipe Rio Porto
+Desenvolvido com ❤️ pela equipe Rio Porto P2P
