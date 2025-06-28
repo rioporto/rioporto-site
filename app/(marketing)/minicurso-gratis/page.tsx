@@ -366,7 +366,7 @@ export default function MinicursoGratisPage() {
                       <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
                     ))}
                   </div>
-                  <p className="text-muted-foreground mb-4">"{testimonial.text}"</p>
+                  <p className="text-muted-foreground mb-4">&quot;{testimonial.text}&quot;</p>
                   <div>
                     <p className="font-semibold">{testimonial.name}</p>
                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>

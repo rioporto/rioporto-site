@@ -292,7 +292,7 @@ export default function CursoP2PLandingPage() {
                       <Star key={i} className="w-5 h-5 fill-orange-400 text-orange-400" />
                     ))}
                   </div>
-                  <p className="text-gray-300 mb-4 italic">"{testimonial.content}"</p>
+                  <p className="text-gray-300 mb-4 italic">&quot;{testimonial.content}&quot;</p>
                   <div>
                     <p className="font-bold text-white">{testimonial.name}</p>
                     <p className="text-sm text-gray-400">{testimonial.role}</p>
