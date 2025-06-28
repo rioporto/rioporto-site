@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     // Preparar dados para inserir
     const dadosInsert = {
       user_id: user?.id || null,
-      type: body.tipo,
+      type: body.tipo === 'compra' ? 'buy' : 'sell', // Mudando para buy/sell
       crypto: body.moeda === 'btc' ? 'BTC' : body.moeda.toUpperCase(),
       amount: parseFloat(body.valorCripto),
       brl_value: parseFloat(body.valorBRL),
