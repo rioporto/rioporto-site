@@ -216,6 +216,8 @@ export default function CotacaoPage() {
         cryptoName,
         price: getCurrentPrice()
       }
+      
+      console.log('Enviando dados:', dadosEnvio);
 
       const response = await fetch("/api/cotacao", {
         method: "POST",
@@ -223,7 +225,9 @@ export default function CotacaoPage() {
         body: JSON.stringify(dadosEnvio),
       })
 
+      console.log('Response status:', response.status);
       const data = await response.json()
+      console.log('Response data:', data);
 
       if (response.ok) {
         toast.success("Cotação enviada com sucesso!")

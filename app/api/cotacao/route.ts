@@ -75,28 +75,29 @@ export async function POST(request: NextRequest) {
     const { data: cotacao, error: dbError } = await supabase
       .from('quotations')
       .insert({
-        user_id: user?.id,
+        user_id: user?.id || null,
         type: sanitizedData.tipo, // mudou de 'tipo' para 'type'
-        crypto: sanitizedData.moeda, // mudou de 'moeda' para 'crypto'
+        crypto: sanitizedData.moeda.toUpperCase(), // mudou de 'moeda' para 'crypto' - uppercase
         amount: parseFloat(sanitizedData.valorCripto), // valor em crypto
         brl_value: parseFloat(sanitizedData.valorBRL), // valor em BRL
         fee: parseFloat(sanitizedData.valorBRL) * 0.025, // taxa padrão 2.5%
         total: parseFloat(sanitizedData.valorBRL) * 1.025, // total com taxa
-        phone_number: sanitizedData.telefone || '', // campo obrigatório
+        phone_number: sanitizedData.telefone || '+55', // campo obrigatório - mínimo +55
         valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // válido por 24h
         status: 'pending',
         nome: sanitizedData.nome,
         email: sanitizedData.email,
-        telefone: sanitizedData.telefone,
-        wallet: sanitizedData.wallet,
-        observacoes: sanitizedData.observacoes,
+        telefone: sanitizedData.telefone || null,
+        wallet: sanitizedData.wallet || null,
+        observacoes: sanitizedData.observacoes || null,
         metadata: {
           crypto_name: sanitizedData.cryptoName,
           price_at_time: sanitizedData.price,
           ip_address: ip,
-          user_agent: request.headers.get('user-agent')
+          user_agent: request.headers.get('user-agent') || 'unknown'
         },
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       })
       .select()
       .single();
@@ -132,10 +133,16 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('Erro na API de cotação:', error);
+    console.error('Erro detalhado na API de cotação:', error);
+    console.error('Tipo do erro:', error instanceof Error ? error.constructor.name : typeof error);
+    if (error instanceof Error) {
+      console.error('Mensagem:', error.message);
+      console.error('Stack:', error.stack);
+    }
     
     // Tratamento de erros de validação
     if (error instanceof z.ZodError) {
+      console.error('Erros de validação:', error.errors);
       return NextResponse.json(
         { 
           error: 'Dados inválidos', 
