@@ -65,7 +65,16 @@ export default function MinicursoGratisPage() {
       const data = await response.json()
 
       if (response.ok && data.success) {
-        toast.success('Acesso liberado! Verifique seu e-mail com o link de acesso.')
+        toast.success('Acesso liberado! Verifique seu e-mail com o link de acesso.', {
+          duration: 6000
+        })
+        
+        // Mensagem adicional com dica
+        setTimeout(() => {
+          toast('💡 Dica: Verifique também sua caixa de spam ou promoções', {
+            duration: 8000
+          })
+        }, 2000)
         
         // Limpar formulário
         setFormData({
@@ -73,13 +82,6 @@ export default function MinicursoGratisPage() {
           email: "",
           whatsapp: ""
         })
-        
-        // Mostrar mensagem adicional
-        setTimeout(() => {
-          toast.success('Link de acesso também enviado via WhatsApp!', {
-            duration: 5000
-          })
-        }, 2000)
       } else {
         throw new Error(data.error || 'Erro ao processar cadastro')
       }
@@ -213,7 +215,7 @@ export default function MinicursoGratisPage() {
                       disabled={loading}
                     />
                     <p className="text-xs text-muted-foreground">
-                      Também enviaremos o link via WhatsApp
+                      Para futuras comunicações e suporte
                     </p>
                   </div>
 
