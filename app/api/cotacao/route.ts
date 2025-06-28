@@ -24,8 +24,9 @@ export async function POST(request: NextRequest) {
     const supabase = createClient();
     
     // Verificar usuário (opcional)
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
     console.log('API Cotação: Usuário:', user?.id || 'não autenticado');
+    console.log('API Cotação: Auth error:', authError);
     
     // Preparar dados para inserir
     const dadosInsert = {
