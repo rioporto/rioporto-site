@@ -133,7 +133,7 @@ export function QuotationsChart({ quotations }: QuotationsChartProps) {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, value, percent }) => 
+                label={({ name, value, percent = 0 }) => 
                   `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
                 }
                 outerRadius={80}
@@ -183,7 +183,7 @@ export function QuotationsChart({ quotations }: QuotationsChartProps) {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, value, percent }) => 
+                label={({ name, value, percent = 0 }) => 
                   `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
                 }
                 outerRadius={80}
