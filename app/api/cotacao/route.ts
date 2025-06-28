@@ -8,8 +8,8 @@ const cotacaoSchema = z.object({
   tipo: z.enum(['compra', 'venda']),
   moeda: z.string().min(1).max(10),
   cryptoName: z.string().min(1).max(100),
-  valorBRL: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Valor inválido'),
-  valorCripto: z.string().regex(/^\d+(\.\d{1,8})?$/, 'Valor inválido'),
+  valorBRL: z.string().regex(/^\d+(\.\d{0,2})?$/, 'Valor inválido'),
+  valorCripto: z.string().regex(/^\d+(\.\d{0,8})?$/, 'Valor inválido'),
   nome: z.string().min(3).max(100),
   email: z.string().email('Email inválido'),
   telefone: z.string().optional().default(''),
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
     // Log de auditoria (OWASP - Logging)
     console.log('Nova cotação recebida:', {
       id: cotacao.id,
-      tipo: cotacao.tipo,
+      tipo: cotacao.type,
       email: cotacao.email,
       timestamp: new Date().toISOString()
     });

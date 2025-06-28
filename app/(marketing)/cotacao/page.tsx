@@ -32,6 +32,18 @@ interface CotacaoForm {
   observacoes?: string
 }
 
+// Interface para dados da cotação enviada
+interface DadosCotacaoEnviada {
+  tipo: "compra" | "venda"
+  moeda: string
+  valorBRL: string
+  valorCripto: string
+  nome: string
+  email: string
+  telefone?: string
+  observacoes?: string
+}
+
 const COMMISSION_RATES = [
   { limit: 4999, rate: 0.035 },
   { limit: 50000, rate: 0.025 },
@@ -51,6 +63,7 @@ export default function CotacaoPage() {
   const [lastUpdate, setLastUpdate] = useState(new Date())
   const [priceError, setPriceError] = useState(false)
   const [cotacaoEnviada, setCotacaoEnviada] = useState(false)
+  const [dadosCotacaoEnviada, setDadosCotacaoEnviada] = useState<DadosCotacaoEnviada | null>(null)
   
   const [formData, setFormData] = useState<CotacaoForm>({
     tipo: "compra",
@@ -179,6 +192,12 @@ export default function CotacaoPage() {
       }
     }
     
+    // Validar valores
+    if (!formData.valorBRL || !formData.valorCripto) {
+      toast.error('Por favor, preencha os valores da cotação')
+      return
+    }
+    
     setLoading(true)
 
     try {
@@ -193,7 +212,7 @@ export default function CotacaoPage() {
         ...formData,
         nome: profile?.name || formData.nome,
         email: profile?.email || formData.email,
-        telefone: profile?.phone || formData.telefone,
+        telefone: profile?.phone || formData.telefone || '',
         cryptoName,
         price: getCurrentPrice()
       }
@@ -208,20 +227,24 @@ export default function CotacaoPage() {
 
       if (response.ok) {
         toast.success("Cotação enviada com sucesso!")
+        
+        // Salvar dados da cotação para o botão de reabrir WhatsApp
+        const dadosSalvos: DadosCotacaoEnviada = {
+          tipo: formData.tipo,
+          moeda: cryptoName,
+          valorBRL: formData.valorBRL,
+          valorCripto: formData.valorCripto,
+          nome: profile?.name || formData.nome,
+          email: profile?.email || formData.email,
+          telefone: profile?.phone || formData.telefone,
+          observacoes: formData.observacoes
+        }
+        setDadosCotacaoEnviada(dadosSalvos)
         setCotacaoEnviada(true)
         
         // Abrir WhatsApp automaticamente após 2 segundos
         setTimeout(() => {
-          abrirWhatsApp({
-            tipo: formData.tipo,
-            moeda: cryptoName,
-            valorBRL: formData.valorBRL,
-            valorCripto: formData.valorCripto,
-            nome: profile?.name || formData.nome,
-            email: profile?.email || formData.email,
-            telefone: profile?.phone || formData.telefone,
-            observacoes: formData.observacoes
-          });
+          abrirWhatsApp(dadosSalvos);
         }, 2000);
         
         // Limpar formulário mantendo dados do usuário se logado
@@ -237,12 +260,19 @@ export default function CotacaoPage() {
           observacoes: "",
         })
         
-        // Resetar estado após 10 segundos
+        // Resetar estado após 30 segundos
         setTimeout(() => {
           setCotacaoEnviada(false)
-        }, 10000)
+          setDadosCotacaoEnviada(null)
+        }, 30000)
       } else {
-        throw new Error(data.error || "Erro ao enviar cotação")
+        // Tratar erros específicos
+        if (data.details) {
+          const errorMessages = data.details.map((d: any) => `${d.field}: ${d.message}`).join(', ')
+          toast.error(`Erro de validação: ${errorMessages}`)
+        } else {
+          throw new Error(data.error || "Erro ao enviar cotação")
+        }
       }
     } catch (error) {
       console.error('Erro:', error)
@@ -273,7 +303,7 @@ export default function CotacaoPage() {
           </div>
 
           {/* Alerta de sucesso após envio */}
-          {cotacaoEnviada && (
+          {cotacaoEnviada && dadosCotacaoEnviada && (
             <Alert className="mb-8 border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
               <CheckCircle2 className="h-4 w-4 text-green-600" />
               <AlertTitle className="text-green-900 dark:text-green-100">Cotação enviada com sucesso!</AlertTitle>
@@ -291,16 +321,9 @@ export default function CotacaoPage() {
                     <Button
                       variant="default"
                       onClick={() => {
-                        abrirWhatsApp({
-                          tipo: formData.tipo,
-                          moeda: formData.moeda === "btc" ? "Bitcoin (BTC)" : formData.moedaSelecionada?.name || "Criptomoeda",
-                          valorBRL: formData.valorBRL,
-                          valorCripto: formData.valorCripto,
-                          nome: profile?.name || formData.nome,
-                          email: profile?.email || formData.email,
-                          telefone: profile?.phone || formData.telefone,
-                          observacoes: formData.observacoes
-                        });
+                        if (dadosCotacaoEnviada) {
+                          abrirWhatsApp(dadosCotacaoEnviada);
+                        }
                       }}
                     >
                       <MessageSquare className="mr-2 h-4 w-4" />
