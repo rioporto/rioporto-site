@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     console.log('Verificando se email já existe:', data.email);
     const { data: existingLead, error: searchError } = await supabase
       .from('leads')
-      .select('id, access_token, token_expires_at, minicurso_access_count')
+      .select('id, access_token, token_expires_at, minicurso_access_count, whatsapp')
       .eq('email', data.email)
       .single();
 
