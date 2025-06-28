@@ -228,6 +228,8 @@ export default function CotacaoPage() {
       console.log('Response status:', response.status);
       const data = await response.json()
       console.log('Response data:', data);
+      console.log('Response data type:', typeof data);
+      console.log('Response data.details type:', typeof data.details);
 
       if (response.ok) {
         toast.success("Cotação enviada com sucesso!")
@@ -271,9 +273,11 @@ export default function CotacaoPage() {
         }, 30000)
       } else {
         // Tratar erros específicos
-        if (data.details) {
+        if (data.details && Array.isArray(data.details)) {
           const errorMessages = data.details.map((d: any) => `${d.field}: ${d.message}`).join(', ')
           toast.error(`Erro de validação: ${errorMessages}`)
+        } else if (data.details) {
+          toast.error(`Erro: ${data.details}`)
         } else {
           throw new Error(data.error || "Erro ao enviar cotação")
         }
