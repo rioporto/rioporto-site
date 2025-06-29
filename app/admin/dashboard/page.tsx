@@ -39,7 +39,8 @@ import {
   XCircle,
   Clock,
   MessageSquare,
-  Download
+  Download,
+  BookOpen
 } from 'lucide-react'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
@@ -332,6 +333,13 @@ export default function DashboardPage() {
           >
             <Download className="w-4 h-4 mr-2" />
             Exportar CSV
+          </Button>
+          <Button
+            variant="default"
+            onClick={() => window.location.href = '/admin/courses'}
+          >
+            <BookOpen className="w-4 h-4 mr-2" />
+            Gerenciar Cursos
           </Button>
         </div>
       </div>
