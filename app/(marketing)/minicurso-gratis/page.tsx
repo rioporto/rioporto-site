@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -21,14 +21,25 @@ import {
   Loader2
 } from "lucide-react"
 import toast from "react-hot-toast"
+import { useAuth } from "@/contexts/auth-context"
+import { useRouter } from "next/navigation"
 
 export default function MinicursoGratisPage() {
+  const { user, loading: authLoading } = useAuth()
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     whatsapp: ""
   })
   const [loading, setLoading] = useState(false)
+
+  // Redirecionar usuários logados diretamente para o curso
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push('/curso-gratis')
+    }
+  }, [user, authLoading, router])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -114,6 +125,19 @@ export default function MinicursoGratisPage() {
     }
   ]
 
+  // Mostrar loading enquanto verifica autenticação
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p>Verificando acesso...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Se chegou aqui, o usuário não está logado
   return (
     <main className="flex-1">
       {/* Hero Section */}
