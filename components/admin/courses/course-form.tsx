@@ -244,11 +244,16 @@ export function CourseForm({ courseId }: CourseFormProps) {
         // Criar novo curso
         const { data: { user } } = await supabase.auth.getUser()
         
+        if (!user) {
+          toast.error('Usuário não autenticado')
+          return
+        }
+        
         const { error } = await supabase
           .from('courses')
           .insert({
             ...courseData,
-            created_by: user?.id
+            created_by: user.id
           })
 
         if (error) throw error
