@@ -22,7 +22,7 @@ const navigation = [
   { name: "Serviços", href: "/servicos" },
   { name: "Artigos", href: "/blog" },
   { name: "Cursos", href: "/cursos" },
-  { name: "Minicurso Grátis", href: "/minicurso-gratis" },
+  { name: "Curso Grátis P2P", href: "/minicurso-gratis" },
   { name: "Sobre", href: "/sobre" },
   { name: "Contato", href: "/contato" },
 ]

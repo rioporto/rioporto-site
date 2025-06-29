@@ -12,7 +12,8 @@ import {
   ArrowRight,
   AlertCircle,
   CheckCircle,
-  Clock
+  Clock,
+  GraduationCap
 } from "lucide-react"
 import Link from "next/link"
 
@@ -79,6 +80,41 @@ export default function DashboardPage() {
           </Link>
         </Button>
       </div>
+
+      {/* Card destacado - Curso Grátis P2P */}
+      <Card className="border-primary/50 shadow-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-2xl">
+            <GraduationCap className="h-6 w-6 text-primary" />
+            Curso Grátis P2P Disponível!
+          </CardTitle>
+          <CardDescription className="text-base">
+            Aprenda a negociar Bitcoin como um profissional com nosso manual completo
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span>9 capítulos com conteúdo em vídeo</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span>Material em PDF para download</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span>Acesso exclusivo para usuários cadastrados</span>
+            </div>
+            <Button size="lg" className="w-full" asChild>
+              <Link href="/curso-gratis">
+                Acessar Curso Agora
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Cards de Status */}
       <div className="grid gap-6 md:grid-cols-3">
@@ -166,6 +202,12 @@ export default function DashboardPage() {
               <Link href="/cotacao">
                 <TrendingUp className="mr-2 h-4 w-4" />
                 Nova Cotação
+              </Link>
+            </Button>
+            <Button variant="outline" asChild className="justify-start">
+              <Link href="/curso-gratis">
+                <GraduationCap className="mr-2 h-4 w-4" />
+                Curso Grátis P2P
               </Link>
             </Button>
             <Button variant="outline" asChild className="justify-start">
