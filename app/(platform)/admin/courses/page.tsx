@@ -82,25 +82,35 @@ export default function AdminCoursesPage() {
     try {
       const { data, error } = await supabase
         .from('courses')
-        .select(`
-          *,
-          course_enrollments (count),
-          course_modules (count)
-        `)
+        .select('*')
         .order('created_at', { ascending: false })
 
       if (error) throw error
 
-      // Processar dados para incluir contagens
-      const processedCourses = data?.map(course => ({
-        ...course,
-        _count: {
-          enrollments: course.course_enrollments?.[0]?.count || 0,
-          modules: course.course_modules?.[0]?.count || 0
-        }
-      }))
+      // Buscar contagens separadamente para evitar problemas
+      const coursesWithCounts = await Promise.all(
+        (data || []).map(async (course) => {
+          const { count: enrollmentsCount } = await supabase
+            .from('course_enrollments')
+            .select('*', { count: 'exact', head: true })
+            .eq('course_id', course.id)
 
-      setCourses(processedCourses || [])
+          const { count: modulesCount } = await supabase
+            .from('course_modules')
+            .select('*', { count: 'exact', head: true })
+            .eq('course_id', course.id)
+
+          return {
+            ...course,
+            _count: {
+              enrollments: enrollmentsCount || 0,
+              modules: modulesCount || 0
+            }
+          }
+        })
+      )
+
+      setCourses(coursesWithCounts)
     } catch (error) {
       console.error('Erro ao carregar cursos:', error)
       toast.error('Erro ao carregar cursos')

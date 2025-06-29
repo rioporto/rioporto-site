@@ -71,192 +71,105 @@ export default async function CursosPage() {
       {/* Courses Grid */}
       <section className="py-16 px-4">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Curso Grátis P2P - Sempre primeiro */}
-            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Play className="h-16 w-16 text-primary/50" />
-                </div>
-                <Badge className="absolute top-4 right-4">GRÁTIS</Badge>
-              </div>
-              <CardHeader>
-                <CardTitle>Manual P2P: Negocie Bitcoin como um Profissional</CardTitle>
-                <CardDescription>
-                  O guia definitivo para comprar ou vender Bitcoin com segurança e privacidade
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    <span>45-60 minutos</span>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-sm">O que você vai aprender:</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5" />
-                        <span>Como funciona o P2P na prática</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5" />
-                        <span>Vantagens sobre corretoras tradicionais</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5" />
-                        <span>Segurança e autocustódia</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5" />
-                        <span>Como evitar golpes e fraudes</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5" />
-                        <span>Aspectos legais e tributários</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <Button 
-                    className="w-full" 
-                    asChild
-                  >
-                    <Link href="/minicurso-gratis">
-                      Acessar Gratuitamente
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Cursos do banco de dados */}
-            {courses.map((course) => (
-              <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 relative">
-                  {course.thumbnail_url ? (
-                    <img 
-                      src={course.thumbnail_url} 
-                      alt={course.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Play className="h-16 w-16 text-primary/50" />
-                    </div>
-                  )}
-                  <div className="absolute top-4 right-4 flex gap-2">
-                    {course.is_featured && (
-                      <Badge className="bg-yellow-500">DESTAQUE</Badge>
-                    )}
-                    {course.is_free ? (
-                      <Badge className="bg-green-500">GRÁTIS</Badge>
+          {courses.length === 0 ? (
+            <div className="text-center py-12">
+              <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h2 className="text-2xl font-semibold mb-2">Nenhum curso disponível no momento</h2>
+              <p className="text-muted-foreground mb-8">
+                Estamos preparando conteúdos incríveis para você. Volte em breve!
+              </p>
+              <Button size="lg" asChild>
+                <Link href="/minicurso-gratis">
+                  Enquanto isso, acesse nosso Curso Grátis P2P
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Cursos do banco de dados */}
+              {courses.map((course) => (
+                <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 relative">
+                    {course.thumbnail_url ? (
+                      <img 
+                        src={course.thumbnail_url} 
+                        alt={course.title}
+                        className="w-full h-full object-cover"
+                      />
                     ) : (
-                      <Badge variant="secondary">R$ {course.price}</Badge>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Play className="h-16 w-16 text-primary/50" />
+                      </div>
                     )}
-                  </div>
-                </div>
-                <CardHeader>
-                  <CardTitle>{course.title}</CardTitle>
-                  <CardDescription>
-                    {course.short_description || course.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{course.duration_minutes} min</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        <span>{course.totalStudents} alunos</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <BookOpen className="h-4 w-4" />
-                        <span>{course.totalLessons} aulas</span>
-                      </div>
+                    <div className="absolute top-4 right-4 flex gap-2">
+                      {course.is_featured && (
+                        <Badge className="bg-yellow-500">DESTAQUE</Badge>
+                      )}
+                      {course.is_free ? (
+                        <Badge className="bg-green-500">GRÁTIS</Badge>
+                      ) : (
+                        <Badge variant="secondary">R$ {course.price}</Badge>
+                      )}
                     </div>
-                    
-                    {course.what_you_learn && course.what_you_learn.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-sm">O que você vai aprender:</h4>
-                        <ul className="space-y-1 text-sm text-muted-foreground">
-                          {course.what_you_learn.slice(0, 3).map((item: string, index: number) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                          {course.what_you_learn.length > 3 && (
-                            <li className="text-xs text-muted-foreground ml-6">
-                              +{course.what_you_learn.length - 3} mais...
-                            </li>
-                          )}
-                        </ul>
+                  </div>
+                  <CardHeader>
+                    <CardTitle>{course.title}</CardTitle>
+                    <CardDescription>
+                      {course.short_description || course.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          <span>{course.duration_minutes} min</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="h-4 w-4" />
+                          <span>{course.totalStudents} alunos</span>
+                        </div>
+                        {course.totalLessons > 0 && (
+                          <div className="flex items-center gap-1">
+                            <BookOpen className="h-4 w-4" />
+                            <span>{course.totalLessons} aulas</span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                    
-                    <Button 
-                      className="w-full" 
-                      asChild
-                    >
-                      <Link href={`/courses/${course.slug}`}>
-                        {course.is_free ? 'Acessar Gratuitamente' : 'Ver Detalhes'}
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-
-            {/* Placeholders para futuros cursos */}
-            <Card className="overflow-hidden opacity-60">
-              <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-100 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                    <span className="text-sm text-gray-500">Em breve</span>
-                  </div>
-                </div>
-              </div>
-              <CardHeader>
-                <CardTitle className="text-gray-500">Bitcoin para Iniciantes</CardTitle>
-                <CardDescription>
-                  Tudo que você precisa saber para começar no mundo do Bitcoin
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button className="w-full" disabled>
-                  Em Breve
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden opacity-60">
-              <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-100 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                    <span className="text-sm text-gray-500">Em breve</span>
-                  </div>
-                </div>
-              </div>
-              <CardHeader>
-                <CardTitle className="text-gray-500">Trading Avançado de Criptomoedas</CardTitle>
-                <CardDescription>
-                  Estratégias profissionais para maximizar seus resultados
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button className="w-full" disabled>
-                  Em Breve
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+                      
+                      {course.what_you_learn && course.what_you_learn.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-sm">O que você vai aprender:</h4>
+                          <ul className="space-y-1 text-sm text-muted-foreground">
+                            {course.what_you_learn.slice(0, 3).map((item: string, index: number) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                            {course.what_you_learn.length > 3 && (
+                              <li className="text-xs text-muted-foreground ml-6">
+                                +{course.what_you_learn.length - 3} mais...
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      <Button 
+                        className="w-full" 
+                        asChild
+                      >
+                        <Link href={course.slug === 'manual-p2p' ? '/minicurso-gratis' : `/courses/${course.slug}`}>
+                          {course.is_free ? 'Acessar Gratuitamente' : 'Ver Detalhes'}
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
